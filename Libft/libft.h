@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 11:37:06 by jtudela           #+#    #+#             */
-/*   Updated: 2024/11/05 11:53:39 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:47:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
-
-# ifndef SIZE_MAX
-#  define SIZE_MAX ((size_t)-1)
-# endif
+# include <stddef.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
