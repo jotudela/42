@@ -6,7 +6,7 @@
 /*   By: jtudela <joantudela66.2.4@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
-/*   Updated: 2024/03/28 16:48:49 by jtudela          ###   ########.fr       */
+/*   Updated: 2024/11/06 10:51:12 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	len;
 	char	*str;
 
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
 	len = total_len(s1, s2);
 	str = ft_calloc(len, sizeof(char));
 	if (!str)

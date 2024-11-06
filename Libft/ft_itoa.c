@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
-/*   Updated: 2024/10/17 13:12:25 by jojo             ###   ########.fr       */
+/*   Updated: 2024/11/06 15:10:42 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char	*ft_strrev(char *str)
 		str[i] = c;
 		i++;
 	}
-	str[size] = '\0';
 	return (str);
 }
 
@@ -35,6 +34,8 @@ static size_t	total_len(int n)
 {
 	size_t	len;
 
+	if (n == 0)
+		return (1);
 	len = 0;
 	while (n != 0)
 	{
@@ -48,38 +49,37 @@ static char	*ft_nnot_good(int n)
 {
 	char	*str;
 
-	str = NULL;
 	if (n == 0)
 	{
 		str = ft_calloc(2, sizeof(char));
-		if (!str)
-			return (NULL);
-		str = "0\0";
+		if (str)
+			str[0] = '0';
+		return (str);
 	}
-	else if (n == -2147483648)
+	if (n == -2147483648)
 	{
 		str = ft_calloc(12, sizeof(char));
-		if (!str)
-			return (NULL);
-		str = "-2147483648\0";
+		if (str)
+			ft_strlcpy(str, "-2147483648", 12);
+		return (str);
 	}
-	return (str);
+	return (NULL);
 }
 
 char	*ft_itoa(int n)
 {
 	size_t	len;
-	int		neg;
 	size_t	i;
+	int		neg;
 	char	*str;
 
 	if (n == 0 || n == -2147483648)
 		return (ft_nnot_good(n));
-	neg = n;
+	neg = n < 0;
 	if (n < 0)
 		n *= -1;
-	len = total_len(n);
-	str = ft_calloc(len, sizeof(char));
+	len = total_len(n) + neg;
+	str = ft_calloc(len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -89,7 +89,7 @@ char	*ft_itoa(int n)
 		n /= 10;
 		i++;
 	}
-	if (neg < 0)
-		str[i] = '-';
+	if (neg)
+		str[len - 1] = '-';
 	return (ft_strrev(str));
 }

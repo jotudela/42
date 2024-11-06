@@ -3,84 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtudela <joantudela66.2.4@gmail.com>       +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
-/*   Updated: 2024/11/05 15:17:36 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:09:00 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	total_len(char const *s1, char const *set)
+static int	is_good(char c, const char *set)
 {
-	size_t	i;
-	size_t	j;
-	size_t	count;
-	int		found;
-
-	i = 0;
-	count = 0;
-	while (s1[i])
-	{
-		j = 0;
-		found = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-			{
-				found = 1;
-				break ;
-			}
-			j++;
-		}
-		if (!found)
-			count++;
-		i++;
-	}
-	return (count + 1);
-}
-
-static void	ft_strcpy(char *str, char const *s1, char const *set)
-{
-	size_t	i;
-	size_t	j;
-	size_t	k;
-	int		found;
-
-	i = 0;
-	k = 0;
-	while (s1[i])
-	{
-		j = 0;
-		found = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-			{
-				found = 1;
-				break ;
-			}
-			j++;
-		}
-		if (!found)
-			str[k++] = s1[i];
-		i++;
-	}
-	str[k] = '\0';
+	while (*set)
+		if (c == *set++)
+			return (0);
+	return (1);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	len;
+	size_t	start;
+	size_t	end;
 	char	*str;
 
-	if (s1 == NULL || set == NULL)
-		return (NULL);
-	len = total_len(s1, set);
-	str = ft_calloc(len, sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_strcpy(str, s1, set);
+	start = 0;
+	end = ft_strlen(s1);
+	while (is_good(s1[start], set) == 0)
+		start++;
+	if (start == ft_strlen(s1))
+	{
+		str = ft_strdup("");
+		if (!str)
+			return (0);
+		else
+			return (str);
+	}
+	while (is_good(s1[end - 1], set) == 0)
+		end--;
+	str = ft_substr(s1, start, end - start);
 	return (str);
 }
