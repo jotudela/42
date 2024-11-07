@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:55:00 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/06 16:46:50 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:45:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	sub_check(char const *s, char c, size_t *i, size_t *start)
 	}
 }
 
-static void	allocation(char **buffer, char const *s, char c, size_t len_s)
+static int	ft_init(char **buffer, char const *s, char c, size_t len_s)
 {
 	size_t	i;
 	size_t	j;
@@ -51,8 +51,6 @@ static void	allocation(char **buffer, char const *s, char c, size_t len_s)
 	i = 0;
 	j = 0;
 	start = 0;
-	if (!s)
-		return ;
 	while (s[i])
 	{
 		sub_check(s, c, &i, &start);
@@ -60,24 +58,25 @@ static void	allocation(char **buffer, char const *s, char c, size_t len_s)
 		{
 			buffer[j] = ft_calloc(sizeof(char), (i - start + 1));
 			if (!buffer[j])
-				return ;
+				return (0);
 			ft_strncpy(buffer[j], &s[start], i - start);
 			j++;
 		}
 		while (s[i] == c && s[i])
 			i++;
 	}
+	return (1);
 }
 
-static size_t	ft_countwords(char const *str, char c)
+static size_t	ft_tab_len(char const *str, char c)
 {
 	size_t	result;
 	int		i;
 
 	result = 0;
 	i = 0;
-	if (!str)
-		return (0);
+	if (c == '\0')
+		return (1);
 	while (str[i])
 	{
 		while (str[i] == c && str[i])
@@ -94,13 +93,26 @@ static size_t	ft_countwords(char const *str, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	char	**buffer;
+	char	**tab;
 	size_t	len_s;
+	size_t	i;
 
-	len_s = ft_countwords(s, c);
-	buffer = (char **)ft_calloc(sizeof(char *), (len_s + 1));
-	if (!buffer)
+	if (!s)
 		return (NULL);
-	allocation(buffer, s, c, len_s);
-	return (buffer);
+	len_s = ft_tab_len(s, c);
+	tab = (char **)ft_calloc(sizeof(char *), (len_s + 1));
+	if (!tab)
+		return (NULL);
+	if (ft_init(tab, s, c, len_s) == 0)
+	{
+		i = 0;
+		while (i < len_s)
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
+		tab = NULL;
+	}
+	return (tab);
 }

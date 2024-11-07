@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
-/*   Updated: 2024/11/06 16:47:03 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:11:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
+	size_t			i;
+	unsigned char	*str;
 
 	i = ft_strlen(s);
-	if (c == 0)
+	str = (unsigned char *)s;
+	if ((unsigned char)c == 0)
 		return ((char *)s + i);
-	else if (c < 0 || c > 127)
-		return ((char *)s);
 	while (i > 0)
 	{
 		i--;
-		if (s[i] == c)
+		if (str[i] == (unsigned char)c)
 			return ((char *)s + i);
 	}
 	return (NULL);

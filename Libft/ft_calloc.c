@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
-/*   Updated: 2024/11/06 16:46:19 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:22:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*ptr;
 
 	if (count == 0 || size == 0)
-		return (malloc(1));
+		return (malloc(0));
 	else if (count > SIZE_MAX / size)
 		return (NULL);
 	ptr = malloc(count * size);

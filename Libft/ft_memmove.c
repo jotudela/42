@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
-/*   Updated: 2024/11/06 16:46:43 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/07 09:42:47 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	char		*d;
 	const char	*s;
 
+	if (dst == NULL && src == NULL)
+		return (NULL);
 	d = (char *)dst;
 	s = (const char *)src;
 	if (d > s && d < s + len)
