@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/11/06 16:47:11 by jotudela         ###   ########.fr        #
+#    Updated: 2024/11/08 13:04:27 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,17 @@
 NAME		= libft.a
 CFLAGS		= -Wall -Wextra -Werror
 CC		= cc
+BONUS_FLAG	= .bonus_compiled
+
+###################################################
+### COLORS
+
+RESET = \033[0m
+BOLD = \033[1m
+RED = \033[91m
+GREEN = \033[92m
+YELLOW = \033[33m
+ORANGE = \033[93m
 
 ###################################################
 ### SOURCES
@@ -79,22 +90,40 @@ OBJ_FILES_BONUS	= $(addsuffix .o, $(SRC_FILES_BONUS))
 all: ${NAME}
 
 ${NAME}: ${OBJ_FILES}
+	@echo "\n"
+	@echo "${BOLD}${RED}		Compiling ${NAME}...		${RESET}"
+	@echo "\n"
 	ar rcs ${NAME} ${OBJ_FILES}
-	ranlib ${NAME}
+	@echo "${BOLD}${GREEN}		${NAME} fully, compiled, ready to use		${RESET}"
+	@echo "\n"
 
-bonus: all ${OBJ_FILES_BONUS}
-	ar rcs ${NAME} ${OBJ_FILES_BONUS}
-	ranlib ${NAME}
+bonus: $(NAME) $(OBJ_FILES_BONUS) $(BONUS_FLAG)
+
+$(BONUS_FLAG): $(OBJ_FILES_BONUS)
+	@echo "\n"
+	@echo "${BOLD}${RED}		Adding bonus files to $(NAME)...		${RESET}"
+	@echo "\n"
+	ar rcs $(NAME) $(OBJ_FILES_BONUS)
+	@echo "\n"
+	@echo "${BOLD}${GREEN}		${NAME} with bonus, fully compiled, ready to use		${RESET}"
+	@echo "\n"
+	@touch $(BONUS_FLAG)
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -f *.o
+	rm -f ${OBJ_FILES} ${OBJ_FILES_BONUS} $(BONUS_FLAG)
+	@echo "\n"
+	@echo "${BOLD}${ORANGE}		Deleted *.o MANDATORY and BONUS	files	${RESET}"
+	@echo "\n"
 
 fclean: clean
 	rm -f ${NAME}
+	@echo "\n"
+	@echo "${BOLD}${ORANGE}		Deleted ${NAME}		${RESET}"
+	@echo "\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
