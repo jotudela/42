@@ -5,64 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 09:55:13 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/13 15:23:48 by jotudela         ###   ########.fr       */
+/*   Created: 2024/11/14 10:50:34 by jotudela          #+#    #+#             */
+/*   Updated: 2024/11/14 13:38:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *str)
+t_list	*ft_lstnew(char *content)
 {
-	int	i;
+	t_list	*li;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	li = malloc(sizeof(*li));
+	if (!li)
+		return (NULL);
+	li->content = ft_strdup(content);
+	li->next = NULL;
+	return (li);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+t_list	*ft_lstlast(t_list *lst)
 {
-	void	*ptr;
+	while (lst != NULL)
+	{
+		if (lst->next == NULL)
+			return (lst);
+		lst = lst->next;
+	}
+	return (lst);
+}
 
-	if (count == 0 || size == 0)
-		return (malloc(0));
-	else if (count > SIZE_MAX / size)
-		return (NULL);
-	ptr = malloc(count * size);
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*li;
+
+	if (!lst || !new)
+		return ;
+	li = ft_lstlast(*lst);
+	if (!li)
+		*lst = new;
+	else
+		li->next = new;
+}
+
+void	ft_lstclear(t_list **lst)
+{
+	t_list	*tmp;
+
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ptr;
+	size_t	len;
+    size_t  i;
+
+    len = 0;
+	while (s1[len])
+        len++;
+	ptr = ft_calloc(len, sizeof(char));
 	if (!ptr)
 		return (NULL);
-	ft_memset(ptr, 0, size * count);
+	i = 0;
+    while (i < len - 1)
+    {
+        ((char *)ptr)[i] = ((char *)s1)[i];
+        i++;
+    }
+	ptr[len - 1] = '\0';
 	return (ptr);
-}
-
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		((char *)b)[i] = c;
-		i++;
-	}
-	return (b);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize > 0)
-	{
-		while (src[i] && i < dstsize - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return (ft_strlen(src));
 }

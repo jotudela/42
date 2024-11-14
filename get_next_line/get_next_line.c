@@ -5,50 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 09:41:09 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/13 16:16:22 by jotudela         ###   ########.fr       */
+/*   Created: 2024/11/14 10:49:42 by jotudela          #+#    #+#             */
+/*   Updated: 2024/11/14 14:51:02 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char *get_line_from_buf(char *buf, int *pos, ssize_t *size)
+void	*ft_calloc(size_t count, size_t size)
 {
-    char    *line;
-    int     i;
+	void	*ptr;
+    size_t	i;
 
-    i = 0;
-    while ((*pos + i) < *size)
-    {
-        if (buf[*pos + i] == '\n')
-            break;
-        i++;
-    }
-    line = calloc(i + 2, sizeof(char));
-    if (!line)
-        return (NULL);
-    ft_strlcpy(line, &buf[*pos], i + 2);
-    *pos += i + 1;
-    return (line);
+	if (count == 0 || size == 0)
+		return (malloc(0));
+	else if (count > SIZE_MAX / size)
+		return (NULL);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (i < count * size)
+	{
+		((char *)ptr)[i] = '\0';
+		i++;
+	}
+	return (ptr);
 }
 
-char *get_next_line(int fd)
+char	*get_line(t_list *lst)
 {
-    static char     buf[BUFFER_SIZE];
-    static int      pos = 0;
-    static ssize_t  size = 0;
-    char           *line;
+	char	*line;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    if (pos >= size)
-    {
-        size = read(fd, buf, BUFFER_SIZE);
-        pos = 0;
-        if (size <= 0)
-            return (NULL);
-    }
-    line = get_line_from_buf(buf, &pos, &size);
-    return (line);
+	line = ft_strdup(lst->content);
+	return (line);
+}
+
+char    *get_next_line(int fd)
+{
+    t_list	*li = NULL;
+	t_list	*new = NULL;
+	char	buf[BUFFER_SIZE + 2];
+	static int	i = 0;
+
+	if (fd <= 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (i == 0)
+	{
+		i = 1;
+		while (read(fd, buf, BUFFER_SIZE + 2) > 0)
+		{
+			new = ft_lstnew(buf);
+			if (!new)
+				return (NULL);
+			ft_lstadd_back(&li, new);
+		}
+	}
+	return (get_line(li));
 }
