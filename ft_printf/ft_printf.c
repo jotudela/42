@@ -3,43 +3,160 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:49:29 by jojo              #+#    #+#             */
-/*   Updated: 2024/11/04 14:51:57 by jojo             ###   ########.fr       */
+/*   Updated: 2024/11/15 16:40:44 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include <stdio.h>
 
-static void print_value(List li)
+void    ft_putchar_fd(char c, int fd)
 {
-    if (li->convert == 'c')
-        ft_putchar_fd(li->value, 1);
-    else if (li->convert == 's')
-        ft_putstr_fd(li->value, 1);
-    else if (li->convert == 'd' || li->convert == 'u')
-    {
-        ft_putnbr_fd(li->value / 10, 1);
-        ft_putchar_fd('.', 1);
-        ft_putnbr_fd(li->value % 10, 1);
-    }
-    else if (li->convert == 'i')
-        ft_putnbr_fd(li->value, 1);
-    else if (li->convert == 'p' || li->convert == 'x')
-        ft_putnbr_fd(ft_atoi_base(li->value, "0123456789abcdef"), 1);
-    else if (li->convert == 'X')
-        ft_putstr_fd(ft_atoi_base(li->value, "0123456789ABCDEF"), 1);
-    else if (li->convert == '%')
-        ft_putnbr_fd(li->value, 1);
-    else
-    {
-        ft_putendl_fd("Type de convertion non reconnue !", 2);
-        exit(1);
-    }
+    write(fd, &c, 1);
 }
 
-static void print_all(const char *format, List li)
+void    ft_putstr_fd(char *str, int fd)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        ft_putchar_fd(str[i], fd);
+        i++;
+    }
+}
+void    ft_putptr(void *ptr, int fd)
+{
+    const char *hex_digits;
+    unsigned long num;
+    char buffer[20];
+    int i;
+
+    num = (unsigned long)ptr;
+    if (num == 0) {
+        ft_putstr_fd("0x0", fd);
+        return;
+    }
+    hex_digits = "0123456789abcdef";
+    while (num > 0) {
+        buffer[i++] = hex_digits[num % 16];
+        num /= 16;
+    }
+    ft_putstr_fd("0x", fd);
+    while (i-- > 0)
+        write(fd, &buffer[i], 1);
+}
+
+void    ft_putint_fd(int n, int fd)
+{
+    if (n == MIN)
+    {
+        ft_putstr_fd("-2147483648", fd);
+        return ;
+    }
+    if (n < 0)
+    {
+        ft_putchar_fd('-', fd);
+        n = -n;
+        ft_putint_fd(n, fd);
+    }
+    else if (n > 9)
+    {
+        ft_putint_fd(n / 10, fd);
+        ft_putint_fd(n % 10, fd);
+    }
+    else
+        ft_putchar_fd(n + '0', fd);
+}
+
+void    ft_putunsigned_fd(unsigned int num, int fd)
+{
+    char buffer[20];
+    int i;
+
+    if (num == 0) {
+        write(fd, "0", 1);
+        return;
+    }
+    i = 0;
+    while (num > 0) {
+        buffer[i++] = (num % 10) + '0';
+        num /= 10;
+    }
+    while (i-- > 0)
+        write(fd, &buffer[i], 1);
+}
+
+void    ft_putnbr_hex(int num, int fd, char c)
+{
+    const char *hex_digits;
+    char buffer[20];
+    int i;
+    unsigned int unsigned_num;
+
+    unsigned_num = num;
+    if (unsigned_num == 0) {
+        write(fd, "0", 1);
+        return;
+    }
+    if (c == 'x')
+        hex_digits = "0123456789abcdef";
+    else if (c == 'X')
+        hex_digits = "0123456789ABCDEF"; 
+    i = 0;
+    while (unsigned_num > 0) {
+        buffer[i++] = hex_digits[unsigned_num % 16];
+        unsigned_num /= 16;
+    }
+    while (i-- > 0)
+        write(fd, &buffer[i], 1);
+}
+
+int    ft_print_format1(char c, va_list args)
+{
+    if (c == 'c')
+        ft_putchar_fd(va_arg(args, int), 1);
+    else if (c == 's')
+        ft_putstr_fd(va_arg(args, char *), 1);
+    else if (c == 'i' || c == 'd')
+        ft_putint_fd(va_arg(args, int), 1);
+    else if (c == 'p')
+        ft_putptr(va_arg(args, void *), 1);
+    else if (c == 'u')
+        ft_putunsigned_fd(va_arg(args, unsigned int), 1);
+    else if (c == 'x' || c == 'X')
+        ft_putnbr_hex(va_arg(args, int), 1, c);
+    else if (c == '%')
+        ft_putchar_fd(c, 1);
+    return (0);
+}
+
+int good_format(char c)
+{
+    if (c == 'c')
+        return (1);
+    else if (c == 's')
+        return (1);
+    else if (c == 'p')
+        return (1);
+    else if (c == 'i')
+        return (1);
+    else if (c == 'd')
+        return (1);
+    else if (c == 'u')
+        return (1);
+    else if (c == 'x')
+        return (1);
+    else if (c == 'X')
+        return (1);
+    return (0);
+}
+
+int ft_verif_format(const char *format)
 {
     int i;
 
@@ -48,21 +165,39 @@ static void print_all(const char *format, List li)
     {
         if (format[i] == '%')
         {
-            print_value(li);
-            li = li->next;
+            if (format[i + 1] == '%')
+                i++;
+            else if (good_format(format[i + 1]) == 0)
+                return (1);
         }
-        ft_putchar_fd(format[i], 1);
         i++;
     }
+    return (0);
 }
 
-int     ft_printf(const char *format, ...)
+int ft_printf(const char *format, ...)
 {
     va_list args;
-    ListElement *li;
-    va_start(args, count_list_len(format));
-    li = ultimate_parse(format, args);
+    int i;
+
+    if (ft_verif_format(format) == 1)
+    {
+        ft_putstr_fd("ERREUR: arret du programme.", 2);
+        return (1); 
+    }
+    va_start(args, format);
+    i = 0;
+    while (format[i])
+    {
+        if (format[i] == '%')
+        {
+            ft_print_format1(format[i + 1], args);
+            i++;
+        }
+        else
+            ft_putchar_fd(format[i], 1);
+        i++;
+    }
     va_end(args);
-    print_all(format, li);
-    clear_list(li);
+    return (0);
 }

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fonction_from_libft.c                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 16:18:33 by jojo              #+#    #+#             */
-/*   Updated: 2024/10/30 16:20:16 by jojo             ###   ########.fr       */
+/*   Created: 2024/11/15 13:57:40 by jotudela          #+#    #+#             */
+/*   Updated: 2024/11/15 16:44:15 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include <stdio.h>
 
-int ft_strlen(char *str)
+int	main(void)
 {
-    int i;
-
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	ft_printf("My version : %s%i%s\n", "Hello tout le monde. Je suis Joan et j'ai ", 19, "ans.");
+	printf("Real version : %s%i%s\n", "Hello tout le monde. Je suis Joan et j'ai ", 19, "ans.");
 }
