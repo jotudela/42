@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:50:30 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/14 15:49:30 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:45:08 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void    ft_lstadd_back(t_list **lst, t_list *new);
 char    *ft_strdup(const char *s1);
 void	*ft_calloc(size_t count, size_t size);
 char    *get_next_line(int fd);
+char	*get_line(t_list *lst);
+int	ft_strlen(char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *s, int c);
 

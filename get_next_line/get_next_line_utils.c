@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:50:34 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/14 15:48:52 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:44:21 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 	if (!lst || !new)
 		return ;
-    tmp = &lst;
+    tmp = *lst;
     while (tmp != NULL)
         tmp = tmp->next;
-    li = (*tmp);
+    li = tmp;
 	if (!li)
 		*lst = new;
 	else
@@ -70,7 +70,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (s == NULL)
 		return (NULL);
-	size = ft_strlen(s);
+	size = ft_strlen((char *)s);
 	if (start >= size)
 		return (ft_calloc(1, sizeof(char)));
 	if (len > size - start)
@@ -82,7 +82,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
     s += start;
     while (size < len)
     {
-        ptr[size] = (char *)s[size];
+        ptr[size] = (char)s[size];
         size++;
     }
 	ptr[len] = '\0';
@@ -96,7 +96,7 @@ char	*ft_strchr(const char *s, int c)
 
 	i = 0;
 	if ((unsigned char)c == 0)
-		return ((char *)s + ft_strlen(s));
+		return ((char *)s + ft_strlen((char *)s));
 	str1 = (unsigned char *)s;
 	while (str1[i])
 	{

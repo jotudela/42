@@ -6,12 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 10:49:42 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/14 15:59:20 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:57:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int	ft_strlen(char *str)
 {
@@ -73,7 +72,8 @@ char    *get_next_line(int fd)
 {
     t_list	*li = NULL;
 	t_list	*new = NULL;
-	char	buf[BUFFER_SIZE + 2];
+	char	buf[BUFFER_SIZE];
+	char	*line;
 	static int	i = 0;
 
 	if (fd <= 0 || BUFFER_SIZE <= 0)
@@ -81,7 +81,7 @@ char    *get_next_line(int fd)
 	if (i == 0)
 	{
 		i = 1;
-		while (read(fd, buf, BUFFER_SIZE + 2) > 0)
+		while (read(fd, buf, BUFFER_SIZE) > 0)
 		{
 			new = ft_lstnew(buf);
 			if (!new)
@@ -89,6 +89,6 @@ char    *get_next_line(int fd)
 			ft_lstadd_back(&li, new);
 		}
 	}
-	while (!(ft_strchr(get_line(lst), '\n')));
-	return ()
+	line = get_line(li);
+	return (line);
 }
