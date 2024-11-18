@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/11/04 14:46:23 by jojo             ###   ########.fr        #
+#    Updated: 2024/11/18 10:06:58 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,35 +15,32 @@
 
 NAME		= libft.a
 CFLAGS		= -Wall -Wextra -Werror
-CC		= gcc
+CC		= cc
+
+###################################################
+### COLORS
+
+RESET = \033[0m
+BOLD = \033[1m
+RED = \033[91m
+GREEN = \033[92m
+YELLOW = \033[33m
+ORANGE = \033[93m
 
 ###################################################
 ### SOURCES
 
-## MANDATORY PART
+# MANDATORY PART
 
 SRC_FILES	= ft_printf \
-			ft_atoi_base \
-			ft_strlen \
-			list \
-			print_from_libft \
-			ultinate_parse
+			ft_print_format_c \
+			ft_print_format_i \
+			ft_print_format_p \
+			ft_print_format_s \
+			ft_print_format_u \
+			ft_print_format_xX
 
 OBJ_FILES	= $(addsuffix .o, $(SRC_FILES))
-
-## BONUS PART
-
-SRC_FILES_BONUS	= ft_lstnew_bonus \
-		ft_lstadd_front_bonus \
-		ft_lstsize_bonus \
-		ft_lstlast_bonus \
-		ft_lstadd_back_bonus \
-		ft_lstdelone_bonus \
-		ft_lstclear_bonus \
-		ft_lstiter_bonus \
-		ft_lstmap_bonus
-
-OBJ_FILES_BONUS	= $(addsuffix .o, $(SRC_FILES_BONUS))
 
 ###################################################
 ## RULES
@@ -51,21 +48,28 @@ OBJ_FILES_BONUS	= $(addsuffix .o, $(SRC_FILES_BONUS))
 all: ${NAME}
 
 ${NAME}: ${OBJ_FILES}
+	@echo "\n"
+	@echo "${BOLD}${RED}		Compiling ${NAME}...		${RESET}"
+	@echo "\n"
 	ar rcs ${NAME} ${OBJ_FILES}
-	ranlib ${NAME}
-
-bonus: all ${OBJ_FILES_BONUS}
-	ar rcs ${NAME} ${OBJ_FILES_BONUS}
-	ranlib ${NAME}
+	@echo "\n"
+	@echo "${BOLD}${GREEN}		${NAME} fully, compiled, ready to use		${RESET}"
+	@echo "\n"
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -f *.o
+	rm -f ${OBJ_FILES}
+	@echo "\n"
+	@echo "${BOLD}${ORANGE}		Deleted *.o MANDATORY files	${RESET}"
+	@echo "\n"
 
 fclean: clean
 	rm -f ${NAME}
+	@echo "\n"
+	@echo "${BOLD}${ORANGE}		Deleted ${NAME}		${RESET}"
+	@echo "\n"
 
 re: fclean all
 
