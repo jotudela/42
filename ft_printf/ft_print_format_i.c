@@ -6,30 +6,29 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:48:38 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/18 10:10:38 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:10:11 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-void    ft_putint_fd(int n, int fd)
+int ft_putint_fd(int n, int fd)
 {
-    if (n == MIN)
+    int count;
+
+    count = 0;
+    if (n == -2147483648)
     {
-        ft_putstr_fd("-2147483648", fd);
-        return ;
+        return (ft_putstr_fd("-2147483648", fd));
     }
     if (n < 0)
     {
-        ft_putchar_fd('-', fd);
+        count += ft_putchar_fd('-', fd);
         n = -n;
-        ft_putint_fd(n, fd);
     }
-    else if (n > 9)
-    {
-        ft_putint_fd(n / 10, fd);
-        ft_putint_fd(n % 10, fd);
-    }
-    else
-        ft_putchar_fd(n + '0', fd);
+    if (n > 9)
+        count += ft_putint_fd(n / 10, fd);
+    count += ft_putchar_fd((n % 10) + '0', fd);
+    return (count);
 }
+

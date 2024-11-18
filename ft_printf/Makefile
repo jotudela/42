@@ -6,14 +6,14 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/11/18 10:06:58 by jotudela         ###   ########.fr        #
+#    Updated: 2024/11/18 14:38:47 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ###################################################
 ### ARGUMENTS
 
-NAME		= libft.a
+NAME		= libftprintf.a
 CFLAGS		= -Wall -Wextra -Werror
 CC		= cc
 
@@ -38,7 +38,7 @@ SRC_FILES	= ft_printf \
 			ft_print_format_p \
 			ft_print_format_s \
 			ft_print_format_u \
-			ft_print_format_xX
+			ft_print_format_xX 
 
 OBJ_FILES	= $(addsuffix .o, $(SRC_FILES))
 
