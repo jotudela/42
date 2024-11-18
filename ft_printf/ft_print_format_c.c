@@ -6,14 +6,14 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:45:15 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/18 11:10:33 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:44:10 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int    ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
-    write(fd, &c, 1);
-    return (1);
+	write(fd, &c, 1);
+	return (1);
 }
