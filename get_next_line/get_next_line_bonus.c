@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:46:33 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/19 15:57:28 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:22:02 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ char	*read_and_stash(int fd, char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash = NULL;
+	static char	*stash[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	stash = read_and_stash(fd, stash);
-	if (!stash)
+	stash[fd] = read_and_stash(fd, stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	line = extract_line(stash);
-	stash = clean_stash(stash);
+	line = extract_line(stash[fd]);
+	stash[fd] = clean_stash(stash[fd]);
 	return (line);
 }

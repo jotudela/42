@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:46:37 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/19 15:10:23 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:14:01 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
@@ -30,6 +30,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*extract_line(char *stash);
 char	*clean_stash(char *stash);
 void	ft_strcat(char *str, char const *s1, char const *s2);
-char	*read_and_stash(int fd, char *stash);
+char	*read_and_stash(int fd, char **stash);
 
 #endif
