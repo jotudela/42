@@ -6,11 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:46:33 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/19 16:22:02 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:44:10 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(char *s, int c)
 {
