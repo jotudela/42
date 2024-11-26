@@ -32,8 +32,14 @@ ORANGE = \033[93m
 
 # MANDATORY PART
 
-SRC_FILES	= main \
-		ft_putstr_fd
+SRC_FILES	= pipex \
+		ft_printf \
+		ft_print_format_xX \
+		ft_print_format_u \
+		ft_print_format_s \
+		ft_print_format_p \
+		ft_print_format_i \
+		ft_print_format_c
 
 OBJ_FILES	= $(addsuffix .o, $(SRC_FILES))
 

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:14:36 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/26 14:37:48 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:48:03 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# include "ft_printf.h"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -22,8 +24,7 @@
 # include <string.h>
 # include <errno.h>
 
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *str, int fd);
-int		ft_error(int ac, char **av);
+int	ft_error(int ac, char **av);
+int ft_access_error(char *file1, char *file2);
 
 #endif

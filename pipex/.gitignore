@@ -70,3 +70,5 @@ Makefile.gen
 .DS_Store
 
 # My Files
+.gitignore
+pipex
