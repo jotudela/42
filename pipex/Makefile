@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/11/25 15:23:59 by jotudela         ###   ########.fr        #
+#    Updated: 2024/11/26 14:09:20 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS		= -Wall -Wextra -Werror
 CC		= cc
 
 ###################################################
-### COLORS
+## COLORS
 
 RESET = \033[0m
 BOLD = \033[1m
@@ -32,7 +32,8 @@ ORANGE = \033[93m
 
 # MANDATORY PART
 
-SRC_FILES	= main
+SRC_FILES	= main \
+		ft_putstr_fd
 
 OBJ_FILES	= $(addsuffix .o, $(SRC_FILES))
 
@@ -45,7 +46,7 @@ ${NAME}: ${OBJ_FILES}
 	@echo "\n"
 	@echo "${BOLD}${RED}		Compiling ${NAME}...		${RESET}"
 	@echo "\n"
-	ar rcs ${NAME} ${OBJ_FILES}
+	${CC} ${CFLAGS} -o pipex ${OBJ_FILES}
 	@echo "\n"
 	@echo "${BOLD}${GREEN}		${NAME} fully, compiled, ready to use		${RESET}"
 	@echo "\n"
