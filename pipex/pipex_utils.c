@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 13:14:36 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/26 23:03:03 by jojo             ###   ########.fr       */
+/*   Created: 2024/11/26 22:55:59 by jojo              #+#    #+#             */
+/*   Updated: 2024/11/26 22:57:22 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "pipex.h"
 
-# include "ft_printf.h"
+int ft_strlen(char *str)
+{
+    int i;
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <string.h>
-# include <errno.h>
-
-int	ft_error(int ac, char **av);
-int ft_access_error(char *file1, char *file2);
-int	ft_parsing(int ac, char **av, int fd);
-int ft_strlen(char *str);
-
-#endif
+    i = 0;
+    while (str[i])
+        i++;
+    return (i);
+}
