@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
+#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/11/26 14:09:20 by jotudela         ###   ########.fr        #
+#    Updated: 2024/12/05 09:58:33 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,10 @@ ORANGE = \033[93m
 # MANDATORY PART
 
 SRC_FILES	= pipex \
-		ft_printf \
-		ft_print_format_xX \
-		ft_print_format_u \
-		ft_print_format_s \
-		ft_print_format_p \
-		ft_print_format_i \
-		ft_print_format_c
+		ft_calloc \
+		ft_split \
+		ft_strjoin \
+		ft_error
 
 OBJ_FILES	= $(addsuffix .o, $(SRC_FILES))
 

@@ -6,66 +6,111 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/11/26 23:16:44 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/05 10:11:29 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, char **av)
+char *ft_find_cmd(char *cmd)
 {
-	if (ft_error(ac, av) == 1)
-		exit(EXIT_FAILURE);
-	if (ft_parsing(ac, av, fd) == 1)
-		exit(EXIT_FAILURE);
-	return (0);
+    char **dirs;
+    char *full_path;
+    char *temp;
+    int i;
+
+	dirs = ft_split("/bin /usr/bin /usr/local/bin", ' ');
+	i = 0;
+    while (dirs[i])
+    {
+        temp = ft_strjoin(dirs[i], "/");
+        if (!temp)
+			return (free(temp), ft_cleartab(dirs), NULL);
+        full_path = ft_strjoin(temp, cmd);
+        free(temp);
+        if (!full_path)
+			return (free(full_path), ft_cleartab(dirs), NULL);
+        if (access(full_path, X_OK) == 0)
+            return (ft_cleartab(dirs), full_path);
+        free(full_path);
+        i++;
+    }
+    return (ft_cleartab(dirs), NULL);
 }
 
-int	ft_parsing(int ac, char **av, int fd)
+void ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
 {
-	int	i;
-	int	pipefd[2];
-	pid_t	pid;
-	char	*buffer;
+    char *path_cmd;
+    char **cmd;
 
+    dup2(in_fd, STDIN_FILENO);
+    dup2(out_fd, STDOUT_FILENO);
+    close(in_fd);
+    close(out_fd);
+    cmd = ft_split(cmd_args, ' ');
+    if (!cmd)
+        msg_error("Erreur allocation commande.");
+    path_cmd = ft_find_cmd(cmd[0]);
+    if (!path_cmd)
+    {
+        ft_cleartab(cmd);
+        msg_error("Commande introuvable.");
+    }
+    if (execve(path_cmd, cmd, envp) == -1)
+        msg_error("Erreur execution commande.");
+    free(path_cmd);
+    ft_cleartab(cmd);
+}
+
+void ft_right_command(char **av, int pipefd[2], char **envp, int mod)
+{
+	int file;
+	
+    if (mod == 1)
+    {
+        close(pipefd[0]);
+		file = open(av[1], O_RDONLY);
+		if (file == -1)
+			msg_error("Can't open file1.");
+        ft_execute_cmd(av[2], file, pipefd[1], envp);
+    }
+    else if (mod == 2)
+    {
+        close(pipefd[1]);
+		file = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (file == -1)
+			msg_error("Can't open file2.");
+        ft_execute_cmd(av[3], pipefd[0], file, envp);
+    }
+}
+
+void ft_parse(char **av, char **envp)
+{
+	int pipefd[2];
+	pid_t pid1;
+	pid_t pid2;
+	
 	if (pipe(pipefd) == -1)
-		return (ft_printf("Erreur pipe.\n"), 1);
-	dup2(fd, pipefd);
-	i = 1;
-	while (i < ac - 1)
-	{
-		buffer = malloc(sizeof(char) * ft_strlen(av[i]));
-		pid = fork();
-		if (pid == 0)
-		{
-			close(pipefd[1]);
-			read(pipefd[0], buffer, ft_strlen(buffer));
-			close(pipefd[1]);
-		}
-		else if (pid > 0)
-		{
-			
-		}
-	}
+		msg_error("pipe");
+	pid1 = fork();
+	if (pid1 == -1)
+		msg_error("Pid1");
+	if (pid1 == 0)
+		ft_right_command(av, pipefd, envp, 1);
+	pid2 = fork();
+	if (pid2 == -1)
+		msg_error("Pid2");
+	if (pid2 == 0)
+		ft_right_command(av, pipefd, envp, 2);
+	close(pipefd[0]);
+	close(pipefd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
 }
 
-int	ft_error(int ac, char **av)
-{
-	pid_t	pid;
-	char	*args[] = {"touch", av[4], NULL};
-
-	if (ac != 5)
-		return (ft_printf("Nombre d'arguments incorecte.\n"), 1);
-	else if (access(av[1], F_OK) == -1)
-		return (ft_printf("Le fichier %s existe pas.\n", av[1]), 1);
-	else if (access(av[4], F_OK) == -1)
-	{
-		pid = fork();
-		if (pid == -1)
-			return (ft_printf("Erreur fork.\n"), 1);
-		if (pid == 0)
-			if (execve("/usr/bin/touch", args, NULL) == -1)
-				return (ft_printf("Erreur execve\n"), 1);
-	}
+int	main(int ac, char **av, char **envp)
+{	
+	ft_error(ac, av);
+	ft_parse(av, envp);
 	return (0);
 }
