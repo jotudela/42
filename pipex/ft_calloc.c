@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 09:57:41 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/04 10:44:42 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/06 11:11:38 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
-void    ft_cleartab(char **tab)
+void	ft_cleartab(char **tab)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

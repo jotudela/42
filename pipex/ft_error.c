@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:35:52 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/05 10:00:06 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/06 11:10:08 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void msg_error(char *str)
+void	msg_error(char *str)
 {
 	perror(str);
 	exit(EXIT_FAILURE);
 }
 
-void ft_error(int ac, char **av)
+static char	**ft_alloc(char *command, char *file)
+{
+	char	*tmp;
+	char	**str;
+
+	tmp = ft_strjoin(command, file);
+	if (!tmp)
+		return (NULL);
+	str = ft_split(tmp, ' ');
+	if (!str)
+		return (NULL);
+	free(tmp);
+	return (str);
+}
+
+void	ft_error(int ac, char **av)
 {
 	pid_t	pid;
 	char	**args;
@@ -27,7 +42,7 @@ void ft_error(int ac, char **av)
 		msg_error("Number of argument not correct.");
 	else if (access(av[1], F_OK) == -1)
 		msg_error("File 1");
-	args = ft_split(ft_strjoin("touch ", av[4]), ' ');
+	args = ft_alloc("touch ", av[4]);
 	if (args == NULL)
 	{
 		ft_cleartab(args);

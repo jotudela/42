@@ -3,93 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/05 10:11:29 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/06 11:16:52 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char *ft_find_cmd(char *cmd)
+char	*ft_find_cmd(char *cmd)
 {
-    char **dirs;
-    char *full_path;
-    char *temp;
-    int i;
+	char	**dirs;
+	char	*full_path;
+	char	*temp;
+	int		i;
 
 	dirs = ft_split("/bin /usr/bin /usr/local/bin", ' ');
 	i = 0;
-    while (dirs[i])
-    {
-        temp = ft_strjoin(dirs[i], "/");
-        if (!temp)
+	while (dirs[i])
+	{
+		temp = ft_strjoin(dirs[i], "/");
+		if (!temp)
 			return (free(temp), ft_cleartab(dirs), NULL);
-        full_path = ft_strjoin(temp, cmd);
-        free(temp);
-        if (!full_path)
+		full_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (!full_path)
 			return (free(full_path), ft_cleartab(dirs), NULL);
-        if (access(full_path, X_OK) == 0)
-            return (ft_cleartab(dirs), full_path);
-        free(full_path);
-        i++;
-    }
-    return (ft_cleartab(dirs), NULL);
+		if (access(full_path, X_OK) == 0)
+			return (ft_cleartab(dirs), full_path);
+		free(full_path);
+		i++;
+	}
+	return (ft_cleartab(dirs), NULL);
 }
 
-void ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
+void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
 {
-    char *path_cmd;
-    char **cmd;
+	char	*path_cmd;
+	char	**cmd;
 
-    dup2(in_fd, STDIN_FILENO);
-    dup2(out_fd, STDOUT_FILENO);
-    close(in_fd);
-    close(out_fd);
-    cmd = ft_split(cmd_args, ' ');
-    if (!cmd)
-        msg_error("Erreur allocation commande.");
-    path_cmd = ft_find_cmd(cmd[0]);
-    if (!path_cmd)
-    {
-        ft_cleartab(cmd);
-        msg_error("Commande introuvable.");
-    }
-    if (execve(path_cmd, cmd, envp) == -1)
-        msg_error("Erreur execution commande.");
-    free(path_cmd);
-    ft_cleartab(cmd);
+	dup2(in_fd, STDIN_FILENO);
+	dup2(out_fd, STDOUT_FILENO);
+	close(in_fd);
+	close(out_fd);
+	cmd = ft_split(cmd_args, ' ');
+	if (!cmd)
+		msg_error("Erreur allocation commande.");
+	path_cmd = ft_find_cmd(cmd[0]);
+	if (!path_cmd)
+	{
+		ft_cleartab(cmd);
+		msg_error("Commande introuvable.");
+	}
+	if (execve(path_cmd, cmd, envp) == -1)
+		msg_error("Erreur execution commande.");
+	free(path_cmd);
+	ft_cleartab(cmd);
 }
 
-void ft_right_command(char **av, int pipefd[2], char **envp, int mod)
+void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
 {
-	int file;
-	
-    if (mod == 1)
-    {
-        close(pipefd[0]);
+	int	file;
+
+	if (mod == 1)
+	{
+		close(pipefd[0]);
 		file = open(av[1], O_RDONLY);
 		if (file == -1)
 			msg_error("Can't open file1.");
-        ft_execute_cmd(av[2], file, pipefd[1], envp);
-    }
-    else if (mod == 2)
-    {
-        close(pipefd[1]);
+		ft_execute_cmd(av[2], file, pipefd[1], envp);
+	}
+	else if (mod == 2)
+	{
+		close(pipefd[1]);
 		file = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (file == -1)
 			msg_error("Can't open file2.");
-        ft_execute_cmd(av[3], pipefd[0], file, envp);
-    }
+		ft_execute_cmd(av[3], pipefd[0], file, envp);
+	}
+	close(pipefd[0]);
+	close(pipefd[1]);
 }
 
-void ft_parse(char **av, char **envp)
+void	ft_parse(char **av, char **envp)
 {
-	int pipefd[2];
-	pid_t pid1;
-	pid_t pid2;
-	
+	int		pipefd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+
 	if (pipe(pipefd) == -1)
 		msg_error("pipe");
 	pid1 = fork();
@@ -109,7 +111,7 @@ void ft_parse(char **av, char **envp)
 }
 
 int	main(int ac, char **av, char **envp)
-{	
+{
 	ft_error(ac, av);
 	ft_parse(av, envp);
 	return (0);

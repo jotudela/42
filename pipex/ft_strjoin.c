@@ -6,20 +6,20 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 22:55:59 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/04 10:05:14 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/06 11:09:00 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static size_t ft_strlen(const char *str)
+static size_t	ft_strlen(const char *str)
 {
-    size_t i;
+	size_t	i;
 
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 static size_t	total_len(char const *s1, char const *s2)
