@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/06 11:16:52 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:59:17 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*ft_find_cmd(char *cmd)
 	char	*temp;
 	int		i;
 
-	dirs = ft_split("/bin /usr/bin /usr/local/bin", ' ');
+	dirs = ft_split("/bin /usr/bin /usr/local/bin /opt/homebrew/bin"
+			" /opt/homebrew/sbin /usr/sbin /sbin", ' ');
 	i = 0;
 	while (dirs[i])
 	{
