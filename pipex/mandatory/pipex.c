@@ -6,13 +6,13 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/09 13:59:17 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/10 15:33:24 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_find_cmd(char *cmd)
+static char	*ft_find_cmd(char *cmd)
 {
 	char	**dirs;
 	char	*full_path;
@@ -39,7 +39,7 @@ char	*ft_find_cmd(char *cmd)
 	return (ft_cleartab(dirs), NULL);
 }
 
-void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
+static void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
 {
 	char	*path_cmd;
 	char	**cmd;
@@ -63,7 +63,7 @@ void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
 	ft_cleartab(cmd);
 }
 
-void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
+static void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
 {
 	int	file;
 
@@ -87,7 +87,7 @@ void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
 	close(pipefd[1]);
 }
 
-void	ft_parse(char **av, char **envp)
+static void	ft_parse(char **av, char **envp)
 {
 	int		pipefd[2];
 	pid_t	pid1;

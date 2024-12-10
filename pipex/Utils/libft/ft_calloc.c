@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 09:57:41 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/06 11:11:38 by jotudela         ###   ########.fr       */
+/*   Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#             */
+/*   Updated: 2024/11/07 10:22:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-static void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		((char *)b)[i] = c;
-		i++;
-	}
-	return (b);
-}
-
-static void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, 0, n);
-}
+#include "libft.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -43,17 +25,4 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ft_bzero(ptr, size * count);
 	return (ptr);
-}
-
-void	ft_cleartab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }

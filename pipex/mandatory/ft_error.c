@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:35:52 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/06 11:10:08 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:55:50 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@ void	msg_error(char *str)
 {
 	perror(str);
 	exit(EXIT_FAILURE);
+}
+
+void	ft_cleartab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 static char	**ft_alloc(char *command, char *file)

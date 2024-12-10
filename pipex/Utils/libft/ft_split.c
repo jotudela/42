@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 18:09:08 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/06 11:12:23 by jotudela         ###   ########.fr       */
+/*   Created: 2024/11/06 15:55:00 by jotudela          #+#    #+#             */
+/*   Updated: 2024/11/07 11:45:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
 static char	*ft_strncpy(char *dest, char const *src, size_t n)
 {

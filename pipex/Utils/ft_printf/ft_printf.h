@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 13:14:36 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/06 11:01:16 by jotudela         ###   ########.fr       */
+/*   Created: 2024/10/30 10:52:53 by jojo              #+#    #+#             */
+/*   Updated: 2024/11/18 15:21:14 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include <stdio.h>
-# include <stdlib.h>
+# define MIN -2147483648
+# define MAX 2147483647
+
+# include <stdarg.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <string.h>
-# include <errno.h>
-# include <stdint.h>
 
-char	**ft_split(const char *s, char c);
-char	*ft_strjoin(const char *s1, const char *s2);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_cleartab(char **tab);
-void	ft_error(int ac, char **av);
-void	msg_error(char *str);
+int	ft_printf(const char *format, ...);
+int	ft_putchar_fdp(char c, int fd);
+int	ft_putint_fd(int n, int fd);
+int	ft_putptr(void *ptr, int fd);
+int	ft_putstr_fdp(char *str, int fd);
+int	ft_putunsigned_fd(unsigned int num, int fd);
+int	ft_putnbr_hex(int num, int fd, char c);
 
 #endif
