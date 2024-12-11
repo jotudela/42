@@ -6,7 +6,7 @@
 #    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/12/10 15:36:01 by jojo             ###   ########.fr        #
+#    Updated: 2024/12/11 14:16:26 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 ### ARGUMENTS
 
 NAME		= pipex
+NAME_BONUS	= pipex_bonus
 CFLAGS		= -Wall -Wextra -Werror
 CC			= cc
 
@@ -24,6 +25,7 @@ UTILS				:= $(LIBFT_PATH)$(LIBFT_NAME)
 
 # Includes
 INC_MANDATORY		= -I ./mandatory
+INC_BONUS			= -I ./bonus
 
 ###################################################
 ## COLORS
@@ -39,7 +41,7 @@ BLUE				:= \033[94m
 ###################################################
 ### SOURCES
 
-# MANDATORY PART
+## MANDATORY PART
 
 # SRC
 SRC_FILES	= pipex \
@@ -50,41 +52,67 @@ SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 # OBJ
 OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 
+
+## BONUS PART
+
+# SRC
+SRC_FILES_B	= pipex_bonus \
+			  ft_error_bonus \
+			  here_doc_bonus
+SRC_DIR_B := bonus
+SRC_BONUS := $(addprefix $(SRC_DIR_B)/, $(addsuffix .c, $(SRC_FILES_B)))
+
+# OBJ
+OBJ_FILES_B	:= $(SRC_BONUS:$(SRC_DIR_B)/%.c=$(SRC_DIR_B)/%.o)
+
 ###################################################
 ## RULES
 
-# Compile tous les fichiers nécessaires
 all: $(UTILS) $(NAME)
 
-# Génère les fichiers objets
+bonus: $(UTILS) $(NAME_BONUS)
+
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
 
-# Compile la libft
+$(SRC_DIR_B)/%.o: $(SRC_DIR_B)/%.c
+	@$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
+
 $(UTILS):
 	@make -sC $(LIBFT_PATH)
 	@echo "\n\n-----------------------------------------------\n\n"
 
-# Compile l'exécutable pipex
 $(NAME): $(OBJ_FILES) $(UTILS)
 	@echo "$(BOLD)$(RED)🛠️      Compiling pipex    🛠️$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJ_FILES) $(UTILS) $(INC_MANDATORY) -o $(NAME)
 	@echo "$(BOLD)$(GREEN)🚀      Pipex fully compiled, ready to use       🚀$(RESET)"
 	@echo "\n$(BOLD)Usage: ./pipex file1 cmd1 cmd2 file2$(RESET)"
 
-# Nettoie les fichiers objets
+$(NAME_BONUS): $(OBJ_FILES_B) $(UTILS)
+	@echo "$(BOLD)$(RED)🛠️      Compiling pipex $(YELLOW)✨ BONUS ✨    🛠️$(RESET)"
+	@echo "\n"
+	@$(CC) $(CFLAGS) $(OBJ_FILES_B) $(UTILS) $(INC_BONUS) -o $(NAME_BONUS)
+	@echo "$(BOLD)🚀      $(GREEN)Pipex $(YELLOW)✨ BONUS ✨ $(GREEN)fully compiled, ready to use       🚀$(RESET)"
+	@echo ""
+	@echo "$(BOLD)		Usage Bonus : $(RESET)"
+	@echo ""
+	@echo "$(BOLD) $(YELLOW) ✨ BONUS 1 ✨ $(RESET) ./pipex_bonus  file1 cmd1 cmd2 cmd3 ... cmdn file2 $(RESET)"
+	@echo "$(BOLD) $(ORANGE) ✨ BONUS 2 ✨ $(RESET) ./pipex_bonus  here_doc LIMITER cmd cmd1 file $(RESET)"
+
 clean:
 	@make clean -sC $(LIBFT_PATH)
 	@rm -f $(OBJ_FILES)
+	@rm -f $(OBJ_FILES_B)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o pipex's files   🌀$(RESET)"
 
-# Nettoie tout, y compris l'exécutable
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)
 	@rm -f $(NAME)
+	@rm -f $(NAME_BONUS)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned pipex exec       🌀$(RESET)"
 
-# Recompile tout
 re: fclean all
 
-.PHONY: all clean fclean re
+rebonus: fclean bonus
+
+.PHONY: all clean fclean re rebonus
