@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:40:14 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/11 15:20:17 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/12 13:51:38 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	pre_gnl(void)
 	write(STDOUT_FILENO, "\033[0m", ft_strlen("\033[0m"));
 }
 
-static char	*get_doc(char **av)
+char	*get_doc(char **av)
 {
 	char	*str;
 	char	*tmp;
@@ -70,7 +70,7 @@ static char	*get_doc(char **av)
 	return (tmp);
 }
 
-static void	ft_stof(char *str)
+void	ft_stof(char *str)
 {
 	int	fd;
 

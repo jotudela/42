@@ -6,7 +6,7 @@
 #    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/12/11 14:16:26 by jojo             ###   ########.fr        #
+#    Updated: 2024/12/12 13:40:42 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,9 +56,16 @@ OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 ## BONUS PART
 
 # SRC
-SRC_FILES_B	= pipex_bonus \
-			  ft_error_bonus \
-			  here_doc_bonus
+SRC_FILES_B	= main \
+			pipex_bonus2 \
+			ft_error_here_doc_bonus \
+			here_doc_bonus \
+			ft_error_bonus \
+			ft_list_bonus \
+			ft_start_bonus \
+			ft_ultimate_parse_bonus \
+			pipex_bonus1
+
 SRC_DIR_B := bonus
 SRC_BONUS := $(addprefix $(SRC_DIR_B)/, $(addsuffix .c, $(SRC_FILES_B)))
 

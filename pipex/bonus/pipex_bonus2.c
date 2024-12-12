@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipex_bonus2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/11 15:10:36 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/12 14:00:49 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	*ft_find_cmd(char *cmd)
+char	*ft_find_cmdhd(char *cmd)
 {
 	char	**dirs;
 	char	*full_path;
@@ -39,7 +39,7 @@ char	*ft_find_cmd(char *cmd)
 	return (ft_cleartab(dirs), NULL);
 }
 
-static void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
+void	ft_execute_cmdhd(char *cmd_args, int in_fd, int out_fd, char **envp)
 {
 	char	*path_cmd;
 	char	**cmd;
@@ -51,7 +51,7 @@ static void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
 	cmd = ft_split(cmd_args, ' ');
 	if (!cmd)
 		msg_error("Erreur allocation commande.");
-	path_cmd = ft_find_cmd(cmd[0]);
+	path_cmd = ft_find_cmdhd(cmd[0]);
 	if (!path_cmd)
 	{
 		ft_cleartab(cmd);
@@ -63,7 +63,7 @@ static void	ft_execute_cmd(char *cmd_args, int in_fd, int out_fd, char **envp)
 	ft_cleartab(cmd);
 }
 
-static void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
+void	ft_right_commandhd(char **av, int pipefd[2], char **envp, int mod)
 {
 	int	file;
 
@@ -73,7 +73,7 @@ static void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
 		file = open("here_doc", O_RDONLY);
 		if (file == -1)
 			msg_error("Can't open here_doc");
-		ft_execute_cmd(av[3], file, pipefd[1], envp);
+		ft_execute_cmdhd(av[3], file, pipefd[1], envp);
 		close(file);
 	}
 	else if (mod == 2)
@@ -82,7 +82,7 @@ static void	ft_right_command(char **av, int pipefd[2], char **envp, int mod)
 		file = open(av[5], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (file == -1)
 			msg_error("Can't open file.");
-		ft_execute_cmd(av[4], pipefd[0], file, envp);
+		ft_execute_cmdhd(av[4], pipefd[0], file, envp);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
@@ -100,26 +100,14 @@ void	ft_parse(char **av, char **envp)
 	if (pid1 == -1)
 		msg_error("Pid1");
 	if (pid1 == 0)
-		ft_right_command(av, pipefd, envp, 1);
+		ft_right_commandhd(av, pipefd, envp, 1);
 	pid2 = fork();
 	if (pid2 == -1)
 		msg_error("Pid2");
 	if (pid2 == 0)
-		ft_right_command(av, pipefd, envp, 2);
+		ft_right_commandhd(av, pipefd, envp, 2);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	if (ft_strcmp(av[1], "here_doc") == 0 && ac == 6)
-	{
-		ft_error_here_doc(av);
-		here_doc(av);
-		ft_parse(av, envp);
-		unlink("here_doc");
-	}
-	return (0);
 }
