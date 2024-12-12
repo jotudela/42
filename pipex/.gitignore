@@ -53,22 +53,4 @@
 modules.order
 Module.symvers
 Mkfile.old
-dkms.co
-
-## Mix related
-Makefile.gen
-
-## Vim: Temporary files
-*~
-
-# Vim: Swap-files
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-
-#Others
-.DS_STORE
-.DS_Store
-
-# My Files
-.gitignore
-pipex
+dkms.conf
