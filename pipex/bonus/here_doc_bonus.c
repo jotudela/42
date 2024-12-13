@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:40:14 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/12 13:51:38 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/13 15:46:40 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,14 @@ void	ft_stof(char *str)
 
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
+	{
+		free(str);
 		msg_error("Error: can't open here_doc.");
+	}
 	if (write(fd, str, ft_strlen(str)) == -1)
 	{
 		close(fd);
+		free(str);
 		msg_error("Error: write failed.");
 	}
 	close(fd);

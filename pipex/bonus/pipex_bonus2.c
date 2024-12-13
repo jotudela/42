@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/13 09:52:53 by jotudela         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:39:24 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_execute_cmdhd(char *cmd_args, int in_fd, int out_fd, char **envp)
 	dup2(out_fd, STDOUT_FILENO);
 	close(in_fd);
 	close(out_fd);
+	unlink("here_doc");
 	cmd = ft_split(cmd_args, ' ');
 	if (!cmd)
 		msg_error("Erreur allocation commande.");
@@ -74,7 +75,6 @@ void	ft_right_commandhd(char **av, int pipefd[2], char **envp, int mod)
 		if (file == -1)
 			msg_error("Can't open here_doc");
 		ft_execute_cmdhd(av[3], file, pipefd[1], envp);
-		close(file);
 	}
 	else if (mod == 2)
 	{
