@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:14:36 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/12 13:59:19 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/13 09:42:40 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void	ft_error_here_doc(char **av);
 char	**ft_alloc(char *command, char *file);
 void	ft_cleartab(char **tab);
 void	msg_error(char *str);
+void	ft_close(void);
 
 #endif

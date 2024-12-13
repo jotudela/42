@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/12 14:00:49 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/13 09:52:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_parse(char **av, char **envp)
 		ft_right_commandhd(av, pipefd, envp, 2);
 	close(pipefd[0]);
 	close(pipefd[1]);
+	ft_close();
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 }

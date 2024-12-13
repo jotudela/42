@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2024/12/12 13:40:42 by jojo             ###   ########.fr        #
+#    Updated: 2024/12/13 09:55:49 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRC_FILES_B	= main \
 			ft_list_bonus \
 			ft_start_bonus \
 			ft_ultimate_parse_bonus \
-			pipex_bonus1
+			pipex_bonus1 \
+			ft_close_bonus
 
 SRC_DIR_B := bonus
 SRC_BONUS := $(addprefix $(SRC_DIR_B)/, $(addsuffix .c, $(SRC_FILES_B)))

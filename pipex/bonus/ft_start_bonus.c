@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:38:47 by jojo              #+#    #+#             */
-/*   Updated: 2024/12/12 12:40:02 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/13 09:47:41 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_execute_cmd(t_args **li, int in_fd, int out_fd)
 	dup2(out_fd, STDOUT_FILENO);
 	close(in_fd);
 	close(out_fd);
+	ft_close();
 	if (execve((*li)->path, (*li)->args, (*li)->env) == -1)
 	{
 		ft_lstclear(li);
@@ -72,5 +73,6 @@ void	ft_start(t_args *li)
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
+	ft_close();
 	waitpid(pid, NULL, 0);
 }

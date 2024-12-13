@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipex_bonus1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:10:48 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/12 12:39:51 by jojo             ###   ########.fr       */
+/*   Updated: 2024/12/13 09:53:06 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void	ft_right_command(t_args *li, int file)
 		child_process_handler(pipefd[0], file, li);
 	close(pipefd[0]);
 	close(file);
+	ft_close();
 	waitpid(-1, NULL, 0);
 }
