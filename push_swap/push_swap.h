@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:09 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 11:20:58 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:22:50 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,13 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstlast(t_list *lst);
 void	msg_error(char *str);
 void	ft_verif(int ac, char **av);
+
+/* ------------------------------------------------------------ */
+
+void    sa(int e1, int e2, t_list **a);
+void    sb(int e1, int e2, t_list **b);
+void    ss(t_list **a, t_list **b);
+void	pa(t_list **a, t_list *b);
+void	pb(t_list *a, t_list **b);
 
 #endif

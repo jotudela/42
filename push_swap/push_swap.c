@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 11:34:40 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:52:45 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,22 @@ void	ft_veriflst(t_list **li)
 	}
 }
 
-t_list	*ft_initlist(int ac, char **av)
+t_list	*ft_initlist(int ac, char **av, int mod)
 {
 	t_list	*li;
 	int		i;
 
-	li = ft_lstnew(ft_atoi(av[1]));
+	if (mod == 1)
+	{
+		li = ft_lstnew(ft_atoi(av[1]));
+		i = 2;
+	}
+	else
+	{
+		li = ft_lstnew(ft_atoi(av[0]));
+		i = 1;
+	}
 	ft_veriflst(&li);
-	i = 2;
 	while (i < ac)
 	{
 		ft_lstadd_back(&li, ft_lstnew(ft_atoi(av[i])));
@@ -40,18 +48,23 @@ t_list	*ft_initlist(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_list	*li;
-	t_list	*tmp;
-	
+	t_list	*a;
+	t_list	*b;
+	char	**tab;
+
 	if (ac < 2)
 		exit(EXIT_FAILURE);
-	ft_verif(ac, av);
-	li = ft_initlist(ac, av);
-	tmp = li;
-	while (tmp)
+	if (ac == 2)
 	{
-		ft_printf("%i\n", tmp->value);
-		tmp = tmp->next;
+		tab = ft_split(av[1], ' ');
+		a = ft_initlist(ac, tab, 2);
 	}
-	ft_lstclear(&li);
+	a = ft_initlist(ac, av, 1);
+	while (a)
+	{
+		ft_printf("%i\n", a->value);
+		a = a->next;
+	}
+	free(tab);
+	ft_lstclear(&a);
 }
