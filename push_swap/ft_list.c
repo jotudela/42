@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/17 15:46:45 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/06 11:27:54 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*ft_lstnew(int new_value)
 		return (NULL);
 	li->value = new_value;
 	li->next = NULL;
+	li->prev = NULL;
 	return (li);
 }
 
@@ -41,6 +42,8 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	if (!lst || !new)
 		return ;
 	new->next = *lst;
+	if (*lst)
+		(*lst)->prev = new;
 	*lst = new;
 }
 
@@ -54,7 +57,10 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (!li)
 		*lst = new;
 	else
+	{
 		li->next = new;
+		new->prev = li;
+	}
 }
 
 t_list	*ft_lstlast(t_list *lst)

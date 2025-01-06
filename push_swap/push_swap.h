@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:09 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/17 15:46:39 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/06 11:20:58 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	s_list
 {
 	int			value;
 	struct s_list	*next;
+	struct s_list	*prev;
 }			t_list;
 
 t_list	*ft_lstnew(int new_value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2024/12/17 16:01:09 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/06 11:34:40 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,17 @@ t_list	*ft_initlist(int ac, char **av)
 int	main(int ac, char **av)
 {
 	t_list	*li;
+	t_list	*tmp;
+	
 	if (ac < 2)
 		exit(EXIT_FAILURE);
 	ft_verif(ac, av);
 	li = ft_initlist(ac, av);
-	while (li)
+	tmp = li;
+	while (tmp)
 	{
-		ft_printf("%i\n", li->value);
-		li = li->next;
+		ft_printf("%i\n", tmp->value);
+		tmp = tmp->next;
 	}
 	ft_lstclear(&li);
 }
