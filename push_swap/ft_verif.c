@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_verif.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:00:05 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/06 10:17:11 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:25:18 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int		ft_outlen(char *str)
 	return (0);
 }
 
-int ft_double(int ac, char **av)
+int ft_double(int ac, char **av, int mod)
 {
     int i;
     int j;
     int tmp1;
     int tmp2;
 
-    i = 1;
+    i = mod;
     while (i < ac)
     {
         tmp1 = ft_atoi(av[i]);
@@ -57,12 +57,12 @@ int ft_double(int ac, char **av)
     return (0);
 }
 
-void	ft_verif(int ac, char **av)
+void	ft_verif(int ac, char **av, int mod)
 {
 	int	i;
 	int	j;
 
-	i = 1;
+	i = mod;
 	while (av[i])
 	{
 		j = 0;
@@ -78,6 +78,6 @@ void	ft_verif(int ac, char **av)
 		}
 		i++;
 	}
-	if (ft_double(ac, av) == 1)
+	if (ft_double(ac, av, mod) == 1)
 		msg_error("Error\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 14:52:45 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:26:24 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ void	ft_veriflst(t_list **li)
 		ft_lstclear(li);
 		msg_error("Error\n");
 	}
+}
+
+int	tab_len(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
 
 t_list	*ft_initlist(int ac, char **av, int mod)
@@ -35,6 +45,7 @@ t_list	*ft_initlist(int ac, char **av, int mod)
 	{
 		li = ft_lstnew(ft_atoi(av[0]));
 		i = 1;
+		ac = tab_len(av);
 	}
 	ft_veriflst(&li);
 	while (i < ac)
@@ -44,6 +55,19 @@ t_list	*ft_initlist(int ac, char **av, int mod)
 		i++;
 	}
 	return (li);
+}
+
+void	freetab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 int	main(int ac, char **av)
@@ -57,14 +81,19 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		tab = ft_split(av[1], ' ');
+		ft_verif(tab_len(tab), tab, 0);
 		a = ft_initlist(ac, tab, 2);
+		freetab(tab);
 	}
-	a = ft_initlist(ac, av, 1);
+	else
+	{
+		a = ft_initlist(ac, av, 1);
+		ft_verif(ac, av, 1);
+	}
 	while (a)
 	{
 		ft_printf("%i\n", a->value);
 		a = a->next;
 	}
-	free(tab);
 	ft_lstclear(&a);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:09 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 14:22:50 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:20:28 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstlast(t_list *lst);
 void	msg_error(char *str);
-void	ft_verif(int ac, char **av);
+void	ft_verif(int ac, char **av, int mod);
 
 /* ------------------------------------------------------------ */
 
