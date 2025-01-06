@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 16:26:24 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/06 16:43:06 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int ac, char **av)
 	t_list	*b;
 	char	**tab;
 
-	if (ac < 2)
+	if (ac < 2 || (ac == 2 && ft_strlen(av[1]) == 0))
 		exit(EXIT_FAILURE);
 	if (ac == 2)
 	{
@@ -89,11 +89,6 @@ int	main(int ac, char **av)
 	{
 		a = ft_initlist(ac, av, 1);
 		ft_verif(ac, av, 1);
-	}
-	while (a)
-	{
-		ft_printf("%i\n", a->value);
-		a = a->next;
 	}
 	ft_lstclear(&a);
 }
