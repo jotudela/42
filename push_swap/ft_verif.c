@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_verif.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:00:05 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/06 16:25:18 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/07 09:41:52 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,20 @@ void	ft_verif(int ac, char **av, int mod)
 	}
 	if (ft_double(ac, av, mod) == 1)
 		msg_error("Error\n");
+}
+
+int	is_ok(t_list *a)
+{
+	int	tmp;
+
+	if (!a)
+		return (0);
+	while (a->next)
+	{
+		tmp = a->value;
+		if (tmp > a->next->value)
+			return (1);
+		a = a->next;
+	}
+	return (0);
 }

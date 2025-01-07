@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 16:43:06 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/07 09:54:30 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_veriflst(t_list **li)
 {
-	if (!(*li) || !(*li)->value)
+	if (!(*li))
 	{
 		ft_lstclear(li);
 		msg_error("Error\n");
