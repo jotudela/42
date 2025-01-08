@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/08 14:52:04 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/08 15:06:16 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,5 @@ fclean: clean
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned push_swap exec       🌀$(RESET)"
 
 re: fclean all
-
-rebonus: fclean bonus
 
 .PHONY: all clean fclean re
