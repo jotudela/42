@@ -6,11 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:00:05 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/07 09:41:52 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/08 14:54:11 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 
 void	msg_error(char *str)
 {

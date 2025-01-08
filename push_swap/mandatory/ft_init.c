@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/07 11:12:09 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/08 14:53:51 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 
 void	ft_veriflst(t_list **li)
 {
@@ -70,10 +70,9 @@ void	freetab(char **tab)
 	free(tab);
 }
 
-int	main(int ac, char **av)
+t_list	*ft_init(int ac, char **av)
 {
 	t_list	*a;
-	t_list	*b;
 	char	**tab;
 
 	if (ac < 2 || (ac == 2 && ft_strlen(av[1]) == 0))
@@ -90,5 +89,5 @@ int	main(int ac, char **av)
 		a = ft_initlist(ac, av, 1);
 		ft_verif(ac, av, 1);
 	}
-	ft_lstclear(&a);
+	return (a);
 }

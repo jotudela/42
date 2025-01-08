@@ -6,11 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 11:27:54 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/08 14:54:02 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../inc/push_swap.h"
 
 t_list	*ft_lstnew(int new_value)
 {

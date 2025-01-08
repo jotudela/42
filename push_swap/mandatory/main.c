@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sa.c                                               :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 13:36:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/06 14:25:57 by jotudela         ###   ########.fr       */
+/*   Created: 2025/01/08 14:13:07 by jotudela          #+#    #+#             */
+/*   Updated: 2025/01/08 15:02:36 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../inc/push_swap.h"
 
-int lst_len(t_list **a)
+int main(int ac, char **av)
 {
-    int i;
+    t_list *a = ft_init(ac, av);
 
-    i = 0;
-    while (a)
-    {
-        i++;
-        a = a->next;
-    }
-    return (i);
-}
+    ft_printlst(a);
+    ft_lstclear(&a);
 
-void    sa(int e1, int e2, t_list **a)
-{
-    int  tmp;
-    if (!a || lst_len(&a) == 1)
-        return ;
-    tmp = e1;
-    e1 = e2;
-    e2 = tmp;
+    return (0);
 }
