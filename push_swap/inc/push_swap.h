@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:09 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/08 14:56:25 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/09 14:00:37 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct	s_list
 {
 	int			value;
+	int			index;
 	struct s_list	*next;
 	struct s_list	*prev;
 }			t_list;
@@ -42,6 +43,8 @@ int		is_ok(t_list *a);
 
 /* ------------------------------------------------------------ */
 
+void radix_sort(t_list **a, t_list **b);
+void assign_index(t_list *stack);
 void	push(t_list **from, t_list **to);
 void	pa(t_list **a, t_list **b);
 void	pb(t_list **a, t_list **b);

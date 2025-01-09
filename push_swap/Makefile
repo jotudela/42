@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/08 15:06:16 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/09 09:23:01 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ BLUE				:= \033[94m
 
 # SRC
 SRC_FILES	= main \
+			push_swap \
 			ft_init \
 			ft_verif \
 			ft_list \

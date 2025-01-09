@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/08 14:54:02 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:58:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_list	*ft_lstnew(int new_value)
 	if (!li)
 		return (NULL);
 	li->value = new_value;
+	li->index = 0;
 	li->next = NULL;
 	li->prev = NULL;
 	return (li);
