@@ -6,7 +6,7 @@
 #    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/13 14:26:53 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/13 14:55:59 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,28 +95,28 @@ fclean: clean
 
 re: fclean all
 
-test2:				$(NAME)
+test2:
 					$(eval ARG = $(shell seq -1000 1000 | shuf -n 2))
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
 					@sed 's/^/\t/' output.txt
 					@rm output.txt
 
-test3:				$(NAME)
+test3:
 					$(eval ARG = $(shell seq -1000 1000 | shuf -n 3))
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
 					@sed 's/^/\t/' output.txt
 					@rm output.txt
 
-test5:				$(NAME)
+test5:
 					$(eval ARG = $(shell seq -1000 1000 | shuf -n 5))
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
 					@sed 's/^/\t/' output.txt
 					@rm output.txt
 
-test100:			$(NAME)
+test100:
 					$(eval ARG = $(shell seq -1000 1000 | shuf -n 100))
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
@@ -124,7 +124,7 @@ test100:			$(NAME)
 					@rm output.txt
 
 
-test500:			$(NAME)
+test500:
 					$(eval ARG = $(shell seq -1000 1000 | shuf -n 500))
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
@@ -132,7 +132,7 @@ test500:			$(NAME)
 					@rm output.txt
 
 
-testdouble:			$(NAME)
+testdouble:
 					$(eval ARG = "1 2 3 4 5 5")
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
@@ -140,7 +140,7 @@ testdouble:			$(NAME)
 					@rm output.txt
 
 
-testint1:			$(NAME)
+testint1:
 					$(eval ARG = "1 deux 3 4 cinq 5")
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
@@ -148,7 +148,7 @@ testint1:			$(NAME)
 					@rm output.txt
 
 
-testint2:			$(NAME)
+testint2:
 					$(eval ARG = "0 1 2 -2147483649")
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
@@ -156,7 +156,7 @@ testint2:			$(NAME)
 					@rm output.txt
 
 
-testint3:			$(NAME)
+testint3:
 					$(eval ARG = "0 1 2 2147483648")
 					@valgrind --leak-check=full --show-leak-kinds=all ./push_swap $(ARG) | wc -l > output.txt
 					@echo "Instructions: "
