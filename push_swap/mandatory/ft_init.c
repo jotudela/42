@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:20:01 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/08 16:19:21 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:24:48 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,19 @@ t_list	*ft_init(int ac, char **av)
 	if (ac == 2)
 	{
 		tab = ft_split(av[1], ' ');
-		ft_verif(tab_len(tab), tab, 0);
+		if (ft_verif(tab_len(tab), tab, 0) == 1)
+		{
+			freetab(tab);
+			msg_error("Error\n");
+		}
 		a = ft_initlist(ac, tab, 2);
 		freetab(tab);
 	}
 	else
 	{
+		if (ft_verif(ac, av, 1) == 1)
+			msg_error("Error\n");
 		a = ft_initlist(ac, av, 1);
-		ft_verif(ac, av, 1);
 	}
 	return (a);
 }
