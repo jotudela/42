@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/13 11:27:19 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:43:17 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstnew(int new_value)
 {
 	t_list	*li;
 
-	li = malloc(sizeof(*li));
+	li = ft_calloc(sizeof(*li), 1);
 	if (!li)
 		return (NULL);
 	li->value = new_value;
