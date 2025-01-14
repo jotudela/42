@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 16:05:38 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:20:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,20 @@ void	print_map(t_map *map)
 static void	print_error(int type_error)
 {
 	if (type_error == 1)
-		write(2, "Error\nThe map is not rectangular !", 34);
+		write(2, "Error\nThe file is not on format .ber !", 39);
 	else if (type_error == 2)
-		write(2, "Error\nThere are no item !", 26);
-	else if (type_error == 22)
-		write(2, "Error\nThere are no exit !", 26);
-	else if (type_error == 23)
-		write(2, "Error\nThere are no player !", 28);
+		write(2, "Error\nThe map is not rectangular !", 34);
 	else if (type_error == 3)
-		write(2, "Error\nThe outline is not valid !", 33);
+		write(2, "Error\nThere are no item !", 26);
+	else if (type_error == 32)
+		write(2, "Error\nThere are no exit !", 26);
+	else if (type_error == 33)
+		write(2, "Error\nThere are no player !", 28);
 	else if (type_error == 4)
-		write(2, "Error\nThere is a character invalid !", 37);
+		write(2, "Error\nThe outline is not valid !", 33);
 	else if (type_error == 5)
+		write(2, "Error\nThere is a character invalid !", 37);
+	else if (type_error == 6)
 		write(2, "Error\nThere is a line who has not a good size !", 48);
 }
 
@@ -47,6 +49,8 @@ int	main(int ac, char **av)
 	t_map	*map;
 	t_control	*su;
 	
+	if (ft_strnstr(av[1], ".ber", ft_strlen(av[1])) == NULL)
+		return (print_error(1), 0);
 	map = ft_init(av[1]);
 	if (!map)
 		return (0);

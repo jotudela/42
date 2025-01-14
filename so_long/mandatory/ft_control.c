@@ -6,14 +6,15 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 13:32:56 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 16:16:21 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:23:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
 /*
-    On doit verifier si la map est un rectanle, 'OK'
+    On doit verifier si le fichier est au format .ber, 'OK'
+    si la map est un rectanle, 'OK'
     si la map contient une seule sortie, au moins un item, et une seule position de depart, 'OK'
     si la map est bien entoure et ferne par des murs, 'OK'
     si il y a pas de caractere inconnue, 'OK'
@@ -56,7 +57,7 @@ static int  is_rectangle(t_map *map, t_control *su)
     su->y = ft_lstlen(map);
     if (su->x == su->y)
     {
-        su->type_error = 1;
+        su->type_error = 2;
         return (1);
     }
     return (0);
@@ -73,17 +74,17 @@ static int  is_CEP(t_map *map, t_control *su)
     }
     if (su->item == 0)
     {
-        su->type_error = 2;
+        su->type_error = 3;
         return (1);
     }
     else if (su->exit != 1)
     {
-        su->type_error = 22;
+        su->type_error = 32;
         return (1);
     }
     else if (su->player != 1)
     {
-        su->type_error = 23;
+        su->type_error = 33;
         return (1);
     }
     return (0);
@@ -100,7 +101,7 @@ static int  char_is_invalid(t_map *map, t_control *su)
         {
             if (map->line[i] != '0' && map->line[i] != '1' && map->line[i] != 'C' && map->line[i] != 'E' && map->line[i] != 'P')
             {
-                su->type_error = 4;
+                su->type_error = 5;
                 return (1);
             }
             i++;
@@ -119,7 +120,7 @@ static int  good_outline2(t_map *map, t_control *su)
     {
         if (map->line[i] != '1')
         {
-            su->type_error = 3;
+            su->type_error = 4;
             return (1);
         }
         i++;
@@ -135,7 +136,7 @@ static int  good_outline(t_map *map, t_control *su)
     {
         if (map->line[0] != '1' || map->line[ft_strlen(map->line) - 2] != '1')
         {
-            su->type_error = 3;
+            su->type_error = 4;
             return (1);
         }
         map = map->next;
@@ -154,7 +155,7 @@ static int  good_len_line(t_map *map, t_control *su)
     {
         if (tmp != map->len_line)
         {
-            su->type_error = 5;
+            su->type_error = 6;
             return (1);
         }
         map = map->next;
