@@ -70,3 +70,6 @@ Makefile.gen
 .DS_Store
 
 # My Files
+minilibx-linux
+a.out
+so_long
