@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:04:23 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 12:00:01 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:49:47 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,37 @@ static void	ft_veriflst(t_map **li)
 {
 	if (!(*li) || !li)
 	{
-		ft_lstclear(li);
+		ft_mapclear(li);
         ft_closefds();
 		ft_printf("Error\n");
         exit(EXIT_FAILURE);
+	}
+}
+
+void	ft_update(t_map *map)
+{
+	int	i;
+
+	if (!map)
+		return ;
+	while (map)
+	{
+		i = 0;
+		while (i < map->len_line && map->line[i])
+		{
+			if (map->line[i] == '0')
+				map->empty += 1;
+			else if (map->line[i] == '1')
+				map->wall += 1;
+			else if (map->line[i] == 'C')
+				map->item += 1;
+			else if (map->line[i] == 'E')
+				map->exit += 1;
+			else if (map->line[i] == 'P')
+				map->player += 1;
+			i++;
+		}
+		map = map->next;
 	}
 }
 

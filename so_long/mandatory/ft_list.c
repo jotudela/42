@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 11:03:20 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:45:22 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ t_map	*ft_lstnew(char *new_line, int len)
 		return (NULL);
 	li->line = ft_strdup(new_line);
 	li->len_line = len;
-	li->vide = -1;
-	li->wall = -1;
-	li->item = -1;
-	li->exit = -1;
-	li->player = -1;
+	li->empty = 0;
+	li->wall = 0;
+	li->item = 0;
+	li->exit = 0;
+	li->player = 0;
 	li->next = NULL;
 	return (li);
 }
 
-void	ft_lstclear(t_map **lst)
+void	ft_mapclear(t_map **lst)
 {
 	t_map	*tmp;
 
