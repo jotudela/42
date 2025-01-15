@@ -6,23 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/15 14:25:11 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:32:28 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
-
-void	print_map(t_map *map)
-{
-	while (map)
-	{
-		ft_printf("%s", map->line);
-		ft_printf("empty:%i\nwall:%i\nitem:%i\nexit:%i\nplayer:%i", map->empty, map->wall, map->item, map->exit, map->player);
-		if (map->next != NULL)
-			ft_printf("\n\n");
-		map = map->next;
-	}
-}
 
 static void	print_error(int type_error)
 {

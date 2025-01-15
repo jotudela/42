@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/15 15:24:12 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:07:27 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../Utils/libft/libft.h"
 # include "../Utils/ft_printf/ft_printf.h"
 # include "../Utils/get_next_line/get_next_line_bonus.h"
-# include <stdbool.h>
 
 /* Toutes les structures */
 
