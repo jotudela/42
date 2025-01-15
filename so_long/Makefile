@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/15 16:34:31 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/15 16:42:39 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,8 @@ SRC_FILES	= main \
 			check/good_len_line \
 			check/good_outline \
 			check/is_CEP \
-			check/is_rectangle
+			check/is_rectangle \
+			game/so_long
 
 SRC_DIR := mandatory
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))

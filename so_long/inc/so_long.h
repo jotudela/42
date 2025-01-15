@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/15 16:25:48 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:28:35 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../Utils/ft_printf/ft_printf.h"
 # include "../Utils/get_next_line/get_next_line_bonus.h"
 # include "../minilibx-linux/mlx.h"
+# include <X11/keysym.h>
 
 /* Toutes les structures */
 
@@ -42,6 +43,15 @@ typedef struct s_control
 	int		player;
 	int		type_error;
 }			t_control;
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		len_line;
+	int		endian;
+}			t_data;
 
 /* Tout les prototypes */
 
@@ -74,5 +84,9 @@ int		char_is_invalid(t_map *map, t_control *su);
 int		good_outline(t_map *map, t_control *su);
 int		good_len_line(t_map *map, t_control *su);
 int		path_valid(t_map *map, t_control *su);
+
+/* Prototypes for game */
+
+void    so_long(void);
 
 #endif
