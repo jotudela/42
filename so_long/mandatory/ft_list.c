@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 14:45:22 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:47:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_map	*ft_lstnew(char *new_line, int len)
 	li->item = 0;
 	li->exit = 0;
 	li->player = 0;
+	li->target = '0';
 	li->next = NULL;
 	return (li);
 }

@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 14:47:48 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:24:12 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../Utils/libft/libft.h"
 # include "../Utils/ft_printf/ft_printf.h"
 # include "../Utils/get_next_line/get_next_line_bonus.h"
+# include <stdbool.h>
 
 /* Toutes les structures */
 
@@ -28,6 +29,7 @@ typedef struct s_map
 	int		item;
 	int		exit;
 	int		player;
+	char	target;
 	struct s_map	*next;
 }			t_map;
 
@@ -52,7 +54,7 @@ void	ft_lstadd_back(t_map **lst, t_map *new);
 t_map	*ft_lstlast(t_map *lst);
 t_map   *ft_init(char *file);
 t_control   *new_su(void);
-int		ft_control(t_map *map, t_control *su);
+
 void	ft_suclear(t_control **su);
 
 /* Prototypes for Utils */
@@ -62,5 +64,15 @@ void    ft_closefds(void);
 /* Prototypes for Update */
 
 void	ft_update(t_map *map);
+
+/* Prototypes for check */
+
+int		ft_control(t_map *map, t_control *su);
+int		is_rectangle(t_map *map, t_control *su);
+int		is_CEP(t_map *map, t_control *su);
+int		char_is_invalid(t_map *map, t_control *su);
+int		good_outline(t_map *map, t_control *su);
+int		good_len_line(t_map *map, t_control *su);
+int		path_valid(t_map *map, t_control *su);
 
 #endif

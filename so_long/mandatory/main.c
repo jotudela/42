@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 17:20:49 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:25:11 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	print_map(t_map *map)
 
 static void	print_error(int type_error)
 {
+	if (type_error == 0)
+		write(2, "Error\nThe number of arguments is invalid !", 43);
 	if (type_error == 1)
 		write(2, "Error\nThe file is not on format .ber !", 39);
 	else if (type_error == 2)
@@ -42,6 +44,24 @@ static void	print_error(int type_error)
 		write(2, "Error\nThere is a character invalid !", 37);
 	else if (type_error == 6)
 		write(2, "Error\nThere is a line who has not a good size !", 48);
+	else if (type_error == 7)
+		write(2, "Error\nThe game can't be win !", 30);
+}
+
+int	ft_good_format(char *file)
+{
+	int	i;
+
+	i = ft_strlen(file) - 1;
+	if (file[i] != 'r')
+		return (1);
+	if (file[i - 1] != 'e')
+		return (1);
+	if (file[i - 2] != 'b')
+		return (1);
+	if (file[i - 3] != '.')
+		return (1);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -49,7 +69,9 @@ int	main(int ac, char **av)
 	t_map	*map;
 	t_control	*su;
 	
-	if (ft_strnstr(av[1], ".ber", ft_strlen(av[1])) == NULL)
+	if (ac != 2)
+		return (print_error(0), 0);
+	if (ft_good_format(av[1]) == 1)
 		return (print_error(1), 0);
 	map = ft_init(av[1]);
 	if (!map)
@@ -65,6 +87,7 @@ int	main(int ac, char **av)
 		ft_suclear(&su);
 		exit(EXIT_FAILURE);
 	}
+	//so_long(map);
 	ft_mapclear(&map);
 	ft_suclear(&su);
 }
