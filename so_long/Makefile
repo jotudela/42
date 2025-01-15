@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/15 16:06:45 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/15 16:34:31 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 ### ARGUMENTS
 
 NAME		= so_long
-CFLAGS		= -Wall -Wextra -Werror #-lmlx -lXext -lX11
+CFLAGS		= -Wall -Wextra -Werror
 CC			= cc
 
 # Libft
@@ -23,12 +23,13 @@ LIBFT_PATH			:= Utils/
 UTILS				:= $(LIBFT_PATH)$(LIBFT_NAME)
 
 # MLX
-#MLX_NAME			:= libmlx.a
-#MLX_PATH			:= minilibx-linux/
-#MLX					:= $(MLX_PATH)$(MLX_NAME)
+MLX_NAME			:= libmlx.a
+MLX_PATH			:= minilibx-linux/
+MLX					:= $(MLX_PATH)$(MLX_NAME)
 
 # Includes
-INC_MANDATORY		= -I inc/# -I minilibx-linux/
+INC_MANDATORY		= -I ./inc/\
+					-I ./minilibx-linux/
 
 ###################################################
 ## COLORS
@@ -67,31 +68,41 @@ OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 ###################################################
 ## RULES
 
-all: $(UTILS) $(NAME)
+all: $(MLX) $(UTILS) $(NAME)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
 
 $(UTILS):
 	@make -sC $(LIBFT_PATH)
-	@echo "\n\n-----------------------------------------------\n\n"
+	@echo "\n\n$(BOLD)$(BLUE)-----------------------------------------------\n\n$(RESET)"
 
-$(NAME): $(OBJ_FILES) $(UTILS)
+$(MLX):
+	@echo "$(BOLD)$(RED)🛠️      Compiling MiniLibX      🛠️$(RESET)"
+	@echo "\n"	
+	@make all -sC $(MLX_PATH)
+	@echo "\n"	
+	@echo "$(BOLD)$(GREEN)😎     MiniLibX Compiled    😎$(RESET)"
+	@echo "\n"
+	@echo "$(BOLD)$(BLUE)-----------------------------------------------$(RESET)"
+	@echo "\n"
+
+$(NAME): $(MLX) $(UTILS) $(OBJ_FILES)
 	@echo "$(BOLD)$(RED)🛠️      Compiling so_long    🛠️$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) $(UTILS) $(INC_MANDATORY) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(MLX) $(UTILS) $(INC_MANDATORY) -lXext -lX11 -lm -lz -o $(NAME)
 	@echo "$(BOLD)$(GREEN)🚀      So_long fully compiled, ready to use       🚀$(RESET)"
 	@echo "\n$(BOLD)Usage: ./so_long maps/map.ber$(RESET)"
 
 clean:
 	@make clean -sC $(LIBFT_PATH)
 	@rm -f $(OBJ_FILES)
-	@rm -f $(OBJ_FILES_B)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o so_long's files   🌀$(RESET)"
+	@make clean -sC $(MLX_PATH)
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
 
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)
 	@rm -f $(NAME)
-	@rm -f $(NAME_BONUS)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned so_long exec       🌀$(RESET)"
 
 re: fclean all
