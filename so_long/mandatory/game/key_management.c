@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_rectangle.c                                     :+:      :+:    :+:   */
+/*   key_management.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 15:13:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/16 17:08:56 by jotudela         ###   ########.fr       */
+/*   Created: 2025/01/16 14:27:31 by jotudela          #+#    #+#             */
+/*   Updated: 2025/01/16 14:28:13 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/so_long.h"
 
-int  ft_lstlen(t_map *map)
+int Key_press(int keycode, t_data *data)
 {
-    int i;
-
-    i = 0;
-    while (map)
+    if (keycode == XK_Escape)
     {
-        ++i;
-        map = map->next;
+        ft_printf("ESCAPE\n");
+        close_win(data);
     }
-    return (i);
-}
-
-int is_rectangle(t_map *map, t_control *su)
-{
-    su->x = map->len_line;
-    su->y = ft_lstlen(map);
-    if (su->x == su->y)
-    {
-        su->type_error = 2;
-        return (1);
-    }
+    else if (keycode == 97)
+        ft_printf("A\n");
+    else if (keycode == 100)
+        ft_printf("D\n");
+    else if (keycode == 115)
+        ft_printf("S\n");
+    else if (keycode == 119)
+        ft_printf("W\n");
     return (0);
 }

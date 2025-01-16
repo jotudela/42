@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/16 11:11:59 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:35:57 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@
 # include "../Utils/get_next_line/get_next_line_bonus.h"
 # include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
+
+/* Defines */
+
+# define WALL "textures/wall.xpm"
+# define TREE "textures/tree.xpm"
+# define FLOOR "textures/floor.xpm"
+# define LINK "textures/link.xpm"
+# define TRIFORCE "textures/triforce.xpm"
+# define EXIT1 "../../textures/exit1.xpm"
+# define EXIT2 "../../textures/exit2.xpm"
 
 /* Toutes les structures */
 
@@ -47,8 +57,14 @@ typedef struct s_control
 typedef struct s_image
 {
 	void	*wall;
-	int		img_x;
-	int		img_y;
+	void	*tree;
+	char	*floor;
+	int		*link;
+	int		*triforce;
+	int		*exit1;
+	int		*exit2;
+	int		x;
+	int		y;
 }			t_image;
 
 typedef struct s_data
@@ -85,6 +101,7 @@ void	ft_update(t_map *map);
 
 int		ft_control(t_map *map, t_control *su);
 int		is_rectangle(t_map *map, t_control *su);
+int		ft_lstlen(t_map *map);
 int		is_CEP(t_map *map, t_control *su);
 int		char_is_invalid(t_map *map, t_control *su);
 int		good_outline(t_map *map, t_control *su);
@@ -95,5 +112,12 @@ int		path_valid(t_map *map, t_control *su);
 
 void	game(t_map **map, t_control *su);
 void    so_long(t_map **map);
+int		generate_textures(t_data *data);
+int		Key_press(int keycode, t_data *data);
+int		close_cross(t_data *data);
+int		close_win(t_data *data);
+void	print_image(t_data *data, void *img, int x, int y);
+int		generate_textures(t_data *data);
+void	print_map(t_data *data, t_map *map);
 
 #endif

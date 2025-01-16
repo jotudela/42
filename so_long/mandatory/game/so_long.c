@@ -6,33 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:38:41 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/16 11:13:37 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:46:34 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/so_long.h"
-
-int	close_win(t_data *data)
-{
-	mlx_destroy_window(data->mlx, data->win);
-    mlx_destroy_display(data->mlx);
-    free(data->mlx);
-    ft_mapclear(data->map);
-    exit(0);
-}
-
-int Key_press(int keysym, t_data *data)
-{
-    if (keysym == XK_Escape)
-        close_win(data);
-    return (0);
-}
-
-int	close_cross(t_data *data)
-{
-	close_win(data);
-	return (0);
-}
 
 void    so_long(t_map **map)
 {
@@ -40,7 +18,23 @@ void    so_long(t_map **map)
     
     data.map = map;
     data.mlx = mlx_init();
+    if (!data.mlx)
+    {
+        ft_printf("MLX init failed !\n");
+        return ft_mapclear(map);
+    }
+    if (generate_textures(&data) == 1)
+    {
+        ft_printf("Textures failed !\n");
+        return ft_mapclear(map), mlx_destroy_display(data.mlx), free(data.mlx);
+    }
     data.win = mlx_new_window(data.mlx, 1920, 1080, "so_long");
+    if (!data.win)
+    {
+        ft_printf("Window failed !\n");
+        return ft_mapclear(map), mlx_destroy_display(data.mlx), free(data.mlx);
+    }
+    print_map(&data, *data.map);
     mlx_key_hook(data.win, Key_press, &data);
     mlx_hook(data.win, 17, 0, close_cross, &data);
     mlx_loop(data.mlx);
