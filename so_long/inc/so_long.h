@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/15 17:28:35 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:11:59 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,19 @@ typedef struct s_control
 	int		type_error;
 }			t_control;
 
+typedef struct s_image
+{
+	void	*wall;
+	int		img_x;
+	int		img_y;
+}			t_image;
+
 typedef struct s_data
 {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		len_line;
-	int		endian;
+	void	*mlx;
+	void	*win;
+	t_map	**map;
+	t_image	img;
 }			t_data;
 
 /* Tout les prototypes */
@@ -87,6 +93,7 @@ int		path_valid(t_map *map, t_control *su);
 
 /* Prototypes for game */
 
-void    so_long(void);
+void	game(t_map **map, t_control *su);
+void    so_long(t_map **map);
 
 #endif
