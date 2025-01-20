@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:30:03 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 13:11:02 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:27:13 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	close_win(t_data *data)
     mlx_destroy_display(data->mlx);
     free(data->mlx);
     ft_mapclear(data->map);
+    ft_suclear(data->su);
     exit(0);
 }
 

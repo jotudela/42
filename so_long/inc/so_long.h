@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 17:11:48 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:20:26 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ typedef struct s_player
 {
 	int	x;
 	int	y;
+	int	xe;
+	int	ye;
+	int	ni;
 }			t_player;
 
 typedef struct s_data
@@ -80,6 +83,7 @@ typedef struct s_data
 	void	*mlx;
 	void	*win;
 	t_map	**map;
+	t_control **su;
 	t_image	img;
 	t_player	player;
 	int		len_lst;
@@ -121,8 +125,8 @@ int		path_valid(t_map *map, t_control *su);
 
 /* Prototypes for game */
 
-void	game(t_map **map, t_control *su);
-void    so_long(t_map **map);
+void	game(t_map **map, t_control **su);
+void    so_long(t_map **map, t_control **su);
 int		generate_textures(t_data *data);
 int		Key_press(int keycode, t_data *data);
 int		close_cross(t_data *data);
@@ -130,5 +134,6 @@ int		close_win(t_data *data);
 void	print_image(t_data *data, void *img, int x, int y);
 void	print_map(t_data *data, t_map *map);
 void    position(t_data *data, t_map *map);
+void	find_E(t_map *map, t_data *data);
 
 #endif

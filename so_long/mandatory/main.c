@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/16 11:13:12 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:48:38 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ int	ft_good_format(char *file)
 	return (0);
 }
 
-void	game(t_map **map, t_control *su)
+void	game(t_map **map, t_control **su)
 {
-	ft_suclear(&su);
-	so_long(map);
+	so_long(map, su);
 }
 
 int	main(int ac, char **av)
@@ -81,5 +80,5 @@ int	main(int ac, char **av)
 		ft_suclear(&su);
 		exit(EXIT_FAILURE);
 	}
-	game(&map, su);
+	game(&map, &su);
 }

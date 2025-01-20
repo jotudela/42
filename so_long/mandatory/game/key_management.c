@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:27:31 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 18:16:41 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 19:19:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void gauche(t_data *data, t_map *map)
     print_image(data, data->img.floor, data->player.x, data->player.y);
     map->line[data->player.x] = '0';
     data->player.x -= 1;
+    if (map->line[data->player.x] == 'C')
+        data->player.ni += 1;
     map->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
@@ -41,6 +43,8 @@ static void droite(t_data *data, t_map *map)
     print_image(data, data->img.floor, data->player.x, data->player.y);
     map->line[data->player.x] = '0';
     data->player.x += 1;
+    if (map->line[data->player.x] == 'C')
+        data->player.ni += 1;
     map->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
@@ -58,6 +62,8 @@ static void bas(t_data *data, t_map *map)
     print_image(data, data->img.floor, data->player.x, data->player.y);
     map->line[data->player.x] = '0';
     data->player.y += 1;
+    if (map->next->line[data->player.x] == 'C')
+        data->player.ni += 1;
     map->next->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
@@ -75,6 +81,8 @@ static void haut(t_data *data, t_map *map)
     print_image(data, data->img.floor, data->player.x, data->player.y);
     map->line[data->player.x] = '0';
     data->player.y -= 1;
+    if (map->prev->line[data->player.x] == 'C')
+        data->player.ni += 1;
     map->prev->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
@@ -88,14 +96,19 @@ int Key_press(int keycode, t_data *data)
         ft_printf("ESCAPE\n");
         close_win(data);
     }
-    if (keycode == 97)//gauche
+    if (keycode == 97)
         gauche(data, *data->map);
-    if (keycode == 100)//droite
+    if (keycode == 100)
         droite(data, *data->map);
-    if (keycode == 115)//bas
+    if (keycode == 115)
         bas(data, *data->map);
-    if (keycode == 119)//haut
+    if (keycode == 119)
         haut(data, *data->map);
-    ft_printf("Numbers of actions : %i\n", data->actions);
+    ft_printf("Numbers of actions : %i %i\n", data->actions, data->player.ni);
+    if (data->player.ni == (*(data->su))->item)
+    {
+        find_E(*data->map, data);
+        print_image(data, data->img.exit1, data->player.xe, data->player.ye);
+    }
     return (0);
 }
