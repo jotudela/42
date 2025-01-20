@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/16 17:35:57 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:11:48 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@
 # define FLOOR "textures/floor.xpm"
 # define LINK "textures/link.xpm"
 # define TRIFORCE "textures/triforce.xpm"
-# define EXIT1 "../../textures/exit1.xpm"
-# define EXIT2 "../../textures/exit2.xpm"
+# define EXIT1 "textures/exit1.xpm"
+# define EXIT2 "textures/exit2.xpm"
 
 /* Toutes les structures */
 
 typedef struct s_map
 {
 	char	*line;
+	char	*tmp;
 	int		len_line;
 	int		empty;
 	int		wall;
@@ -42,6 +43,7 @@ typedef struct s_map
 	int		player;
 	char	target;
 	struct s_map	*next;
+	struct s_map	*prev;
 }			t_map;
 
 typedef struct s_control
@@ -67,12 +69,21 @@ typedef struct s_image
 	int		y;
 }			t_image;
 
+typedef struct s_player
+{
+	int	x;
+	int	y;
+}			t_player;
+
 typedef struct s_data
 {
 	void	*mlx;
 	void	*win;
 	t_map	**map;
 	t_image	img;
+	t_player	player;
+	int		len_lst;
+	int		actions;
 }			t_data;
 
 /* Tout les prototypes */
@@ -117,7 +128,7 @@ int		Key_press(int keycode, t_data *data);
 int		close_cross(t_data *data);
 int		close_win(t_data *data);
 void	print_image(t_data *data, void *img, int x, int y);
-int		generate_textures(t_data *data);
 void	print_map(t_data *data, t_map *map);
+void    position(t_data *data, t_map *map);
 
 #endif

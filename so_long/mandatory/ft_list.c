@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:19:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/15 14:47:16 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:17:02 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_map	*ft_lstnew(char *new_line, int len)
 	if (!li)
 		return (NULL);
 	li->line = ft_strdup(new_line);
+	li->tmp = ft_strdup(li->line);
 	li->len_line = len;
 	li->empty = 0;
 	li->wall = 0;
@@ -28,6 +29,7 @@ t_map	*ft_lstnew(char *new_line, int len)
 	li->player = 0;
 	li->target = '0';
 	li->next = NULL;
+	li->prev = NULL;
 	return (li);
 }
 
@@ -41,6 +43,7 @@ void	ft_mapclear(t_map **lst)
 	{
 		tmp = (*lst)->next;
 		free((*lst)->line);
+		free((*lst)->tmp);
 		free(*lst);
 		*lst = tmp;
 	}
@@ -63,9 +66,15 @@ void	ft_lstadd_back(t_map **lst, t_map *new)
 		return ;
 	li = ft_lstlast(*lst);
 	if (!li)
+	{
 		*lst = new;
+		new->prev = NULL;
+	}
 	else
+	{
 		li->next = new;
+		new->prev = li;
+	}
 }
 
 t_map	*ft_lstlast(t_map *lst)

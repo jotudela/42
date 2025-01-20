@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:55:38 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/15 15:24:31 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:54:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ static void flood_fill(t_map *map, t_control *control, int x, int y)
     i = 0;
     while (i++ < y && current_line)
         current_line = current_line->next;
-    if (!current_line || x < 0 || x >= current_line->len_line || current_line->line[x] == 'V' || current_line->line[x] == '1')
+    if (!current_line || x < 0 || x >= current_line->len_line || current_line->tmp[x] == 'V' || current_line->tmp[x] == '1')
         return;
-    current = current_line->line[x];
+    current = current_line->tmp[x];
     if (current == 'C')
         control->item++;
     else if (current == 'E')
         control->exit++;
     else if (current == 'P')
         control->player++;
-    current_line->line[x] = 'V';
+    current_line->tmp[x] = 'V';
     flood_fill(map, control, x + 1, y);
     flood_fill(map, control, x - 1, y);
     flood_fill(map, control, x, y + 1);
@@ -40,8 +40,10 @@ static void flood_fill(t_map *map, t_control *control, int x, int y)
 
 static void find_xy(t_map *map, t_control *su)
 {
-    int i, j = 0;
-
+    int i; 
+    int j;
+    
+    j = 0;
     while (map) {
         i = 0;
         while (map->line[i] != '\0') {
