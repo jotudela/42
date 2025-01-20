@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:27:31 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 17:56:51 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:16:41 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void bas(t_data *data, t_map *map)
     i = 0;
     while (i++ < data->player.y && map)
         map = map->next;
-    if (map->line[data->player.x + 1] == '1')
+    if (map->next->line[data->player.x] == '1')
         return ;
     print_image(data, data->img.floor, data->player.x, data->player.y);
     map->line[data->player.x] = '0';
@@ -70,7 +70,7 @@ static void haut(t_data *data, t_map *map)
     i = 0;
     while (i++ < data->player.y && map)
         map = map->next;
-    if (map->line[data->player.x - 1] == '1')
+    if (map->prev->line[data->player.x] == '1')
         return ;
     print_image(data, data->img.floor, data->player.x, data->player.y);
     map->line[data->player.x] = '0';
