@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:27:31 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 19:19:25 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 10:17:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,20 @@ static void gauche(t_data *data, t_map *map)
         map = map->next;
     if (map->line[data->player.x - 1] == '1')
         return ;
-    print_image(data, data->img.floor, data->player.x, data->player.y);
-    map->line[data->player.x] = '0';
+    if (map->line[data->player.x] == '2')
+    {
+        print_image(data, data->img.exit1, data->player.x, data->player.y);
+        map->line[data->player.x] = 'E';
+    }
+    else{print_image(data, data->img.floor, data->player.x, data->player.y);
+    map->line[data->player.x] = '0';}
     data->player.x -= 1;
     if (map->line[data->player.x] == 'C')
         data->player.ni += 1;
-    map->line[data->player.x] = 'P';
+    if (map->line[data->player.x] == 'E')
+        map->line[data->player.x] = '2';
+    else
+        map->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
 }
@@ -40,12 +48,20 @@ static void droite(t_data *data, t_map *map)
         map = map->next;
     if (map->line[data->player.x + 1] == '1')
         return ;
-    print_image(data, data->img.floor, data->player.x, data->player.y);
-    map->line[data->player.x] = '0';
+    if (map->line[data->player.x] == '2')
+    {
+        print_image(data, data->img.exit1, data->player.x, data->player.y);
+        map->line[data->player.x] = 'E';
+    }
+    else{print_image(data, data->img.floor, data->player.x, data->player.y);
+    map->line[data->player.x] = '0';}
     data->player.x += 1;
     if (map->line[data->player.x] == 'C')
         data->player.ni += 1;
-    map->line[data->player.x] = 'P';
+    if (map->line[data->player.x] == 'E')
+        map->line[data->player.x] = '2';
+    else
+        map->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
 }
@@ -59,12 +75,20 @@ static void bas(t_data *data, t_map *map)
         map = map->next;
     if (map->next->line[data->player.x] == '1')
         return ;
-    print_image(data, data->img.floor, data->player.x, data->player.y);
-    map->line[data->player.x] = '0';
+    if (map->line[data->player.x] == '2')
+    {
+        print_image(data, data->img.exit1, data->player.x, data->player.y);
+        map->line[data->player.x] = 'E';
+    }
+    else{print_image(data, data->img.floor, data->player.x, data->player.y);
+    map->line[data->player.x] = '0';}
     data->player.y += 1;
     if (map->next->line[data->player.x] == 'C')
         data->player.ni += 1;
-    map->next->line[data->player.x] = 'P';
+    if (map->next->line[data->player.x] == 'E')
+        map->next->line[data->player.x] = '2';
+    else
+        map->next->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
 }
@@ -78,12 +102,21 @@ static void haut(t_data *data, t_map *map)
         map = map->next;
     if (map->prev->line[data->player.x] == '1')
         return ;
-    print_image(data, data->img.floor, data->player.x, data->player.y);
-    map->line[data->player.x] = '0';
+    if (map->line[data->player.x] == '2')
+    {
+        print_image(data, data->img.exit1, data->player.x, data->player.y);
+        map->line[data->player.x] = 'E';
+    }
+    else
+    {print_image(data, data->img.floor, data->player.x, data->player.y);
+    map->line[data->player.x] = '0';}
     data->player.y -= 1;
     if (map->prev->line[data->player.x] == 'C')
         data->player.ni += 1;
-    map->prev->line[data->player.x] = 'P';
+    if (map->prev->line[data->player.x] == 'E')
+        map->prev->line[data->player.x] = '2';
+    else
+        map->prev->line[data->player.x] = 'P';
     print_image(data, data->img.link, data->player.x, data->player.y);
     data->actions++;
 }

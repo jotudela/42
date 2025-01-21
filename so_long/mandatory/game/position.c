@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 13:35:10 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 19:20:19 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 09:37:44 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    position(t_data *data, t_map *map)
         x = 0;
         while (map->line[x])
         {
-            if (map->line[x] == 'P')
+            if (map->line[x] == 'P' || map->line[x] == '2')
             {
                 data->player.x = x;
                 data->player.y = y;
