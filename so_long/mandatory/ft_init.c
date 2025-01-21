@@ -6,22 +6,22 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:04:23 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/14 14:49:47 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:10:06 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void    ft_closefds(void)
+void	ft_closefds(void)
 {
-    int fd;
+	int	fd;
 
-    fd = 2;
-    while (fd < 1024)
-    {
-        close(fd);
-        fd++;
-    }
+	fd = 2;
+	while (fd < 1024)
+	{
+		close(fd);
+		fd++;
+	}
 }
 
 static void	ft_veriflst(t_map **li)
@@ -29,9 +29,9 @@ static void	ft_veriflst(t_map **li)
 	if (!(*li) || !li)
 	{
 		ft_mapclear(li);
-        ft_closefds();
+		ft_closefds();
 		ft_printf("Error\n");
-        exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -62,10 +62,10 @@ void	ft_update(t_map *map)
 	}
 }
 
-t_map   *ft_init(char *file)
+t_map	*ft_init(char *file)
 {
-    int     fd;
-    char	*tmp;
+	int		fd;
+	char	*tmp;
 	t_map	*map;
 
 	fd = open(file, O_RDONLY);
@@ -75,8 +75,8 @@ t_map   *ft_init(char *file)
 	if (!tmp)
 		return (close(fd), NULL);
 	map = ft_lstnew(tmp, ft_strlen(tmp) - 1);
-    ft_veriflst(&map);
-    free(tmp);
+	ft_veriflst(&map);
+	free(tmp);
 	while (1)
 	{
 		tmp = get_next_line(fd);
@@ -84,7 +84,7 @@ t_map   *ft_init(char *file)
 			break ;
 		ft_lstadd_back(&map, ft_lstnew(tmp, ft_strlen(tmp) - 1));
 		free(tmp);
-        ft_veriflst(&map);
+		ft_veriflst(&map);
 	}
-    return (close(fd), free(tmp), map);
+	return (close(fd), free(tmp), map);
 }

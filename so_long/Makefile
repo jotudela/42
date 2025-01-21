@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/21 10:40:07 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/21 15:28:08 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRC_FILES	= main \
 			check/is_rectangle \
 			game/so_long \
 			game/key_management \
+			game/key_management2 \
 			game/close_game \
 			game/generate_map \
 			game/position \

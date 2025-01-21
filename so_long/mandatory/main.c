@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 18:48:38 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:06:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	game(t_map **map, t_control **su)
 
 int	main(int ac, char **av)
 {
-	t_map	*map;
+	t_map		*map;
 	t_control	*su;
-	
+
 	if (ac != 2)
 		return (print_error(0), 0);
 	if (ft_good_format(av[1]) == 1)

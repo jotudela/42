@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/21 11:05:25 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:37:59 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,31 @@
 # define EXIT1 "textures/exit1.xpm"
 # define EXIT2 "textures/exit2.xpm"
 
-/* Toutes les structures */
+/* Structures */
 
 typedef struct s_map
 {
-	char	*line;
-	char	*tmp;
-	int		len_line;
-	int		empty;
-	int		wall;
-	int		item;
-	int		exit;
-	int		player;
-	char	target;
+	char			*line;
+	char			*tmp;
+	char			target;
+	int				len_line;
+	int				empty;
+	int				wall;
+	int				item;
+	int				exit;
+	int				player;
 	struct s_map	*next;
 	struct s_map	*prev;
 }			t_map;
 
 typedef struct s_control
 {
-	int		x;// Horizontal
-	int		y;// Vertical
-	int		item;
-	int		exit;
-	int		player;
-	int		type_error;
+	int	x;
+	int	y;
+	int	item;
+	int	exit;
+	int	player;
+	int	type_error;
 }			t_control;
 
 typedef struct s_image
@@ -80,62 +80,57 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	t_map	**map;
-	t_control **su;
-	t_image	img;
-	t_player	player;
-	int		len_lst;
-	int		actions;
+	void			*mlx;
+	void			*win;
+	int				len_lst;
+	int				actions;
+	t_map			**map;
+	t_control		**su;
+	t_image			img;
+	t_player		player;
 }			t_data;
 
-/* Tout les prototypes */
+/* Prototypes */
 
-/* Prototypes for list */
+/* List functions */
+t_map		*ft_lstnew(char *new_line, int len);
+void		ft_mapclear(t_map **lst);
+void		ft_lstadd_front(t_map **lst, t_map *new);
+void		ft_lstadd_back(t_map **lst, t_map *new);
+t_map		*ft_lstlast(t_map *lst);
+t_map		*ft_init(char *file);
+void		ft_suclear(t_control **su);
+t_control	*new_su(void);
 
-t_map	*ft_lstnew(char *new_line, int len);
-void	ft_mapclear(t_map **lst);
-void	ft_lstadd_front(t_map **lst, t_map *new);
-void	ft_lstadd_back(t_map **lst, t_map *new);
-t_map	*ft_lstlast(t_map *lst);
-t_map   *ft_init(char *file);
-t_control   *new_su(void);
+/* Utils */
+void		ft_closefds(void);
 
-void	ft_suclear(t_control **su);
+/* Update */
+void		ft_update(t_map *map);
 
-/* Prototypes for Utils */
+/* Check map functions */
+int			ft_control(t_map *map, t_control *su);
+int			is_rectangle(t_map *map, t_control *su);
+int			ft_lstlen(t_map *map);
+int			is_cep(t_map *map, t_control *su);
+int			char_is_invalid(t_map *map, t_control *su);
+int			good_outline(t_map *map, t_control *su);
+int			good_len_line(t_map *map, t_control *su);
+int			path_valid(t_map *map, t_control *su);
 
-void    ft_closefds(void);
-
-/* Prototypes for Update */
-
-void	ft_update(t_map *map);
-
-/* Prototypes for check */
-
-int		ft_control(t_map *map, t_control *su);
-int		is_rectangle(t_map *map, t_control *su);
-int		ft_lstlen(t_map *map);
-int		is_CEP(t_map *map, t_control *su);
-int		char_is_invalid(t_map *map, t_control *su);
-int		good_outline(t_map *map, t_control *su);
-int		good_len_line(t_map *map, t_control *su);
-int		path_valid(t_map *map, t_control *su);
-
-/* Prototypes for game */
-
-void	game(t_map **map, t_control **su);
-void    so_long(t_map **map, t_control **su);
-int		generate_textures(t_data *data);
-int		Key_press(int keycode, t_data *data);
-int		close_cross(t_data *data);
-int		close_win(t_data *data);
-int		close_win2(t_data *data);
-void	print_image(t_data *data, void *img, int x, int y);
-void	print_map(t_data *data, t_map *map);
-void    position(t_data *data, t_map *map);
-void	find_E(t_map *map, t_data *data);
-void	is_finish(t_data *data, t_map *map);
+/* Game */
+void		game(t_map **map, t_control **su);
+void		so_long(t_map **map, t_control **su);
+int			generate_textures(t_data *data);
+int			key_press(int keycode, t_data *data);
+int			close_cross(t_data *data);
+int			close_win(t_data *data);
+int			close_win2(t_data *data);
+void		print_image(t_data *data, void *img, int x, int y);
+void		print_map(t_data *data, t_map *map);
+void		position(t_data *data, t_map *map);
+void		find_e(t_map *map, t_data *data);
+void		is_finish(t_data *data, t_map *map);
+void		print_floor(t_data *data, t_map *map);
 
 #endif
