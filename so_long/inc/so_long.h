@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:41:44 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 19:20:26 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:05:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,11 @@ int		generate_textures(t_data *data);
 int		Key_press(int keycode, t_data *data);
 int		close_cross(t_data *data);
 int		close_win(t_data *data);
+int		close_win2(t_data *data);
 void	print_image(t_data *data, void *img, int x, int y);
 void	print_map(t_data *data, t_map *map);
 void    position(t_data *data, t_map *map);
 void	find_E(t_map *map, t_data *data);
+void	is_finish(t_data *data, t_map *map);
 
 #endif

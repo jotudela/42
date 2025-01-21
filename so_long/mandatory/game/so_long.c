@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 15:38:41 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/20 18:59:51 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:05:45 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void generate(t_data *data, t_map *map)
     {
         ft_printf("Textures failed !\n");
         ft_mapclear(data->map);
-        close_win(data);
+        close_win2(data);
     }
     data->win = mlx_new_window(data->mlx, map->len_line * 32, data->len_lst * 32, "so_long");
     if (!data->win)
@@ -64,6 +64,8 @@ void    so_long(t_map **map, t_control **su)
     data.su = su;
     data.len_lst = ft_lstlen(*map);
     data.player.ni = 0;
+    data.player.xe = -1;
+    data.player.ye = -1;
     generate(&data, *map);
     print_map(&data, *data.map);
     mlx_key_hook(data.win, Key_press, &data);

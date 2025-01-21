@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:27:31 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/21 10:17:49 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:26:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,12 @@ int Key_press(int keycode, t_data *data)
         bas(data, *data->map);
     if (keycode == 119)
         haut(data, *data->map);
-    ft_printf("Numbers of actions : %i %i\n", data->actions, data->player.ni);
+    ft_printf("Numbers of actions : %i\n", data->actions);
     if (data->player.ni == (*(data->su))->item)
     {
         find_E(*data->map, data);
-        print_image(data, data->img.exit1, data->player.xe, data->player.ye);
+        print_image(data, data->img.exit2, data->player.xe, data->player.ye);
     }
+    is_finish(data, *data->map);
     return (0);
 }
