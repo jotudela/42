@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/21 15:28:08 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/21 17:07:33 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,4 +114,34 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test0:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/map.ber
+
+test1:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long
+
+test2:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/rectangular.ber
+
+test3:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/format.error
+
+test4:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/nothing.ber
+
+test5:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/wall.ber
+
+test6:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/bad_ie1.ber
+
+test7:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/bad_ie2.ber
+
+test8:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/bad_ie3.ber
+
+test9:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/len.ber
+
+.PHONY: all clean fclean re test0 test1 test2 test3 test4 test5 test6 test7 test8 test9

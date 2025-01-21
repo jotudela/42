@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:04:23 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/21 14:10:06 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:55:23 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ft_veriflst(t_map **li)
 	{
 		ft_mapclear(li);
 		ft_closefds();
-		ft_printf("Error\n");
+		ft_putstr_fd("Error\nList corrupted !", 2);
 		exit(EXIT_FAILURE);
 	}
 }

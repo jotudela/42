@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/21 14:06:53 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:58:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	print_error(int type_error)
 		write(2, "Error\nThere is a line who has not a good size !", 48);
 	else if (type_error == 7)
 		write(2, "Error\nThe game can't be win !", 30);
+	else if (type_error == 8)
+		ft_putstr_fd("Error\nCan't malloc !", 2);
 }
 
 int	ft_good_format(char *file)
@@ -68,7 +70,7 @@ int	main(int ac, char **av)
 		return (print_error(1), 0);
 	map = ft_init(av[1]);
 	if (!map)
-		return (0);
+		return (print_error(8), 0);
 	ft_update(map);
 	su = new_su();
 	if (!su)
