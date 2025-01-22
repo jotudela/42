@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/21 17:19:30 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/22 13:31:41 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,6 +116,12 @@ re: fclean all
 
 test0:
 	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/map.ber
+
+test00:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/map2.ber
+
+test000:
+	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long maps/map3.ber
 
 test1:
 	@valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./so_long
