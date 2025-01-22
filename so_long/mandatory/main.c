@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:40:18 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/21 16:58:53 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/22 09:23:42 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int ac, char **av)
 		print_error(su->type_error);
 		ft_mapclear(&map);
 		ft_suclear(&su);
-		exit(EXIT_FAILURE);
+		return (0);
 	}
 	game(&map, &su);
 }
