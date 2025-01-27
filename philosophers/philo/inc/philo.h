@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:22 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/24 19:38:19 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/27 15:23:41 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ typedef struct s_data
 	int	time_eat;
 	int	time_sleep;
 	int	nb_of_eating;
+	pthread_t	philo;
+	pthread_mutex_t	l_fork;
+	pthread_mutex_t	r_fork;
+	pthread_mutex_t	write;
 }			t_data;
 
 /* Philo */
@@ -38,8 +42,8 @@ void	philo(t_data data);
 int	ft_atoi(char *str);
 void	msg_error(int type_error);
 int	verif_init(int ac, char **av, t_data **data);
-t_data  *ft_newdata(void);
-void    clear_data(t_data **data);
-void    print_state(int philo, char *state, struct timeval program_start, pthread_mutex_t mutex);
+t_data	*ft_newdata(int nb_philo);
+void	clear_data(t_data **data);
+int	print_state(int philo, char *state, pthread_mutex_t mutex);
 
 #endif

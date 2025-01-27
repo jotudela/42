@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:12 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/24 18:58:13 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/27 15:17:21 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static int	ft_init(int ac, char **av, t_data *data)
 		return (clear_data(&data), 3);
 	else if (data->time_sleep <= 0)
 		return (clear_data(&data), 4);
-	else if (ac == 6 && data->nb_of_eating <= 0)
+	else if (ac == 6 && data->nb_of_eating < 0)
 		return (clear_data(&data), 5);
+
 	return (0);
 }
 

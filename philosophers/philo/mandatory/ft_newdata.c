@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_newdata.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:27:52 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/24 18:44:36 by jojo             ###   ########.fr       */
+/*   Updated: 2025/01/27 15:23:30 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void    clear_data(t_data **data)
     *data = NULL;
 }
 
-t_data  *ft_newdata(void)
+t_data  *ft_newdata(int nb_philo)
 {
     t_data  *data;
 
-    data = ft_calloc(sizeof(*data), 1);
+    data = ft_calloc(sizeof(*data), nb_philo);
     if (!data)
         return (NULL);
     data->nb_philo = 0;
