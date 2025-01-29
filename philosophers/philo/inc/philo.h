@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:22 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/27 15:23:41 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:43:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,43 @@
 # include <stddef.h>
 # include <stdint.h>
 
-typedef struct s_data
+typedef struct s_philo
 {
-	int	nb_philo;
-	int	time_die;
-	int	time_eat;
-	int	time_sleep;
-	int	nb_of_eating;
-	pthread_t	philo;
+	pthread_t			philo;
+	int						id;
+	int						eating;
+	int						meals_eaten;
+	size_t			last_meal;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int						num_of_philos;
+	int						num_times_to_eat;
+	int						dead;
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	r_fork;
-	pthread_mutex_t	write;
-}			t_data;
+	pthread_mutex_t	write_lock;
+}			t_philo;
+
+typedef struct s_main
+{
+	int							dead_flag;
+	pthread_mutex_t	dead_lock;
+	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	write_lock;
+	t_philo					*philos;
+}			t_main;
 
 /* Philo */
-void	philo(t_data data);
+//void	philo(t_data data);
 
 /* Utils */
 int	ft_atoi(char *str);
 void	msg_error(int type_error);
-int	verif_init(int ac, char **av, t_data **data);
-t_data	*ft_newdata(int nb_philo);
-void	clear_data(t_data **data);
-int	print_state(int philo, char *state, pthread_mutex_t mutex);
+int	ft_verif(int ac, char **av);
+t_main    *ft_init(int ac, char **av);
+void *ft_calloc(size_t count, size_t size);
+void    ft_clear(t_main **data, int nb);
+int	print_state(int id, char *state, pthread_mutex_t mutex);
 
 #endif

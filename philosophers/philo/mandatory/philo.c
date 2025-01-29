@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 15:03:35 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/27 15:08:57 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:55:07 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void    *routine(t_data *data);
 
 //fonction ou tout va se passer
-void    philo(t_data *data)
+/*void    philo(t_main *data)
 {
     
-}
+}*/

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/24 19:16:05 by jojo             ###   ########.fr        #
+#    Updated: 2025/01/29 17:05:21 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,9 @@ BLUE				:= \033[94m
 SRC_FILES	= main \
 			ft_atoi \
 			msg_error \
-			verif_init \
-			ft_newdata \
+			ft_verif \
+			ft_init \
+			ft_calloc \
 			print_state
 
 SRC_DIR := mandatory

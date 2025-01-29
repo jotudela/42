@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:05:31 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/27 14:19:47 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:31:00 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static size_t	ft_usleep(size_t m_s)
 	return (tmp);
 }
 
-int	print_state(int philo, char *state, pthread_mutex_t mutex)
+int	print_state(int id, char *state, pthread_mutex_t mutex)
 {
 	pthread_mutex_lock(&mutex);
-	printf("%zu Philo %d %s\n", ft_usleep(200), philo, state);
+	printf("%zu Philo %d %s\n", ft_usleep(200), id, state);
 	pthread_mutex_unlock(&mutex);
 	pthread_mutex_destroy(&mutex);	
 	return (0);
