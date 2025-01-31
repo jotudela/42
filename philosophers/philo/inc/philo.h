@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:22 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/29 16:43:09 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:35:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ t_main    *ft_init(int ac, char **av);
 void *ft_calloc(size_t count, size_t size);
 void    ft_clear(t_main **data, int nb);
 int	print_state(int id, char *state, pthread_mutex_t mutex);
+void	philo(t_main *data);
 
 #endif

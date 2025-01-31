@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:19 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/29 17:25:16 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:28:55 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int ac, char **av)
 	if (ft_verif(ac, av) == 1)
 		return (0);
 	data = ft_init(ac, av);
+	philo(data);
 	ft_clear(&data, ft_atoi(av[1]));
 }
 

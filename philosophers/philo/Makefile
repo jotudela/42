@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/29 17:05:21 by jotudela         ###   ########.fr        #
+#    Updated: 2025/01/31 17:35:45 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC_FILES	= main \
 			ft_verif \
 			ft_init \
 			ft_calloc \
+			philo \
 			print_state
 
 SRC_DIR := mandatory

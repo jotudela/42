@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:01:45 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/29 17:05:18 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:43:13 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void ft_clear(t_main **data, int nb)
             pthread_mutex_destroy(&((*data)->philos[i].l_fork));
             pthread_mutex_destroy(&((*data)->philos[i].r_fork));
             pthread_mutex_destroy(&((*data)->philos[i].write_lock));
+            pthread_join(((*data)->philos[i].philo), NULL);
             i++;
         }
         free((*data)->philos);
