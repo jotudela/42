@@ -3,39 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 15:03:35 by jotudela          #+#    #+#             */
-/*   Updated: 2025/01/31 19:16:21 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/03 16:27:34 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-//fonction ou tout mes thread passe
-void    routine_philos(t_main *data)
+/**
+ * @brief Fonction pour passer tout mes philos.
+ * 
+ * @param data 
+ */
+void *routine_philos(void *arg)
 {
+    t_philo     *philo;
+    t_main      *data;
 
-}
-
-//fonction pour le main et regarder si tout les philo sont toujours vivant
-void    routine_main(t_main *data);
-
-void    *nothing(void *null)
-{
-    (void)null;
+    philo = (t_philo *)arg;
+    data = (t_main *)arg;
+    while (!philo->go){}
+    ft_sleep(data, data->philos);
+    ft_think(data, data->philos);
     return (NULL);
 }
 
-//fonction ou tout va se passer
-void    philo(t_main *data)
+/**
+ * @brief Fonction pour verifier tout les philos.
+ * 
+ * @param data 
+ */
+void    routine_main(t_main *data)
+{
+    (void)data;
+    printf("yo du main\n");
+}
+
+/**
+ * @brief Focntion pour init le reste.
+ * 
+ * @param data 
+ */
+void philo(t_main *data)
 {
     int i;
 
     i = 0;
-    while (i < data->philos[i].num_of_philos)
-        pthread_create(&data->philos[i++].philo, NULL, nothing, NULL);
+    data->philos[0].go = 0;
+    while (i < data->philos[0].num_of_philos)
+    {
+        pthread_create(&data->philos[i].philo, NULL, routine_philos, &data->philos[i]);
+        i++;
+    }
     gettimeofday(&data->start, NULL);
-    routine_philos(data);
+    data->philos[0].go = 1;
     routine_main(data);
 }

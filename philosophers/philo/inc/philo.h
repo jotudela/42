@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:22 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/31 19:06:38 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/03 16:15:24 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_philo
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	write_lock;
+	volatile int	go;
 }			t_philo;
 
 typedef struct s_main
@@ -62,7 +63,8 @@ int	ft_verif(int ac, char **av);
 t_main    *ft_init(int ac, char **av);
 void *ft_calloc(size_t count, size_t size);
 void    ft_clear(t_main **data, int nb);
-int	print_state(int id, char *state, pthread_mutex_t mutex);
+void	ft_think(t_main *data, t_philo *philo);
+void	ft_sleep(t_main *data, t_philo *philo);
 void	philo(t_main *data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/01/31 17:35:45 by jotudela         ###   ########.fr        #
+#    Updated: 2025/02/03 15:45:16 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 ### ARGUMENTS
 
 NAME		= philo
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 CC			= cc
 
 ###################################################
