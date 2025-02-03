@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:19 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/31 17:28:55 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:19:53 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 et apres faire la routine + la fonction de verif si un philo meurt.
 */
 
+void	one_philo(void)
+{
+	write(1, "0 Philo 1 has taken a fork\n", 28);
+	write(1, "0 Philo 1 died\n", 16);
+}
+
 int	main(int ac, char **av)
 {
 	t_main	*data;
@@ -23,6 +29,12 @@ int	main(int ac, char **av)
 	if (ft_verif(ac, av) == 1)
 		return (0);
 	data = ft_init(ac, av);
+	if (data->philos[0].num_of_philos == 1)
+	{
+		one_philo();
+		ft_clear(&data, ft_atoi(av[1]));
+		return (0);
+	}
 	philo(data);
 	ft_clear(&data, ft_atoi(av[1]));
 }

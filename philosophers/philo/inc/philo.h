@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:58:22 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/31 17:35:09 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:06:38 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef struct s_main
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	write_lock;
+	struct timeval start;
+	struct timeval update;
+	long	m_s;
 	t_philo					*philos;
 }			t_main;
 

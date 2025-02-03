@@ -3,44 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   print_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:05:31 by jojo              #+#    #+#             */
-/*   Updated: 2025/01/29 16:31:00 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:33:23 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static size_t	get_current_time(void)
+void	ft_eat(t_philo *philo)
 {
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
-		return (write(2, "gettimeofday() error\n", 22), 0);
-	return (time.tv_sec * 1000 + time.tv_sec / 1000);
+	pthread_mutex_lock(&pihlo->write_lock);
+	pthread_mutex_lock(&philo->l_fork);
+	printf("")
 }
 
-static size_t	ft_usleep(size_t m_s)
+void	ft_think(t_main *data, t_philo *philo)
 {
-	size_t	start;
-	size_t	tmp;
-
-	start = get_current_time();
-	tmp = 0;
-	while ((tmp - start) < m_s)
-	{
-		tmp = get_current_time();
-		usleep(m_s);
-	}
-	return (tmp);
-}
-
-int	print_state(int id, char *state, pthread_mutex_t mutex)
-{
-	pthread_mutex_lock(&mutex);
-	printf("%zu Philo %d %s\n", ft_usleep(200), id, state);
-	pthread_mutex_unlock(&mutex);
-	pthread_mutex_destroy(&mutex);	
-	return (0);
+	pthread_mutex_lock(&pihlo->write_lock);
+	gettimeofday(&data->update, NULL;)
+	data->m_s = (data->update.tv_sec - data->start.tv_sec) * 1000;
+    data->m_s += (data->start.tv_usec - data->update.tv_usec) / 1000;
+	printf("%ld Philo %s is thinking\n", data->m_s, philo->id);
+	pthread_mutex_unlock(&philo->write_lock);
 }
