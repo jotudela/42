@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 17:16:09 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:40:10 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main(int ac, char **av, char **envp)
         }
         if (!*(h.head->line)) //si l'utilisateur ne met rien
             continue ;
-        handle_imput(&h, h.head->line, envp);
+        handle_imput(&h, h.tail->line, envp);
     }
     ft_rl_clear_history(&h);
     return (0);
