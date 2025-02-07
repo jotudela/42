@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 12:55:29 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:41:19 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ typedef struct
     t_historique *tail;
     t_historique *current;
 }           t_history;
+
+/* Fonctions pour les signaux */
+void    setup_signals(void);
+void    sigquit_handler(int signum);
+void    handle_signals(int signum);
 
 /* Fonctions pour l'Historique et le Terminal */
 char    *ft_readline(t_history *history);

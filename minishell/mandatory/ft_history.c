@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:22:11 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 10:28:15 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:22:00 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,37 @@ void init_history(t_history *history)
 void ft_add_history(t_history *history, const char *line)
 {
     t_historique *new_node;
-    
+
+    if (!line || !*line) // Ne pas ajouter une ligne vide
+        return;
+
     new_node = malloc(sizeof(t_historique));
     if (!new_node)
         return;
+
     new_node->line = ft_strdup(line);
     new_node->next = NULL;
     new_node->prev = history->tail;
-    if (history->tail) {
+
+    if (history->tail)
         history->tail->next = new_node;
-    } else {
-        history->head = new_node;
-    }
+    else
+        history->head = new_node; // Premier élément
+
     history->tail = new_node;
+
+    // ✅ Corrigé : Réinitialiser `current` pour qu'on recommence depuis la fin
     history->current = NULL;
 }
 
 void ft_rl_clear_history(t_history *history)
 {
     t_historique *current;
+    t_historique *next;
     
     current = history->head;
     while (current) {
-        t_historique *next = current->next;
+        next = current->next;
         free(current->line);
         free(current);
         current = next;

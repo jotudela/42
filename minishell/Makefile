@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/02/07 10:51:29 by jotudela         ###   ########.fr        #
+#    Updated: 2025/02/07 15:42:31 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 
 NAME		= minishell
 NAME_BONUS	= minishell_bonus
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 CC			= cc
 
 # Libft
@@ -45,6 +45,7 @@ BLUE				:= \033[94m
 
 # SRC
 SRC_FILES	= main \
+			ft_signal \
 			ft_readline \
 			ft_terminal \
 			ft_printhistory \
