@@ -6,12 +6,19 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:22 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 17:27:24 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:40:18 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
+/**
+ * @brief Permet de monter dans les anciennes commande dans le terminal.
+ * 
+ * @param history 
+ * @param buffer 
+ * @param pos 
+ */
 static void handle_arrow_up(t_history *history, char *buffer, int *pos)
 {
     if (!history->tail)
@@ -20,35 +27,46 @@ static void handle_arrow_up(t_history *history, char *buffer, int *pos)
         history->current = history->tail;
     else if (history->current->prev)
         history->current = history->current->prev;
-
     if (history->current)
         ft_strlcpy(buffer, history->current->line, BUFFER_SIZE);
     else
         buffer[0] = '\0';
-
     *pos = ft_strlen(buffer);
     print_line(buffer);
 }
 
+/**
+ * @brief Permet de descendre dans les anciennes commande dans le terminal.
+ * 
+ * @param history 
+ * @param buffer 
+ * @param pos 
+ */
 static void handle_arrow_down(t_history *history, char *buffer, int *pos)
 {
     if (!history->tail)
         return;
-
     if (history->current && history->current->next)
         history->current = history->current->next;
     else
         history->current = NULL;
-
     if (history->current)
         ft_strlcpy(buffer, history->current->line, BUFFER_SIZE);
     else
         buffer[0] = '\0';
-
     *pos = ft_strlen(buffer);
     print_line(buffer);
 }
 
+/**
+ * @brief Permet de diriger vers soit la gauche ou la droite et de faire doit
+ * haut ou bas.
+ * 
+ * @param history 
+ * @param buffer 
+ * @param pos 
+ * @param direction 
+ */
 static void handle_arrow_keys(t_history *history, char *buffer, int *pos, char direction)
 {
     if (direction == 'A')
@@ -73,6 +91,13 @@ static void handle_arrow_keys(t_history *history, char *buffer, int *pos, char d
     }
 }
 
+/**
+ * @brief Permet d'afficher dans le terminal de minishell les char envoye.
+ * 
+ * @param buffer 
+ * @param pos 
+ * @param c 
+ */
 static void handle_character_input(char *buffer, int *pos, char c)
 {
     if (*pos < BUFFER_SIZE - 1)
@@ -83,6 +108,35 @@ static void handle_character_input(char *buffer, int *pos, char c)
     }
 }
 
+/**
+ * @brief Permet de suprimer du texte.
+ * 
+ * @param buffer 
+ * @param pos 
+ */
+static void handle_backspace(char *buffer, int *pos)
+{
+    if (*pos > 0) 
+    {
+        (*pos)--;
+        ft_memmove(&buffer[*pos], &buffer[*pos + 1], ft_strlen(buffer + *pos));
+        buffer[ft_strlen(buffer) - 1] = '\0';
+        write(STDOUT_FILENO, "\033[2K\r", 5);
+        write(STDOUT_FILENO, Hello, ft_strlen(Hello));
+        write(STDOUT_FILENO, buffer, ft_strlen(buffer));
+        write(STDOUT_FILENO, " ", 1);
+        write(STDOUT_FILENO, "\b", 1);
+        for (int i = ft_strlen(buffer); i > *pos; i--)
+            write(STDOUT_FILENO, "\033[D", 3);
+    }
+}
+
+/**
+ * @brief Pernet de recuperer ce que l'on ecrit et bien plus.
+ * 
+ * @param history 
+ * @return char* 
+ */
 char *ft_readline(t_history *history)
 {
     char buffer[BUFFER_SIZE];
@@ -116,6 +170,7 @@ char *ft_readline(t_history *history)
             {
                 ft_rl_clear_history(history);
                 printf("bye 👋 !\n");
+                disableRawMode();
                 exit(0);
             }
             continue;
@@ -125,14 +180,10 @@ char *ft_readline(t_history *history)
             handle_arrow_keys(history, buffer, &pos, seq[1]);
             continue;
         }
-         if (c == 127)  
+        
+        if (c == 127)  
         {
-            if (pos > 0)
-            {
-                pos--;
-                ft_memmove(&buffer[pos], &buffer[pos + 1], ft_strlen(buffer) - pos + 1); // Décaler le texte
-                write(STDOUT_FILENO, "\b \b", 3); // Effacer proprement
-            }
+            handle_backspace(buffer, &pos);
             continue;
         }
         handle_character_input(buffer, &pos, c);

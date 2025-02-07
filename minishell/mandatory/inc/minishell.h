@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 15:41:19 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:33:26 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # define Hello "\033[31m[\033[34mminishell>\033[31m]\033[0m "
-# define Hello2 "\r\033[31m[\033[34mminishell>\033[31m]\033[0m "
 # define PATH_MAX 4096
 
 # include "../../Utils/libft/libft.h"
@@ -37,6 +36,7 @@
 # include <curses.h>         // tgetent, tgetflag, tgetnum, tgetstr
 # include <term.h>           // tgoto, tputs
 
+/* Structure qui va tout recuperer et pour executer */
 typedef struct s_list
 {
     char            *path;

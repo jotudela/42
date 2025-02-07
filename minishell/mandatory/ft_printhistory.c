@@ -6,12 +6,17 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:34:57 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 16:38:18 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:30:48 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
+/**
+ * @brief Permet l'affichage du prompt et de la commande.
+ * 
+ * @param line 
+ */
 void print_line(const char *line)
 {
     int i;
@@ -34,14 +39,12 @@ void ft_rl_on_new_line()
     write(STDOUT_FILENO, "\n", 1);
 }
 
-// Remplace la ligne en cours par une nouvelle ligne
 void ft_rl_replace_line(const char *new_line)
 {
     write(STDOUT_FILENO, "\r", 1);
     write(STDOUT_FILENO, new_line, strlen(new_line));
 }
 
-// Réaffiche l'invite de commande
 void ft_rl_redisplay()
 {
     write(STDOUT_FILENO, "\r", 1);

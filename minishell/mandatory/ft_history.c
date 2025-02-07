@@ -6,17 +6,28 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:22:11 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 17:38:41 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:15:07 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
+/**
+ * @brief Permet dinitier la liste.
+ * 
+ * @param history 
+ */
 void init_history(t_history *history)
 {
     history->head = history->tail = history->current = NULL;
 }
 
+/**
+ * @brief Permet d'ajouter un noeu a la liste.
+ * 
+ * @param history 
+ * @param line 
+ */
 void ft_add_history(t_history *history, const char *line)
 {
     t_historique *new_node;
@@ -43,6 +54,11 @@ void ft_add_history(t_history *history, const char *line)
     history->current = NULL;
 }
 
+/**
+ * @brief Permet de clear la liste.
+ * 
+ * @param history 
+ */
 void ft_rl_clear_history(t_history *history)
 {
     t_historique *current;

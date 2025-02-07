@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:20:29 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 10:58:43 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:39:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 struct termios orig_termios;
 
+/**
+ * @brief Permet de remettre le terminal en mode normal.
+ * 
+ */
 void disableRawMode()
 {
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
 
+/**
+ * @brief Permet de mettre minishell en mode interactif.
+ * 
+ */
 void enableRawMode()
 {
     struct termios raw;
@@ -31,5 +39,4 @@ void enableRawMode()
     raw.c_cc[VTIME] = 0;
 
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-    atexit(disableRawMode);  // Restaurer le mode original à la sortie
 }
