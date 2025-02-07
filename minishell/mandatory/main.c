@@ -6,81 +6,75 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/06 16:52:21 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:01:52 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-void handle_signal(int sig)
+void	handle_signals(int signum)
 {
-    if (sig == SIGINT) //crtl-C
-    {
-        printf("\n");          // Nouvelle ligne
-        rl_on_new_line();      // Reset readline
-        rl_replace_line("", 0); // Efface ligne actuelle
-        rl_redisplay();        // Réaffiche prompt
-    }
-    else if (sig == SIGQUIT) /*ctrl-\*/
-    {
-        rl_on_new_line();      // Reset readline
-        rl_replace_line("", 0); // Efface ligne actuelle
-        rl_redisplay();
-    }
+	(void)signum;
+	if (waitpid(-1, NULL, WNOHANG) == -1)
+	{
+		write(STDOUT_FILENO, "^C", 2);
+		ft_rl_on_new_line();
+		ft_rl_replace_line("");
+		ft_rl_redisplay();
+	}
+}
+
+void	sigquit_handler(int signum)
+{
+	(void)signum;
 }
 
 void setup_signals(void)
 {
-    struct sigaction sa;
-    
-    sa.sa_handler = handle_signal;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_RESTART;
-    
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
+    signal(2, handle_signals);
+	signal(3, handle_signals);
 }
 
-void    handle_imput(char *line, char **envp)
+void    handle_imput(t_history *h, char *line, char **envp)
 {
     char    cwd[PATH_MAX];
     (void)envp;
-    if (ft_strncmp(line, "exit\n\0", ft_strlen(line)) == 0) //si l'utilisateur rentre "exit"
+    if (ft_strncmp(line, "exit\n", ft_strlen(line)) == 0) //si l'utilisateur rentre "exit"
     {
         free(line);
         printf("bye 👋 !\n");
         exit(0);
     }
     if (*line)
-        add_history(line);
+        ft_add_history(h, line);
     if (ft_strncmp(line, "pwd\n\0", ft_strlen(line)) == 0)
         printf("%s\n", getcwd(cwd, sizeof(cwd)));
 }
 
 int main(int ac, char **av, char **envp)
 {
-    char    *line;
+    t_history h;
 
     (void)av;
+    init_history(&h);
+    enableRawMode();
     if (ac != 1)
         return (write(2, "Error\nFormat to execute : ./minishell", 38));
     setup_signals();
     while (1)
     {
-        line = readline(Hello);
-        if (!line) //ctrl-D
+        write(1, Hello, ft_strlen(Hello));
+        ft_readline(&h);
+        if (h.head == NULL || h.head->line == NULL)
         {
             printf("bye 👋 !\n");
+            ft_rl_clear_history(&h); // Nettoyage de l'historique avant de quitter
             exit(0);
         }
-        if (*line == '\0') //si l'utilisateur ne met rien
-        {
-            free(line);
+        if (h.head->line == (void*)0) //si l'utilisateur ne met rien
             continue ;
-        }
-        handle_imput(line, envp);
-        free(line);
+        handle_imput(&h, h.head->line, envp);
     }
-    free(line);
+    ft_rl_clear_history(&h);
     return (0);
 }

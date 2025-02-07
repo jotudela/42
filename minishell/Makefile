@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/02/06 16:01:55 by jotudela         ###   ########.fr        #
+#    Updated: 2025/02/07 10:51:29 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,11 @@ BLUE				:= \033[94m
 ## MANDATORY PART
 
 # SRC
-SRC_FILES	= main
+SRC_FILES	= main \
+			ft_readline \
+			ft_terminal \
+			ft_printhistory \
+			ft_history
 
 SRC_DIR := mandatory
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))

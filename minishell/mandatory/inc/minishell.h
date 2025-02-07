@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/06 16:45:06 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 12:55:29 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # define Hello "\033[31m[\033[34mminishell>\033[31m]\033[0m "
+# define Hello2 "\r\033[31m[\033[34mminishell>\033[31m]\033[0m "
 # define PATH_MAX 4096
 
 # include "../../Utils/libft/libft.h"
@@ -46,6 +47,33 @@ typedef struct s_list
     int                     mod;
     struct s_list   *next;
 }           t_list;
+
+/* Structure pour l'Historique et le terminal */
+typedef struct s_historique
+{
+    char    *line;
+    struct s_historique *next;
+    struct s_historique *prev;
+}           t_historique;
+
+typedef struct 
+{
+    t_historique *head;
+    t_historique *tail;
+    t_historique *current;
+}           t_history;
+
+/* Fonctions pour l'Historique et le Terminal */
+char    *ft_readline(t_history *history);
+void    init_history(t_history *history);
+void    ft_rl_clear_history(t_history *history);
+void    ft_rl_on_new_line(void);
+void    ft_rl_replace_line(const char *new_line);
+void    ft_rl_redisplay(void);
+void    print_line(const char *line);
+void    ft_add_history(t_history *history, const char *line);
+void    disableRawMode(void);
+void    enableRawMode(void);
 
 /* Fonctions de Parsing */
 
