@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:22 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:40:18 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:51:35 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static void handle_backspace(char *buffer, int *pos)
     {
         (*pos)--;
         ft_memmove(&buffer[*pos], &buffer[*pos + 1], ft_strlen(buffer + *pos));
-        buffer[ft_strlen(buffer) - 1] = '\0';
+        buffer[ft_strlen(buffer)] = '\0';
         write(STDOUT_FILENO, "\033[2K\r", 5);
         write(STDOUT_FILENO, Hello, ft_strlen(Hello));
         write(STDOUT_FILENO, buffer, ft_strlen(buffer));
