@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:41:53 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:13:17 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    handle_imput(t_history *h, char *line, char **envp)
     if (ft_strncmp(line, "exit\n", ft_strlen(line)) == 0) //si l'utilisateur rentre "exit"
     {
         ft_rl_clear_history(h);
-        printf("bye 👋 !\n");
+        write(STDOUT_FILENO, "bye 👋 !\n", 12);
         disableRawMode();
         exit(0);
     }

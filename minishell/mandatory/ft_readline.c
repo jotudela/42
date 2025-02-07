@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:22 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:51:35 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:20:08 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,15 @@ static void handle_character_input(char *buffer, int *pos, char c)
 {
     if (*pos < BUFFER_SIZE - 1)
     {
-        buffer[(*pos)++] = c;
+        ft_memmove(&buffer[*pos + 1], &buffer[*pos], ft_strlen(buffer) - *pos);
+        buffer[*pos] = c;
+        (*pos)++;
         buffer[*pos] = '\0';
-        write(STDOUT_FILENO, &c, 1);
+        write(STDOUT_FILENO, "\033[2K\r", 5);
+        write(STDOUT_FILENO, Hello, ft_strlen(Hello));
+        write(STDOUT_FILENO, buffer, *pos);
+        write(STDOUT_FILENO, "\033[C", 3);
+        write(STDOUT_FILENO, "\033[D", 3);
     }
 }
 
