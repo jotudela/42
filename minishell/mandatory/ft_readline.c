@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:22 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 19:20:08 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/09 00:40:16 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static void handle_character_input(char *buffer, int *pos, char c)
         ft_memmove(&buffer[*pos + 1], &buffer[*pos], ft_strlen(buffer) - *pos);
         buffer[*pos] = c;
         (*pos)++;
-        buffer[*pos] = '\0';
+        buffer[ft_strlen(buffer)] = '\0';
         write(STDOUT_FILENO, "\033[2K\r", 5);
         write(STDOUT_FILENO, Hello, ft_strlen(Hello));
         write(STDOUT_FILENO, buffer, *pos);
@@ -130,8 +130,6 @@ static void handle_backspace(char *buffer, int *pos)
         write(STDOUT_FILENO, "\033[2K\r", 5);
         write(STDOUT_FILENO, Hello, ft_strlen(Hello));
         write(STDOUT_FILENO, buffer, ft_strlen(buffer));
-        write(STDOUT_FILENO, " ", 1);
-        write(STDOUT_FILENO, "\b", 1);
         for (int i = ft_strlen(buffer); i > *pos; i--)
             write(STDOUT_FILENO, "\033[D", 3);
     }
@@ -151,7 +149,6 @@ char *ft_readline(t_history *history)
     char seq[2];
 
     ft_memset(buffer, 0, BUFFER_SIZE);
-
     while (1)
     {
         if (read(STDIN_FILENO, &c, 1) != 1)
@@ -159,9 +156,9 @@ char *ft_readline(t_history *history)
 
         if (c == '\n')
         {
-            buffer[pos] = '\0';
+            buffer[pos] = '\0';  // Terminer la ligne proprement
             write(STDOUT_FILENO, "\n", 1);
-            if (pos == 0)
+            if (pos == 0)  // Si la ligne est vide, on redessine le prompt
             {
                 ft_rl_redisplay();
                 continue;
@@ -169,7 +166,6 @@ char *ft_readline(t_history *history)
             ft_add_history(history, buffer);
             return (NULL);
         }
-
         if (c == 4)
         {
             if (pos == 0)
@@ -186,7 +182,6 @@ char *ft_readline(t_history *history)
             handle_arrow_keys(history, buffer, &pos, seq[1]);
             continue;
         }
-        
         if (c == 127)  
         {
             handle_backspace(buffer, &pos);

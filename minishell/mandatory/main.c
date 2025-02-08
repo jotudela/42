@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 19:13:17 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/08 22:13:32 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void    handle_imput(t_history *h, char *line, char **envp)
         disableRawMode();
         exit(0);
     }
-    if (*line)
-        ft_add_history(h, line);
     //passer a la fonction qui va tout recuperer et en meme temps executer ce que je passe
 }
 
