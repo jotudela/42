@@ -6,11 +6,11 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:22 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/09 00:40:16 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/09 16:36:03 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 /**
  * @brief Permet de monter dans les anciennes commande dans le terminal.
@@ -22,7 +22,7 @@
 static void handle_arrow_up(t_history *history, char *buffer, int *pos)
 {
     if (!history->tail)
-        return;
+        return ;
     if (!history->current)
         history->current = history->tail;
     else if (history->current->prev)
@@ -45,7 +45,7 @@ static void handle_arrow_up(t_history *history, char *buffer, int *pos)
 static void handle_arrow_down(t_history *history, char *buffer, int *pos)
 {
     if (!history->tail)
-        return;
+        return ;
     if (history->current && history->current->next)
         history->current = history->current->next;
     else
@@ -92,26 +92,39 @@ static void handle_arrow_keys(t_history *history, char *buffer, int *pos, char d
 }
 
 /**
- * @brief Permet d'afficher dans le terminal de minishell les char envoye.
+ * @brief Permet d'afficher dans le terminal de minishell les char envoyé.
  * 
  * @param buffer 
  * @param pos 
  * @param c 
  */
-static void handle_character_input(char *buffer, int *pos, char c)
+static int handle_character_input(char *buffer, int *pos, char c)
 {
-    if (*pos < BUFFER_SIZE - 1)
+    int current_len;
+    int i;
+
+    if (!buffer || !pos)
+        return (-1);
+    current_len = (int)ft_strlen(buffer);
+    if (current_len >= BUFFER_SIZE - 2)
+        return (0);
+    if (*pos < current_len)
+        ft_memmove(&buffer[*pos + 1], &buffer[*pos], current_len - *pos);
+    buffer[*pos] = c;
+    (*pos)++;
+    buffer[current_len + 1] = '\0';
+    if (write(STDOUT_FILENO, CLEAR_LINE, 5) < 0 ||
+        write(STDOUT_FILENO, Hello, ft_strlen(Hello)) < 0 ||
+        write(STDOUT_FILENO, buffer, current_len + 1) < 0)
+        return (-1);
+    i = current_len + 1;
+    while (i > *pos)
     {
-        ft_memmove(&buffer[*pos + 1], &buffer[*pos], ft_strlen(buffer) - *pos);
-        buffer[*pos] = c;
-        (*pos)++;
-        buffer[ft_strlen(buffer)] = '\0';
-        write(STDOUT_FILENO, "\033[2K\r", 5);
-        write(STDOUT_FILENO, Hello, ft_strlen(Hello));
-        write(STDOUT_FILENO, buffer, *pos);
-        write(STDOUT_FILENO, "\033[C", 3);
-        write(STDOUT_FILENO, "\033[D", 3);
+        if (write(STDOUT_FILENO, CURSOR_BACKWARD, 3) < 0)
+            return (-1);
+        i--;
     }
+    return (0);
 }
 
 /**
@@ -120,19 +133,32 @@ static void handle_character_input(char *buffer, int *pos, char c)
  * @param buffer 
  * @param pos 
  */
-static void handle_backspace(char *buffer, int *pos)
+static int handle_backspace(char *buffer, int *pos)
 {
-    if (*pos > 0) 
+    size_t remaining_len;
+    size_t i;
+
+    if (!buffer || !pos)
+        return (-1);
+    if (*pos <= 0)
+        return (0);
+    (*pos)--;
+    remaining_len = ft_strlen(buffer + *pos);
+    if (ft_memmove(&buffer[*pos], &buffer[*pos + 1], remaining_len) == NULL)
+        return (-1);
+    buffer[ft_strlen(buffer)] = '\0';
+    if (write(STDOUT_FILENO, CLEAR_LINE, 5) < 0 ||
+        write(STDOUT_FILENO, Hello, ft_strlen(Hello)) < 0 ||
+        write(STDOUT_FILENO, buffer, ft_strlen(buffer)) < 0)
+        return (-1);
+    i = ft_strlen(buffer);
+    while ((int)i > *pos)
     {
-        (*pos)--;
-        ft_memmove(&buffer[*pos], &buffer[*pos + 1], ft_strlen(buffer + *pos));
-        buffer[ft_strlen(buffer)] = '\0';
-        write(STDOUT_FILENO, "\033[2K\r", 5);
-        write(STDOUT_FILENO, Hello, ft_strlen(Hello));
-        write(STDOUT_FILENO, buffer, ft_strlen(buffer));
-        for (int i = ft_strlen(buffer); i > *pos; i--)
-            write(STDOUT_FILENO, "\033[D", 3);
+        if (write(STDOUT_FILENO, CURSOR_BACKWARD, 3) < 0)
+            return (-1);
+        i--;
     }
+    return (0);
 }
 
 /**
@@ -156,7 +182,7 @@ char *ft_readline(t_history *history)
 
         if (c == '\n')
         {
-            buffer[pos] = '\0';  // Terminer la ligne proprement
+            buffer[ft_strlen(buffer)] = '\0';  // Terminer la ligne proprement
             write(STDOUT_FILENO, "\n", 1);
             if (pos == 0)  // Si la ligne est vide, on redessine le prompt
             {

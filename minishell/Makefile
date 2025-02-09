@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
+#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/02/07 15:42:31 by jotudela         ###   ########.fr        #
+#    Updated: 2025/02/09 16:27:21 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +46,10 @@ BLUE				:= \033[94m
 # SRC
 SRC_FILES	= main \
 			ft_signal \
-			ft_readline \
-			ft_terminal \
-			ft_printhistory \
-			ft_history
+			ft_readline/ft_readline \
+			ft_readline/ft_terminal \
+			ft_readline/ft_printhistory \
+			ft_readline/ft_history
 
 SRC_DIR := mandatory
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))

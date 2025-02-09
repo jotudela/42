@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_terminal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:20:29 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:39:16 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/09 16:36:25 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 struct termios orig_termios;
 

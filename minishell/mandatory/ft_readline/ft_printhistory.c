@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printhistory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:34:57 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:30:48 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/09 16:36:32 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 /**
  * @brief Permet l'affichage du prompt et de la commande.

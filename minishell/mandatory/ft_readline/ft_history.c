@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 10:22:11 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:15:07 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/09 16:36:41 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 /**
  * @brief Permet dinitier la liste.

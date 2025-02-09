@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 18:33:26 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/09 16:18:34 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # define Hello "\033[31m[\033[34mminishell>\033[31m]\033[0m "
 # define PATH_MAX 4096
+# define CLEAR_LINE "\033[2K\r"
+# define CURSOR_FORWARD "\033[C"
+# define CURSOR_BACKWARD "\033[D"
 
 # include "../../Utils/libft/libft.h"
 # include "../../Utils/ft_printf/ft_printf.h"
