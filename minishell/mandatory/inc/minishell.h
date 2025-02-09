@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/09 16:18:34 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/09 19:16:31 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@
 # include <term.h>           // tgoto, tputs
 
 /* Structure qui va tout recuperer et pour executer */
-typedef struct s_list
+typedef struct s_commands
 {
     char            *path;
     char            **args;
     char            **env;
     char            *file1;
-    char            *file2;
+    char            redirections[2];
     int                     mod;
-    struct s_list   *next;
-}           t_list;
+    struct s_commands   *next;
+}           t_commands;
 
 /* Structure pour l'Historique et le terminal */
 typedef struct s_historique

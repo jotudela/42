@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/08 22:13:32 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/09 19:06:37 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief Permet de regarder si l'utilisateur met exit et ce n'est pas le cas
- * je l'ajoute a ma liste et je l'envoie a executer.
+ * je parse ma/mes commande(s) et je l'envoie a executer.
  * 
  * @param h 
  * @param line 
@@ -22,6 +22,7 @@
  */
 void    handle_imput(t_history *h, char *line, char **envp)
 {
+    t_commands  *list;
     (void)envp;
     if (ft_strncmp(line, "exit\n", ft_strlen(line)) == 0) //si l'utilisateur rentre "exit"
     {

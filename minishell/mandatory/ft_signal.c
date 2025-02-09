@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:41:39 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/07 15:42:11 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/09 19:03:13 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	sigquit_handler(int signum)
 void setup_signals(void)
 {
     signal(2, handle_signals);
-	signal(3, handle_signals);
+	signal(3, sigquit_handler);
 }
