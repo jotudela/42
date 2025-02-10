@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/09 19:06:37 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/10 13:40:58 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
  */
 void    handle_imput(t_history *h, char *line, char **envp)
 {
-    t_commands  *list;
+    //t_commands  *list;
     (void)envp;
-    if (ft_strncmp(line, "exit\n", ft_strlen(line)) == 0) //si l'utilisateur rentre "exit"
+    if (ft_strncmp(line, "exit", ft_strlen("exit")) == 0) //si l'utilisateur rentre "exit"
     {
         ft_rl_clear_history(h);
+        write(STDOUT_FILENO, Hello, ft_strlen(Hello));
         write(STDOUT_FILENO, "bye 👋 !\n", 12);
         disableRawMode();
         exit(0);
