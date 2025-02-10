@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 02:17:41 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/09 00:35:05 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/02/10 14:01:27 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ int	ft_print_state(t_philo *philo, char *str)
 		return (pthread_mutex_unlock(&philo->init->end), 1);
 	pthread_mutex_unlock(&philo->init->end);
 	pthread_mutex_lock(&philo->init->write_lock);
-	printf("[%ldms] %d %s\n", time, philo->nb_print, str);
+	write(1, "[", 1);
+	ft_putnbr_long(time);
+	write(1, "] ", 2);
+	ft_putnbr_long(philo->nb_print);
+	write(1, " ", 1);
+	putstr_fd(1, str);
+	write(1, "\n", 1);
 	pthread_mutex_unlock(&philo->init->write_lock);
 	return (0);
 }

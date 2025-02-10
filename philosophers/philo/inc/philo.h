@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 02:16:28 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/09 00:59:08 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/02/10 13:58:32 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ long					get_current_time(void);
 void					ft_verif(int argc, char **argv);
 void					ft_usleep(long ms);
 int						ft_print_state(t_philo *philo, char *str);
+void					ft_putnbr_long(long n);
+void					putstr_fd(int fd, char *str);
 void					msg_error(char *text, int digit);
 void					ft_clean(t_init *init);
 /*PHILO.C*/
