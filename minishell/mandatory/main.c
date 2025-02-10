@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:16:42 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/10 13:40:58 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:19:58 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
  */
 void    handle_imput(t_history *h, char *line, char **envp)
 {
-    //t_commands  *list;
-    (void)envp;
+    t_commands  *list;
+
     if (ft_strncmp(line, "exit", ft_strlen("exit")) == 0) //si l'utilisateur rentre "exit"
     {
         ft_rl_clear_history(h);
@@ -32,7 +32,9 @@ void    handle_imput(t_history *h, char *line, char **envp)
         disableRawMode();
         exit(0);
     }
-    //passer a la fonction qui va tout recuperer et en meme temps executer ce que je passe
+    list = ft_ultimate_parse(line, envp);
+    //ft_start(&h, list);
+    ft_lstclear(&list);
 }
 
 /**

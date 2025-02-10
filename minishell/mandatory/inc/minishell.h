@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/09 19:16:31 by jojo             ###   ########.fr       */
+/*   Updated: 2025/02/10 17:13:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 typedef struct s_commands
 {
     char            *path;
-    char            **args;
+    char            *args;
     char            **env;
     char            *file1;
     char            redirections[2];
@@ -84,7 +84,18 @@ void    disableRawMode(void);
 void    enableRawMode(void);
 
 /* Fonctions de Parsing */
+t_commands  *ft_ultimate_parse(char *line, char **envp);
+t_commands	*ft_lstnew(char *command, char **envp, int mod, char *file);
+t_commands	*ft_lstlast(t_commands *lst);
+void        ft_lstadd_back(t_commands **lst, t_commands *new);
+void        ft_lstclear(t_commands **lst);
+void        ft_verif(t_commands **list, char *str);
+char        *ft_find_cmd(char *cmd);
 
 /* Fonctions pour Executer */
+
+/* Utils */
+void        msg_error(char *why);
+void        ft_cleartab(char **args);
 
 #endif
