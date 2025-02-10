@@ -1,25 +1,4 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/02/03 15:45:16 by jotudela         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-###################################################
-### ARGUMENTS
-
-NAME		= philo
-CFLAGS		= -Wall -Wextra -Werror -g
-CC			= cc
-
-###################################################
-## COLORS
-
+# Colors
 RESET				:= \033[0m
 BOLD				:= \033[1m
 RED					:= \033[91m
@@ -28,48 +7,54 @@ YELLOW				:= \033[33m
 ORANGE				:= \033[93m
 BLUE				:= \033[94m
 
-###################################################
-### SOURCES
+# Compiler
+NAME			= philo
+CC				= cc
+CFLAGS			= -Wall -Wextra -Werror
+MKDIR			= mkdir -p
+RM				= rm -rf
+LINKER  	    = -lpthread
 
-## MANDATORY PART
+# Includes
+INCLUDES_DIR 	= inc
+INCLUDES_FLAG 	= -I$(INCLUDES_DIR)
+INCLUDES		= $(INCLUDES_DIR)/philo.h
 
-# SRC
-SRC_FILES	= main \
-			ft_atoi \
-			msg_error \
-			ft_verif \
-			ft_init \
-			ft_calloc \
-			philo \
-			print_state
+# Sources
+SRCS_DIR		= srcs/
+SRC_FILES		= main.c \
+				  init.c \
+				  utils.c \
+				  ft_atoi.c \
+				  philo.c \
 
-SRC_DIR := mandatory
-SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
+# Objects
+OBJS_DIR		= objs/
+OBJ_FILES		= $(SRC_FILES:.c=.o)
+OBJS			= $(addprefix $(OBJS_DIR), $(OBJ_FILES))
 
-# OBJ
-OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 
-###################################################
-## RULES
+all : $(OBJS_DIR) $(NAME)
 
-all: $(NAME)
+$(OBJS_DIR) :
+	@$(MKDIR) $(OBJS_DIR)
 
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
+$(NAME) : $(OBJS) Makefile
+	@echo "$(BOLD)$(RED)👴      Compiling Philosophers     👴$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LINKER) -o $(NAME)
+	@echo "$(BOLD)$(GREEN)🍝     Philosophers compiled, Ready to think !     🍝$(RESET)"
+	@echo "\n$(BOLD)🌟 Usage: ./philo [nb_philos] [time_to_die] [time_to_eat] [time_to_sleep] and with or not [nb_of_dinners] 🌟$(RESET)"
 
-$(NAME): $(OBJ_FILES) $(UTILS)
-	@echo "$(BOLD)$(RED)🛠️      Compiling philo    🛠️$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME)
-	@echo "$(BOLD)$(GREEN)🚀      Philo fully compiled, ready to use       🚀$(RESET)"
-	@echo "\n$(BOLD)Usage: ./philo [nb_philos] [time_to_die] [time_to_eat] [time_to_sleep] and with or not [nb_of_dinners]$(RESET)"
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c $(INCLUDES)
+	@$(CC) $(CFLAGS) $(INCLUDES_FLAG) -c $< -o $@	
 
-clean:
-	@rm -f $(OBJ_FILES)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o philo's files   🌀$(RESET)"
+clean :
+	@$(RM) $(OBJS_DIR)
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned *.o files     🌀$(RESET)"
 
-fclean: clean
-	@rm -f $(NAME)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned philo exec       🌀$(RESET)"
+fclean : clean
+	@$(RM) $(NAME)
+	@echo "$(BOLD)$(ORANGE)🌀     Full Cleaned     🌀$(RESET)"
 
 re: fclean all
 
