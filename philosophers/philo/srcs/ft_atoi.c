@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:59:40 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/11 10:14:43 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:19:20 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,33 @@ void	putstr_fd(int fd, char *str)
 		write(fd, str++, 1);
 }
 
-#include <unistd.h>
-
-void ft_putnbr_long(long n)
+void	ft_putnbr_long(long n)
 {
-    char buffer[20];
-    int i = 0;
-    
-    if (n < 0)
+	char	buffer[20];
+	int		i;
+
+	if (n < 0)
 	{
-        write(1, "-", 1);
-        n = -n;
-    }
-    if (n == 0)
-        buffer[i++] = '0';
+		write(1, "-", 1);
+		n = -n;
+	}
+	i = 0;
+	if (n == 0)
+		buffer[i++] = '0';
 	else
 	{
-        while (n > 0)
+		while (n > 0)
 		{
-            buffer[i++] = (n % 10) + '0';
-            n /= 10;
-        }
-    }
-    while (i > 0)
+			buffer[i++] = (n % 10) + '0';
+			n /= 10;
+		}
+	}
+	while (i > 0)
 	{
-        i--;
-        write(1, &buffer[i], 1);
-    }
+		i--;
+		write(1, &buffer[i], 1);
+	}
 }
-
 
 long	ft_atoi(const char *str)
 {

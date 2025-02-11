@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 02:18:01 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/11 11:30:34 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:16:57 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_eat(t_philo *philo)
 {
 	if (philo->nb_print % 2 == 0)
 	{
+		ft_usleep(philo->init->times.eat / 10);
+		philo->times.last_eat = get_current_time();
 		pthread_mutex_lock(philo->left_fork);
 		ft_print_state(philo, "has taken a fork    🔱");
 		pthread_mutex_lock(philo->right_fork);
@@ -29,11 +31,10 @@ void	ft_eat(t_philo *philo)
 		ft_print_state(philo, "has taken a fork    🔱");
 	}
 	pthread_mutex_lock(&philo->meal_lock);
-	philo->times.last_eat = get_current_time();
 	philo->nb_eat++;
+	philo->times.last_eat = get_current_time();
 	pthread_mutex_unlock(&philo->meal_lock);
 	ft_print_state(philo, "is eating           🍝");
-	ft_usleep(philo->init->times.eat);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 }
@@ -83,7 +84,7 @@ int	philo_ate(t_init *init)
 void	*close_simulation(t_init *init)
 {
 	int	i;
-	
+
 	while (philo_ate(init))
 	{
 		i = -1;
@@ -113,12 +114,14 @@ void	*monitor(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	if (philo->init->philo_count == 1)
-		return (ft_print_state(philo, "has taken a fork    🔱"), NULL);
 	flag = 0;
 	while (flag == 0)
 	{
+		if (philo->init->philo_count == 1)
+			return (ft_print_state(philo, "has taken a fork    🔱"), NULL);
+		usleep(50);
 		ft_eat(philo);
+		ft_usleep(philo->init->times.eat);
 		ft_print_state(philo, "is sleeping         😴");
 		ft_usleep(philo->init->times.sleep);
 		ft_print_state(philo, "is thinking         🤔");

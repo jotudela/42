@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 02:17:41 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/11 11:57:12 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:06:15 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	ft_verif(int argc, char **argv)
 		nb = ft_atoi(argv[i]);
 		if (i == 1 && (nb < 1 || nb > MAX_PHILO))
 			return (msg_error("❌ Error 👴\nNumber of philos incorrect !\n", 1));
-		else if (i == 2 && (nb < 1 || nb > INT_MAX))
+		else if (i == 2 && (nb < 60 || nb > INT_MAX))
 			return (msg_error("❌ Error 🕚\nTime to die incorrect !\n", 1));
-		else if (i == 3 && (nb < 0 || nb > INT_MAX))
+		else if (i == 3 && (nb < 60 || nb > INT_MAX))
 			return (msg_error("❌ Error 🕚\nTime to eat incorrect !\n", 1));
-		else if (i == 4 && (nb < 0 || nb > INT_MAX))
+		else if (i == 4 && (nb < 60 || nb > INT_MAX))
 			return (msg_error("❌ Error 🕚\nTime to sleep incorrect !\n", 1));
 		else if (i == 5 && (nb < 0 || nb > INT_MAX))
 			return (msg_error("❌ Error 🍝\nNumber of eat incorrect !\n", 1));
