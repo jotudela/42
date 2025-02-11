@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 02:18:01 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/09 00:58:55 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:30:34 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 void	ft_eat(t_philo *philo)
 {
@@ -83,8 +83,7 @@ int	philo_ate(t_init *init)
 void	*close_simulation(t_init *init)
 {
 	int	i;
-
-	init->times.die += init->count_ms;
+	
 	while (philo_ate(init))
 	{
 		i = -1;
@@ -103,7 +102,7 @@ void	*close_simulation(t_init *init)
 			}
 			pthread_mutex_unlock(&init->philos[i]->meal_lock);
 		}
-		usleep(500);
+		usleep(50);
 	}
 	return (NULL);
 }

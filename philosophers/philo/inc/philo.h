@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 02:16:28 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/10 13:58:32 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:56:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define MAX_PHILO 50
+# define MAX_PHILO 200
 
 typedef struct timeval	t_timeval;
 
@@ -70,12 +70,12 @@ void					ft_init(t_init *init, char **argv);
 void					ft_clean(t_init *init);
 long					get_current_time(void);
 /*UTILS.C*/
-void					ft_verif(int argc, char **argv);
+int						ft_verif(int argc, char **argv);
 void					ft_usleep(long ms);
 int						ft_print_state(t_philo *philo, char *str);
 void					ft_putnbr_long(long n);
 void					putstr_fd(int fd, char *str);
-void					msg_error(char *text, int digit);
+int						msg_error(char *text, int digit);
 void					ft_clean(t_init *init);
 /*PHILO.C*/
 void					ft_eat(t_philo *philo);

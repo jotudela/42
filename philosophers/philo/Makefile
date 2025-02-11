@@ -58,4 +58,19 @@ fclean : clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test0:
+	@valgrind ./philo 1 800 200 200
+
+test1:
+	@./philo 5 800 200 200
+
+test2:
+	@valgrind ./philo 5 800 200 200 7
+
+test3:
+	@./philo 4 410 200 200
+
+test4:
+	@valgrind ./philo 4 310 200 100
+
+.PHONY: all clean fclean re test0 test1 test2 test3 test4

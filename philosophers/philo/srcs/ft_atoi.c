@@ -6,11 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:59:40 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/10 13:52:20 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:14:43 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 size_t	ft_strlen(const char *s)
 {

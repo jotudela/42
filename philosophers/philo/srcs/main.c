@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 01:57:44 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/08 22:45:35 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:56:22 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 int	main(int argc, char **argv)
 {
 	t_init	init;
 
-	ft_verif(argc, argv);
+	if (ft_verif(argc, argv) == 1)
+		return (1);
 	ft_init(&init, argv);
 	close_simulation(&init);
 	ft_clean(&init);
