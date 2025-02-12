@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/12 14:28:59 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:23:17 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,23 @@
 # include <term.h>           // tgoto, tputs
 
 /* Structure qui va tout recuperer et pour executer */
-/* Liste chainee qui va disparaitre */
-typedef struct s_commands
+typedef struct s_tree
 {
     char            *path;
-    char            *args;
+    char            **args;
     char            **env;
     char            *file1;
     char            redirections[2];
     int                     mod;
+    struct s_tree *tleft;
+    struct s_tree *tright;
+    struct s_tree *parent;
+}           t_tree;
+
+typedef struct s_commands
+{
+    t_tree  *root;
+    int     i;
     struct s_commands   *next;
 }           t_commands;
 
@@ -86,7 +94,7 @@ void    enableRawMode(void);
 
 /* Fonctions de Parsing */
 t_commands  *ft_ultimate_parse(char *line, char **envp);
-t_commands	*ft_lstnew(char *command, char **envp, int mod, char *file);
+t_commands	*ft_lstnew(char **args, char **envp);
 t_commands	*ft_lstlast(t_commands *lst);
 void        ft_lstadd_back(t_commands **lst, t_commands *new);
 void        ft_lstclear(t_commands **lst);

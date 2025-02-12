@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:16:21 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/10 17:21:32 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:35:20 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    msg_error(char *why)
 
 void	ft_verif(t_commands **list, char *str)
 {
-	if ((*list) == NULL || (*list)->path == NULL)
+	if ((*list) == NULL || (*list)->root == NULL)
 	{
 		ft_lstclear(list);
 		msg_error(str);
@@ -62,8 +62,13 @@ t_commands  *ft_ultimate_parse(char *line, char **envp)
 
     args = ft_split(line, ' ');
     i = 0;
-    li = ft_lstnew(args[0], envp, 1, args[1]);
+    li = ft_lstnew(args, envp);
     ft_verif(&li, "Error list");
+	while (args[i])
+	{
+		ft_lstadd_back(&li, ft_lstnew(args, envp));
+		ft_verif(&li, "Error list");
+	}
     ft_cleartab(args);
     return (li);
 }

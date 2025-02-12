@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:21:40 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/10 17:15:10 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:32:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ void    ft_cleartab(char **args)
     args = NULL;
 }
 
+void    clean_tree(t_tree *tr)
+{
+    if (!tr)
+        return ;
+    clean_tree(tr->tleft);
+    clean_tree(tr->tright);
+    free(tr);
+}
+
 void	ft_lstclear(t_commands **lst)
 {
 	t_commands	*tmp;
@@ -33,27 +42,62 @@ void	ft_lstclear(t_commands **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-        free((*lst)->path);
+		clean_tree((*lst)->root);
 		free(*lst);
 		*lst = tmp;
 	}
 }
 
-t_commands	*ft_lstnew(char *command, char **envp, int mod, char *file)
+t_tree    *new_tree(char *operation)
+{
+    t_tree    *tr;
+
+    tr = ft_calloc(sizeof(*tr), 1);
+    if (!tr)
+    {
+        ft_putendl_fd("Erreur allocation memoire.", 2);
+        exit(EXIT_FAILURE);
+    }
+    tr->path = NULL;
+	tr->args = NULL;
+	tr->env = NULL;
+	ft_strlcpy(tr->redirections, operation, sizeof(tr->redirections));
+    tr->tleft = NULL;
+    tr->tright = NULL;
+    tr->parent = NULL;
+    return (tr);
+}
+
+t_tree    *new_node(char **args, char **envp)
+{
+	t_tree    *tr;
+
+    tr = ft_calloc(sizeof(*tr), 1);
+    if (!tr)
+    {
+        ft_putendl_fd("Erreur allocation memoire.", 2);
+        exit(EXIT_FAILURE);
+    }
+    tr->path = NULL;
+	tr->args = NULL;
+	tr->env = NULL;
+	tr->redirections[0] = '\0';
+    tr->tleft = NULL;
+    tr->tright = NULL;
+    tr->parent = NULL;
+    return (tr);
+}
+
+t_commands	*ft_lstnew(char **args, char **envp)
 {
 	t_commands	*li;
 
 	li = ft_calloc(sizeof(*li), 1);
 	if (!li)
 		return (NULL);
-	li->args = command;
-	li->path = ft_find_cmd(command);
-	li->env = envp;
-	li->mod = mod;
-	li->file1 = NULL;
-	if (li->mod == 1)
-		li->file1 = file;
-	else if (li->mod == 2)
+	li->root = new_tree(args[2]);
+	li->root->tleft = new_node(args, envp);
+	li->root->tright = new_node(args, envp);
 	li->next = NULL;
 	return (li);
 }
