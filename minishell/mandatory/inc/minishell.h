@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:01:53 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/10 17:13:25 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:28:59 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include <term.h>           // tgoto, tputs
 
 /* Structure qui va tout recuperer et pour executer */
+/* Liste chainee qui va disparaitre */
 typedef struct s_commands
 {
     char            *path;

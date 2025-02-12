@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:22 by jotudela          #+#    #+#             */
-/*   Updated: 2025/02/10 13:39:29 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:39:19 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void handle_arrow_down(t_history *history, char *buffer, int *pos)
         history->current = history->current->next;
     else
         history->current = NULL;
+    write(1, "\33[2K\r", 5);
     if (history->current)
         ft_strlcpy(buffer, history->current->line, BUFFER_SIZE);
     else
