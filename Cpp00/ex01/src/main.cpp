@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 14:56:15 by jojo              #+#    #+#             */
-/*   Updated: 2025/03/17 16:36:00 by jojo             ###   ########.fr       */
+/*   Updated: 2025/03/18 13:43:44 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/phonebook.hpp"
+#include "../inc/PhoneBook.hpp"
 
 int main(int ac, char **av)
 {
@@ -20,7 +20,7 @@ int main(int ac, char **av)
     (void)av;
     if (ac != 1)
     {
-        std::cerr << "Number of arguments not correct !" << std::endl;
+        std::cout << "Number of arguments not correct !" << std::endl;
         return (1);
     }
     std::cout << "$> ";
@@ -33,6 +33,8 @@ int main(int ac, char **av)
             ft_exit();
         else if (str == "SEARCH")
             Book.ft_search();
+        else if (str == "ADD")
+            Book.ft_add();
         std::cout << "$> ";
         std::cin >> str;
     }

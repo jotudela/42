@@ -12,8 +12,9 @@ RED		:= \033[91m
 GREEN		:= \033[92m
 
 # Fichiers sources
-SRC_FILES	= src/phonebook.cpp \
-			src/main.cpp
+SRC_FILES	= src/PhoneBook.cpp \
+			src/main.cpp \
+			src/Contact.cpp
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Includes
