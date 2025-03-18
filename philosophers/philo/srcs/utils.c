@@ -3,75 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 02:17:41 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/02/11 16:06:15 by jotudela         ###   ########.fr       */
+/*   Created: 2025/02/12 21:30:56 by mmeuric           #+#    #+#             */
+/*   Updated: 2025/02/13 20:45:33 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
-int	ft_verif(int argc, char **argv)
+long	get_current_time(void)
 {
-	int		i;
-	long	nb;
+	struct timeval	time;
 
-	i = 0;
-	if (argc != 5 && argc != 6)
-	{
-		write(2, "❌ Error 📖\n✅ Exec format: ./philo [nb_pilos] ", 52);
-		return (msg_error("[time_to_die] [time_to_eat] [time_to_sleep]\n", 1));
-	}
-	while (++i < argc)
-	{
-		nb = ft_atoi(argv[i]);
-		if (i == 1 && (nb < 1 || nb > MAX_PHILO))
-			return (msg_error("❌ Error 👴\nNumber of philos incorrect !\n", 1));
-		else if (i == 2 && (nb < 60 || nb > INT_MAX))
-			return (msg_error("❌ Error 🕚\nTime to die incorrect !\n", 1));
-		else if (i == 3 && (nb < 60 || nb > INT_MAX))
-			return (msg_error("❌ Error 🕚\nTime to eat incorrect !\n", 1));
-		else if (i == 4 && (nb < 60 || nb > INT_MAX))
-			return (msg_error("❌ Error 🕚\nTime to sleep incorrect !\n", 1));
-		else if (i == 5 && (nb < 0 || nb > INT_MAX))
-			return (msg_error("❌ Error 🍝\nNumber of eat incorrect !\n", 1));
-	}
-	return (0);
+	if (gettimeofday(&time, NULL) == -1)
+		return (-1);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(long ms)
+void	sleep_ms(long duration)
 {
 	long	start;
 
 	start = get_current_time();
-	while (get_current_time() - start < ms)
-		usleep(50);
+	while (get_current_time() < start + duration)
+		usleep(500);
 }
 
-int	ft_print_state(t_philo *philo, char *str)
+int	ft_last_msg(t_philo *philo, char *msg)
 {
-	int		flag;
+	int		stop;
 	long	time;
 
-	pthread_mutex_lock(&philo->init->write_lock);
+	time = get_current_time();
 	pthread_mutex_lock(&philo->init->end);
-	flag = philo->init->is_end;
-	if (flag)
-		return (pthread_mutex_unlock(&philo->init->end),
-			pthread_mutex_unlock(&philo->init->write_lock), 1);
+	stop = philo->init->is_end;
+	if (stop)
+		return (pthread_mutex_unlock(&philo->init->end), 1);
 	pthread_mutex_unlock(&philo->init->end);
-	time = get_current_time() - philo->times.first_time;
-	printf("[%ldms] %d %s\n", time, philo->nb_print, str);
+	pthread_mutex_lock(&philo->init->write_lock);
+	printf("[%ldms] %d %s\n", time, philo->nb, msg);
 	pthread_mutex_unlock(&philo->init->write_lock);
-	return (0);
-}
-
-int	msg_error(char *text, int digit)
-{
-	if (text)
-		write(2, text, ft_strlen(text) + 1);
-	return (digit);
+	return (1);
 }
 
 void	ft_clean(t_init *init)
@@ -79,7 +52,7 @@ void	ft_clean(t_init *init)
 	int	i;
 
 	i = 0;
-	while (i < init->philo_count)
+	while (i < init->nb_philo)
 	{
 		pthread_join(init->philos[i]->thread, NULL);
 		pthread_mutex_lock(&init->philos[i]->meal_lock);
