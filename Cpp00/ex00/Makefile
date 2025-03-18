@@ -12,7 +12,7 @@ RED		:= \033[91m
 GREEN		:= \033[92m
 
 # Fichiers sources
-SRC_FILES	= megaphone.cpp
+SRC_FILES	= src/megaphone.cpp
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Commandes
