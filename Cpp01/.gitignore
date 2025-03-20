@@ -70,5 +70,6 @@ Makefile.gen
 .DS_Store
 
 # My Files
+.vscode
 zombie
 PTR_REF
