@@ -3,7 +3,7 @@ CC		= c++
 CPPFLAGS	= -std=c++98 -Wall -Wextra -Werror
 
 # Nom de l'exécutable
-NAME		= zombie
+NAME		= PTR_REF2
 
 # Couleurs
 RESET		:= \033[0m
@@ -13,12 +13,15 @@ GREEN		:= \033[92m
 
 # Fichiers sources
 SRC_FILES	= src/main.cpp \
-			src/Zombie.cpp \
-			src/zombieHorde.cpp
+			src/HumanA.cpp \
+			src/HumanB.cpp \
+			src/Weapon.cpp
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Includes
-INC			= inc/Zombie.hpp
+INC			= inc/HumanA.hpp \
+			inc/HumanB.hpp \
+			inc/Weapon.hpp
 
 # Commandes
 RM		= rm -f

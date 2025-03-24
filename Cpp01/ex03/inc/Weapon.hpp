@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 10:25:23 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/20 13:32:22 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:13:46 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class Weapon
         Weapon( std::string n );
         ~Weapon();
         const std::string& getType();
-        void setType( std::string &new_weapon );
+        void setType( std::string new_weapon );
 };
 
 #endif

@@ -6,12 +6,13 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 13:30:52 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/20 13:32:33 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:31:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/HumanA.hpp"
 #include "../inc/HumanB.hpp"
+#include "../inc/Weapon.hpp"
 
 int main()
 {
