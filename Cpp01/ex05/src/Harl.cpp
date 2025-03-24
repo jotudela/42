@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:31:13 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/24 13:31:13 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:43:00 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void Harl::complain( std::string level )
             (this->*ptrInfo)();
             break;
         case 'W':
-            (this->*ptrError)();
+            (this->*ptrWarning)();
             break;
         case 'E':
             (this->*ptrError)();
