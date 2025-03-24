@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 14:04:53 by mmeuric           #+#    #+#              #
-#    Updated: 2025/03/24 15:49:22 by jotudela         ###   ########.fr        #
+#    Updated: 2025/03/24 16:01:31 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@make -s -C src/libft fclean
+	@make -s -C src/cmds_minishell fclean
 	@echo "$(BOLD)$(RED)[Executable removed!]$(RESET)"
 
 re: fclean all
