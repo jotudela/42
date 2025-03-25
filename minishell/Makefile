@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 14:04:53 by mmeuric           #+#    #+#              #
-#    Updated: 2025/03/24 16:01:31 by jotudela         ###   ########.fr        #
+#    Updated: 2025/03/25 15:35:46 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,30 +16,8 @@ NAME = minishell
 RESET		:= \033[0m
 BOLD		:= \033[1m
 RED		:= \033[91m
+DARK_BLUE	:= \033[34m
 GREEN		:= \033[92m
-
-# Parametres pour Valgrind.supp
-VALGRIND_SUPP :=\
-{\
-"   ignore_libreadline_leaks"\
-"   Memcheck:Leak"\
-"   ..."\
-"   obj:*/libreadline.so.*"\
-}\
-{\
-"   ignore_ls_leaks"\
-"   Memcheck:Leak"\
-"   obj:*/ls*"\
-}\
-{\
-"   ignore_still_reachable"\
-"   Memcheck:Leak"\
-"   match-leak-kinds:reachable"\
-"   fun:*"\
-}
-
-# Options Valgrind
-OPT_VAL := --suppressions=.valgrind.supp --leak-check=full --trace-children=yes --track-fds=yes
 
 # Détection de l'OS et configuration de Readline
 ifeq ($(shell uname -s), Darwin)
@@ -81,7 +59,7 @@ GLOBAL_HEADERS = include/globals.h
 all: banner $(OBJSFOLDER) $(LIBFT) $(L_BUILTINS) $(NAME)
 
 banner:
-	@echo "$(CYAN)"
+	@echo "$(DARK_BLUE)"
 	@echo " ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     " 
 	@echo " ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     " 
 	@echo " ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     " 
@@ -125,13 +103,4 @@ fclean: clean
 
 re: fclean all
 
-test:
-	@./minishell
-
-test_valgrind:
-	@touch .valgrind.supp
-	@printf "%s\n" $(VALGRIND_SUPP) > .valgrind.supp
-	@valgrind $(OPT_VAL) ./minishell
-	@rm -f .valgrind.supp
-
-.PHONY: all clean fclean re test test_valgrind
+.PHONY: all clean fclean re
