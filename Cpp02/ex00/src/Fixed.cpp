@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:27:08 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/25 12:30:44 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:55:15 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ Fixed::Fixed(): value(0)
     cout << "Default constructor called" << endl;
 }
 
-Fixed::Fixed( Fixed const& other )
+Fixed::Fixed( Fixed const& copy )
 {
     cout << "Copy constructor called" << endl;
-    *this = other;
+    *this = copy;
 }
 
 Fixed::~Fixed()
@@ -47,6 +47,5 @@ int Fixed::getRawBits( void ) const
 
 void Fixed::setRawBits( int const raw )
 {
-    cout << "setRawBits member function called" << endl;
-    this->value = raw << fractionalBits;
+    this->value = raw;
 }

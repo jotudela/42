@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:07:25 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/25 12:18:05 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:55:29 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class Fixed
     public:
         Fixed();
         ~Fixed();
-        Fixed( Fixed const& other );
+        Fixed( Fixed const& copy );
         Fixed& operator=( const Fixed& other );
         int getRawBits( void ) const;
         void setRawBits( int const raw );
