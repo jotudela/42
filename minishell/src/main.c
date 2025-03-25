@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:55:32 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/25 13:39:33 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:18:44 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,15 @@ int	main(int _, char **__, char **envp)
 
 	initialize_shell(envp, attrs, _, __);
 	if (signal(SIGTSTP, handler_SIGTSTP) == SIG_ERR)
-		exit(1);
+	{
+        perror("Erreur lors de l'attachement du gestionnaire de signal");
+        exit(1);
+    }
 	while (true)
 	{
 		if (g_signal_status != 88)
 			prompt_pwd();
 		command_line = readline("💻 ");
-		if (signal(SIGTSTP, handler_SIGTSTP) == SIG_ERR)
-        	exit(1);
 		if (parse_and_execute(command_line))
 			break ;
 		g_signal_status = 0;
