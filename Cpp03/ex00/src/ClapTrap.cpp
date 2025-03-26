@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:11:56 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 13:35:55 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:26:13 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ ClapTrap::~ClapTrap()
 ClapTrap& ClapTrap::operator=( const ClapTrap& other )
 {
     if (this != &other){
-        cout << "ClapTrap " << this->name << " is now " << other.name << " !" << endl;
         this->name = other.name;
         this->health = other.health;
         this->energy = other.energy;
         this->damage = other.damage;
+        cout << "ClapTrap " << this->name << " is now " << other.name << " !" << endl;
     }
     return *this;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScavTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:05:09 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 14:13:47 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:29:57 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ using std::endl;
 
 ScavTrap::ScavTrap( string n ): ClapTrap(n)
 {
+    this->health = 100;
+    this->energy = 50;
+    this->damage = 20;
     cout << "ScavTrap " << name << " has been created !" << endl;
 }
 
 ScavTrap::~ScavTrap()
 {
-    cout << "ScavTrap " << this->name << " has been desroyed !" << endl;
+    cout << "ScavTrap " << this->name << " has been destroyed !" << endl;
 }
 
 ScavTrap& ScavTrap::operator=( const ScavTrap& other )
@@ -40,15 +43,38 @@ ScavTrap& ScavTrap::operator=( const ScavTrap& other )
 
 ScavTrap::ScavTrap( ScavTrap const& copy ): ClapTrap(copy)
 {
+    this->health = copy.health;
+    this->energy = copy.energy;
+    this->damage = copy.damage;
     cout << "ScavTrap copy constructor called for " << copy.name << endl; 
 }
 
 void ScavTrap::guardGate()
 {
-    cout << "ScavTrap " << this->name << " is now on Guard keeper mod !" << endl;
+    cout << "ScavTrap " << this->name << " is now in Gate Keeper mode!" << endl;
 }
 
-int ScavTrap::getAttacksDamage( void ){ return this->damage; }
+void ScavTrap::attack( const string& target )
+{
+    if (this->energy <= 0){
+        cout << "ScavTrap " << this->name << " has no energy to do anythings !" << endl;
+        return ;
+    }
+    if (this->health <= 0){
+        cout << "ScavTrap " << this->name << " has no health !" << endl;
+        return ;
+    }
+    this->energy -= 1;
+    cout << "ScavTrap "
+        << this->name
+        << " attacks "
+        << target
+        << ", causing "
+        << this->damage
+        << " points of damage !" << endl;
+}
+
+int ScavTrap::getAttacksDamage( void ) const { return this->damage; }
 
 void ScavTrap::printStats( void )
 {

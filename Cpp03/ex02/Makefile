@@ -19,7 +19,7 @@ SRC_FILES	= src/main.cpp \
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Includes
-INC			= inc/FragTrap.hpp
+INC			= inc/ScavTrap.hpp
 
 # Commandes
 RM		= rm -f

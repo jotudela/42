@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:45:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 14:42:07 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:12:15 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ class ScavTrap : public ClapTrap
 
         //Basic functions
         ScavTrap( std::string n );
-        virtual~ScavTrap();
+        ~ScavTrap();
         ScavTrap( ScavTrap const& copy );
         ScavTrap& operator=( const ScavTrap& other );
 
         //Ohter functions
-        virtual void guardGate();
-        int getAttacksDamage( void );
+        void guardGate();
+        void attack( const std::string& target );
+        int getAttacksDamage( void ) const;
         void printStats( void );
 };
 

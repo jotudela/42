@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 14:28:23 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 14:44:49 by jotudela         ###   ########.fr       */
+/*   Created: 2025/03/26 19:13:04 by jojo              #+#    #+#             */
+/*   Updated: 2025/03/26 19:36:32 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _FRAGTRAP_HPP_
 # define _FRAGTRAP_HPP_
 
-# include "../inc/ScavTrap.hpp"
+# include "../inc/ClapTrap.hpp"
 
-class FragTrap : public ScavTrap
+class FragTrap : public ClapTrap
 {
     public:
 
@@ -25,8 +25,11 @@ class FragTrap : public ScavTrap
         FragTrap( FragTrap const& copy );
         FragTrap& operator=( const FragTrap& other );
 
-        //Other functions
-        void hightFivesGuys( void );
+        //Ohter functions
+        void highFivesGuys( void );
+        void attack( const std::string& target );
+        int getAttacksDamage( void ) const;
+        void printStats( void );
 };
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:11:56 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 14:01:16 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:44:46 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ using std::string;
 using std::cout;
 using std::endl;
 
-ClapTrap::ClapTrap( string n ): name(n), health(100), energy(50), damage(20)
+ClapTrap::ClapTrap( string n ): name(n), health(10), energy(10), damage(0)
 {
     cout << "ClapTrap " << name << " has created !" << endl;
 }
@@ -28,8 +28,11 @@ ClapTrap::~ClapTrap()
 
 ClapTrap& ClapTrap::operator=( const ClapTrap& other )
 {
-    if (this != &other){
-        cout << "ClapTrap " << this->name << " is now " << other.name << " !" << endl;
+    if (this != &other) {
+        if (this->name.empty())
+            cout << "ClapTrap has no name and is now " << other.name << " !" << endl;
+        else
+            cout << "ClapTrap " << this->name << " is now " << other.name << " !" << endl;
         this->name = other.name;
         this->health = other.health;
         this->energy = other.energy;
@@ -37,6 +40,7 @@ ClapTrap& ClapTrap::operator=( const ClapTrap& other )
     }
     return *this;
 }
+
 
 ClapTrap::ClapTrap( ClapTrap const& copy )
 {

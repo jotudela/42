@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:53:03 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 14:21:48 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:45:55 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int main(void) {
 
     std::cout << "\n=== Test de la copie ===" << std::endl;
     ScavTrap c(a);  // Test du constructeur de copie
+    ScavTrap d("test");
+    d = c;
 
     std::cout << "\n=== Test des dégâts et réparation ===" << std::endl;
     b.attack("David");
