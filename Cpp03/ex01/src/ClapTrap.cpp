@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:11:56 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 13:35:55 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:01:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ using std::string;
 using std::cout;
 using std::endl;
 
-ClapTrap::ClapTrap( string n ): name(n), health(10), energy(10), damage(0)
+ClapTrap::ClapTrap( string n ): name(n), health(100), energy(50), damage(20)
 {
     cout << "ClapTrap " << name << " has created !" << endl;
 }
@@ -74,6 +74,9 @@ void ClapTrap::takeDamage( unsigned int amount )
         cout << "ClapTrap " << this->name << " has no Health !" << endl;
         return ;
     }
+    this->health -= amount;
+    if (this->health < 0)
+        this->health = 0;
     cout << "ClapTrap "
         << this->name
         << " take "
@@ -97,10 +100,13 @@ void ClapTrap::beRepaired( unsigned int amount )
         cout << "ClapTrap " << this->name << " has max Health !" << endl;
         return ;
     }
+    this->health += amount;
+    if (this->health > 100)
+        this->health = 100;
     this->energy -= 1;
     cout << "ClapTrap "
         << this->name
-        << "repaire him "
+        << " repaire him "
         << amount
         << " health, now he have "
         << this->health
