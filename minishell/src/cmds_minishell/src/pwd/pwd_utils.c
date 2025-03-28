@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:37:31 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/18 03:19:45 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:42:42 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*pwd_cmd(char *str)
 		set_env_value(ft_strdup("OLDPWD"), ft_strdup(pwd_node -> value), 1);
 	else
 		set_env_value(ft_strdup("OLDPWD"), ft_strdup(""), 1);
-	free(pwd);
 	pwd = trim_path(str);
 	set_env_value(ft_strdup("PWD"), ft_strdup(pwd), 1);
 	return (pwd);
@@ -69,5 +68,5 @@ char	*trim_path(char *pwd)
 		i++;
 	}
 	result = contruct_path(slices);
-	return (free_list(slices), result);
+	return (result);
 }

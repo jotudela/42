@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:40:28 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/06 14:40:30 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:49:29 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ void	set_env_value(char *key, char *value, int equal_sign)
 			edit_env(node, value, 1);
 		else
 			free(value);
-		free(key);
+		//free(key);
 	}
 }

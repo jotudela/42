@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:11:16 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/06 14:11:17 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:08:24 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	exec_redir(t_ast_redir *tree, bool forked)
 		}
 		set_exit_status(0);
 	}
-	(free(file_name), executor(tree->cmd, forked));
+	(/*free(file_name), */executor(tree->cmd, forked));
 	if (fd_backup != tree->fd)
 		(dup2(fd_backup, tree->fd), close(fd_backup));
 }
@@ -84,7 +84,7 @@ void	exec_exe(t_ast_exec *exe, bool forked)
 		exit(get_exit_status());
 	}
 	wait_and_exit_status(pid);
-	free_list(argv);
+	//free_list(argv);
 	exit_if_forked(forked);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:55:17 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/06 14:55:19 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:26:12 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_strbuilder	*sb_append_int(t_strbuilder *sb, int nb)
 
 void	sb_free(t_strbuilder *sb)
 {
-	free(sb->str);
-	free(sb);
+	(void)sb;
+//	free(sb->str);
+//	free(sb);
 }

@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:20:51 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/20 00:38:33 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:53:17 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,11 @@ void	free_tok_lst(t_token *tok)
 		return ;
 	while (tok)
 	{
-		free(tok->value);
+	//	free(tok->value);
 		free_tok_lst(tok->nospace_next);
 		tmp = tok;
+		(void)tmp;
 		tok = tok->next;
-		free(tmp);
+	//	free(tmp);
 	}
 }

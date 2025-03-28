@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
+#    By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/06 14:04:53 by mmeuric           #+#    #+#              #
-#    Updated: 2025/03/25 15:35:46 by jotudela         ###   ########.fr        #
+#    Updated: 2025/03/28 00:59:08 by mmeuric          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ OBJS = $(patsubst %.c, $(OBJSFOLDER)%.o, $(SRCS))
 # Gestion des Builtins
 BUILTINS_FOLD = src/cmds_minishell
 BUILTINS_FILES = src/builtin_dispatcher.c src/global_utils.c src/global_utils2.c src/lst_operations.c src/parse_utils.c \
-                 src/cd/cd.c src/cd/cds_nuts.c src/cd/path_utils.c \
+                 src/cd/cd.c src/cd/cds_utils.c src/cd/path_utils.c \
                  src/echo/echo.c src/echo/echo_utils.c \
                  src/env/env.c src/env/env_utils.c \
                  src/exit/exit.c \

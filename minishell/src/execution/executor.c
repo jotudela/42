@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:12:49 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/06 14:12:52 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:28:42 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	free_list(char **list)
 
 	i = 0;
 	while (list[i])
-		free(list[i++]);
-	free(list);
+		i++;
+//		free(list[i++]);
+//	free(list);
 }
 
 void	executor(t_ast_cmd *tree, bool forked)

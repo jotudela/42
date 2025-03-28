@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 23:31:21 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/18 04:14:28 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:27:23 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ typedef struct s_env
 	struct s_env	*prev;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_alloc {
+    void *ptr;
+    struct s_alloc *next;
+} t_alloc;
+
+extern t_alloc *g_allocs;
+void ft_free_all(void);
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -76,5 +84,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				free_list(char **args);
 char				*get_next_line(int fd);
 void				*ft_malloc(unsigned long size);
+void				ft_free_all(void);
+
 
 #endif

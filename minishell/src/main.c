@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:55:32 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/25 14:55:42 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:31:15 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <parser.h>
 #include <signals.h>
 #include <termios.h>
+#include "libft.h"
+
 
 int		g_signal_status;
 
@@ -102,6 +104,11 @@ bool	parse_and_execute(char *command_line)
 		ft_putendl_fd("exit", 1);
 		return (free(command_line), true);
 	}
+	// Si la commande est "exit", on sort du shell
+    if (ft_strcmp(command_line, "exit") == 0)
+    {
+        return (free(command_line), true);  // Retourne true pour quitter
+    }
 	lexer(command_line, &tokens);
 	if (parser(tokens, &ast))
 		executor(ast, false);
@@ -115,6 +122,16 @@ bool	parse_and_execute(char *command_line)
 		add_history(command_line);
 	}
 	return (free_ast(ast), free(command_line), false);
+}
+
+void ft_free_all(void) {
+    t_alloc *tmp;
+    while (g_allocs) {
+        tmp = g_allocs;
+        g_allocs = g_allocs->next;
+        free(tmp->ptr);
+        free(tmp); // Libération de la structure elle-même
+    }
 }
 
 /*
@@ -147,5 +164,6 @@ int	main(int _, char **__, char **envp)
 		g_signal_status = 0;
 		tty_attr(attrs, ATTR_SET);
 	}
+	ft_free_all();
 	exit(get_exit_status());
 }

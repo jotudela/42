@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:09:32 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/18 04:14:50 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:20:34 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	tok_error(char which)
 {
-	set_exit_status(258);
+	set_exit_status(255);
 	write(2, "42Shell: unexpected token `", 27);
 	write(2, &which, 1);
 	write(2, "'\n", 2);
@@ -22,7 +22,7 @@ void	tok_error(char which)
 
 void	unclosed_error(char which)
 {
-	set_exit_status(258);
+	set_exit_status(255);
 	write(2, "42shell: unclosed quote `", 25);
 	write(2, &which, 1);
 	write(2, "'\n", 2);
@@ -30,7 +30,7 @@ void	unclosed_error(char which)
 
 void	syntax_error(char *where)
 {
-	set_exit_status(258);
+	set_exit_status(255);
 	write(2, "42shell: syntax error near unexpected token `", 45);
 	ft_putstr_fd(where, 2);
 	write(2, "'\n", 2);
