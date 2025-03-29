@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:55:32 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/28 13:31:15 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/29 11:43:08 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,20 @@ void	tty_attr(struct termios *attrs, int action)
 void	initialize_shell(char **envp, struct termios *attrs, ...)
 {
 	char	*tmp;
+	int		value;
 
 	create_env(envp);
 	tmp = getcwd(NULL, 0);
 	rl_catch_signals = false;
 	pwd_cmd(tmp);
 	free(tmp);
+	tmp = get_env_value(" SHLVL");
+	value = ft_atoi(tmp);
+	value += 1;
+	if (value > 1000)
+		value = 1;
+	tmp = ft_itoa(value);
+	set_env_value(ft_strdup("SHLVL"), ft_strdup(tmp), 1);
 	install_default_sig_handlers();
 	tty_attr(attrs, ATTR_GET);
 	tty_attr(attrs, ATTR_CHG);

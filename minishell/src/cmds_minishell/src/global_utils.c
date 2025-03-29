@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:40:18 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/20 15:17:30 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/29 11:38:53 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*get_env_value(char *var)
 	t_env	*node;
 
 	node = search_in_env(get_envp(NULL), var + 1);
-	free(var);
 	if (!node)
 		return (ft_strdup(""));
 	value = node->value;
