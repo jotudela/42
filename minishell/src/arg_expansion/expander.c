@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:15:09 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 16:06:36 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/20 00:20:04 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*expand_env(char *to_expand, bool in_quote, bool ignore_env)
 		if (!ignore_env && *ptr == '$' && len > 1)
 		{
 			if (len == 2 && ptr[1] == '?')
-				(/*free(chunk), */chunk = ft_itoa(get_exit_status()));
+				(free(chunk), chunk = ft_itoa(get_exit_status()));
 			else
 			{
 				chunk = get_env_value(chunk);
@@ -43,7 +43,7 @@ char	*expand_env(char *to_expand, bool in_quote, bool ignore_env)
 		}
 		(sb_append_free(sb, chunk), ptr += len);
 	}
-	return (/*free(to_expand),*/ to_expand = sb->str, /*free(sb),*/ to_expand);
+	return (free(to_expand), to_expand = sb->str, free(sb), to_expand);
 }
 
 char	*expand(t_token *tok, bool ignore_env)
@@ -88,7 +88,7 @@ void	expand_nosp_arg(t_token *sub_tok, t_str **lst, bool ignore_env)
 		else
 			add_str_lst(to_join, lst, iter != 0, sub_tok);
 		sub_tok = sub_tok->nospace_next;
-		(iter++);
+		(free(to_join), iter++);
 	}
 }
 

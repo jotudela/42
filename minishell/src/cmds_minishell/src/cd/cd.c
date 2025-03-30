@@ -3,99 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 14:30:03 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 11:08:09 by mmeuric          ###   ########.fr       */
+/*   Created: 2025/03/30 12:39:29 by jojo              #+#    #+#             */
+/*   Updated: 2025/03/30 12:40:28 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd_utils.h"
 #include <stdio.h>
-/*
-int	cd(char *arg, t_env *env)
+
+int	cd_home(t_env *env)
 {
 	t_env	*node;
 
-	if (!arg)
+	node = search_in_env(env, "HOME");
+	if (!node)
 	{
-		node = search_in_env(env, "HOME");
-		if (!node)
-		{
-			printf("cd: HOME not set\n");
-			return (1);
-		}
-		else
-			return (change_directory(node->value));
+		printf("cd: HOME not set\n");
+		return (1);
 	}
-	else
-		return (change_directory(arg));
+	return (change_directory(node->value));
 }
 
-int	cd(char *arg, t_env *env)
+int	cd_oldpwd(t_env *env)
 {
 	t_env	*node;
 	int		ret;
 
-	if (!arg)
+	node = search_in_env(env, "OLDPWD");
+	if (!node)
 	{
-		node = search_in_env(env, "HOME");
-		if (!node)
-		{
-			printf("cd: HOME not set\n");
-			return (1);
-		}
-		else
-			return (change_directory(node->value));
+		printf("cd: OLDPWD not set\n");
+		return (1);
 	}
-	else if (!ft_strcmp(arg, "-"))
-	{
-		node = search_in_env(env, "OLDPWD");
-		if (!node)
-		{
-			printf("cd: OLDPWD not set\n");
-			return (1);
-		}
-		ret = change_directory(node->value);
-		// Affichage du nouveau chemin comme le fait bash lors de "cd -"
-		if (ret == 0)
-			printf("%s\n", node->value);
-		return (ret);
-	}
-	else
-		return (change_directory(arg));
+	ret = change_directory(node->value);
+	if (ret == 0)
+		printf("%s\n", node->value);
+	return (ret);
 }
-*/
+
 int	cd(char *arg, t_env *env)
 {
-	t_env	*node;
-	int		ret;
-
 	if (!arg)
-	{
-		node = search_in_env(env, "HOME");
-		if (!node)
-		{
-			printf("cd: HOME not set\n");
-			return (1);
-		}
-		else
-			return (change_directory(node->value)); // Ajout de env
-	}
-	else if (!ft_strcmp(arg, "-"))
-	{
-		node = search_in_env(env, "OLDPWD");
-		if (!node)
-		{
-			printf("cd: OLDPWD not set\n");
-			return (1);
-		}
-		ret = change_directory(node->value); // Ajout de env
-		// Affichage du nouveau chemin comme le fait bash lors de "cd -"
-		if (ret == 0)
-			printf("%s\n", node->value);
-		return (ret);
-	}
-	else
-		return (change_directory(arg)); // Ajout de env
+		return (cd_home(env));
+	if (!ft_strcmp(arg, "-"))
+		return (cd_oldpwd(env));
+	return (change_directory(arg));
 }

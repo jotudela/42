@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cds_utils.c                                        :+:      :+:    :+:   */
+/*   cd_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:30:18 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/28 13:42:45 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/30 03:33:10 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,55 +46,6 @@ int	change_directory(char *dir)
 	return (status);
 }
 
-
-#include <stdlib.h>
-#include <string.h>
-#include "libft.h"  // Assure-toi que ft_strdup est bien inclus
-
-/*
-int	change_directory(char *dir)
-{
-	char	*old_pwd;
-	char	*new_pwd;
-	char	*path;
-	int		status;
-
-	if (!dir)
-		return (1);
-
-	// Récupérer l'ancien répertoire (PWD avant changement)
-	old_pwd = pwd_cmd(NULL);
-	if (!old_pwd)
-		old_pwd = ft_strdup(""); // Sécurité si PWD n'est pas défini
-
-	// Tenter de changer de répertoire
-	if (chdir(dir) == -1)
-	{
-		perror("chdir");
-		free(old_pwd);
-		return (1);
-	}
-
-	// Récupérer le nouveau chemin absolu après le changement
-	path = structure_path(old_pwd, dir);
-	if (!is_dir(path))
-	{
-		print_err(dir, -5);
-		free(path);
-		free(old_pwd);
-		return (1);
-	}
-
-	// Mettre à jour OLDPWD et PWD dans l'environnement
-	update_env(env, "OLDPWD", old_pwd);
-	update_env(env, "PWD", path);
-
-	// Nettoyage et retour du statut
-	free(old_pwd);
-	free(path);
-	return (0);
-}
-*/
 char	*contruct_path(char **path)
 {
 	t_strbuilder	*sb;
@@ -110,7 +61,7 @@ char	*contruct_path(char **path)
 		path++;
 	}
 	consumed = sb->str;
-	//free(sb);
+	free(sb);
 	return (consumed);
 }
 

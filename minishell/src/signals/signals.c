@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:52:42 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/25 14:58:35 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/30 12:00:06 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,15 @@
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	if (waitpid(-1, NULL, WNOHANG) == -1)
-	{
-		printf("\n");
-		prompt_pwd();
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		set_exit_status(1);
-		g_signal_status = 69;
-	}
+	if (waitpid(-1, &sig, WNOHANG) == 0)
+		return ;
+	printf("\n");
+	prompt_pwd();
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	set_exit_status(130);
+	g_signal_status = 69;
 }
 
 void	heredoc_sigint_handler(int sig)
@@ -40,7 +39,7 @@ void	handle_default_sig_handlers(int action)
 	if (action == SET)
 	{
 		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, sigquit_handler);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else
 	{

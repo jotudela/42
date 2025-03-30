@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:51:54 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 15:41:29 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/18 04:32:10 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_ast(t_ast_cmd *tree)
 		free_ast(((t_ast_binary *)tree)->left);
 		free_ast(((t_ast_binary *)tree)->right);
 	}
-	//free(tree);
+	free(tree);
 }
 
 t_ast_cmd	*redir_file(t_token **current)

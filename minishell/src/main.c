@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:55:32 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/29 11:43:08 by jojo             ###   ########.fr       */
+/*   Updated: 2025/03/30 16:31:41 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,8 @@
 #include <parser.h>
 #include <signals.h>
 #include <termios.h>
-#include "libft.h"
-
 
 int		g_signal_status;
-
-/*
-** Affiche le répertoire de travail actuel sous une forme 
-** colorée dans le prompt.
-*/
-void	prompt_pwd(void)
-{
-	ft_putstr_fd("" BLUE, 1);
-	ft_putstr_fd(pwd_cmd(NULL), 1);
-	ft_putendl_fd("" NOCOL "", 1);
-}
 
 /*
 ** Modifie ou récupère les attributs du terminal en fonction de 
@@ -83,16 +70,34 @@ void	initialize_shell(char **envp, struct termios *attrs, ...)
 	rl_catch_signals = false;
 	pwd_cmd(tmp);
 	free(tmp);
-	tmp = get_env_value(" SHLVL");
+	tmp = get_env_value(ft_strdup(" SHLVL"));
 	value = ft_atoi(tmp);
 	value += 1;
 	if (value > 1000)
 		value = 1;
+	free(tmp);
 	tmp = ft_itoa(value);
 	set_env_value(ft_strdup("SHLVL"), ft_strdup(tmp), 1);
+	free(tmp);
 	install_default_sig_handlers();
 	tty_attr(attrs, ATTR_GET);
 	tty_attr(attrs, ATTR_CHG);
+}
+
+void	free_env(void)
+{
+	t_env	*env;
+	t_env	*prev;
+
+	env = *get_envp_internal(NULL);
+	while (env)
+	{
+		free(env->key);
+		free(env->value);
+		prev = env;
+		env = env->next;
+		free(prev);
+	}
 }
 
 /*
@@ -108,15 +113,13 @@ bool	parse_and_execute(char *command_line)
 	t_ast_cmd	*ast;
 
 	if (!command_line)
+		return (ft_putendl_fd("exit", 1),
+			free_env(), free(command_line), true);
+	if (ft_strcmp(command_line, "exit") == 0)
 	{
-		ft_putendl_fd("exit", 1);
-		return (free(command_line), true);
+		(free(command_line), free_env(), free(pwd_cmd(NULL)));
+		exit(get_exit_status());
 	}
-	// Si la commande est "exit", on sort du shell
-    if (ft_strcmp(command_line, "exit") == 0)
-    {
-        return (free(command_line), true);  // Retourne true pour quitter
-    }
 	lexer(command_line, &tokens);
 	if (parser(tokens, &ast))
 		executor(ast, false);
@@ -130,16 +133,6 @@ bool	parse_and_execute(char *command_line)
 		add_history(command_line);
 	}
 	return (free_ast(ast), free(command_line), false);
-}
-
-void ft_free_all(void) {
-    t_alloc *tmp;
-    while (g_allocs) {
-        tmp = g_allocs;
-        g_allocs = g_allocs->next;
-        free(tmp->ptr);
-        free(tmp); // Libération de la structure elle-même
-    }
 }
 
 /*
@@ -157,11 +150,11 @@ int	main(int _, char **__, char **envp)
 	struct termios	attrs[3];
 
 	initialize_shell(envp, attrs, _, __);
-	if (signal(SIGTSTP, handler_SIGTSTP) == SIG_ERR)
+	if (signal(SIGTSTP, handler_sigtstp) == SIG_ERR)
 	{
-        perror("Erreur lors de l'attachement du gestionnaire de signal");
-        exit(1);
-    }
+		perror("Erreur lors de l'attachement du gestionnaire de signal");
+		exit(get_exit_status());
+	}
 	while (true)
 	{
 		if (g_signal_status != 88)
@@ -172,6 +165,6 @@ int	main(int _, char **__, char **envp)
 		g_signal_status = 0;
 		tty_attr(attrs, ATTR_SET);
 	}
-	ft_free_all();
+	free(pwd_cmd(NULL));
 	exit(get_exit_status());
 }

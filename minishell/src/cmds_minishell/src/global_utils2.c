@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:40:28 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 13:49:29 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/30 16:33:08 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ void	set_env_value(char *key, char *value, int equal_sign)
 		append_to_env(env, key, value, equal_sign);
 	else
 	{
-		if (ft_strlen(value))
+		if (value && !ft_strchr(key, '='))
 			edit_env(node, value, 1);
 		else
 			free(value);
-		//free(key);
+		free(key);
 	}
 }

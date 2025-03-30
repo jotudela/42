@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:16:11 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/28 13:36:54 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:24:37 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_join_last(t_str **lst, char *str, bool to_expand)
 		return (ft_stradd_back(lst, new_str(str, to_expand)));
 	joined = ft_strjoin(str_last->str, str);
 	old_to_expand = str_last->wild_card;
+	free(str_last->str);
 	str_last->str = joined;
 	str_last->wild_card = old_to_expand || to_expand;
 }
@@ -65,7 +66,7 @@ void	add_str_lst(char *str, t_str **lst, bool join_to_last, t_token *tok)
 char	**consume_argv(t_str *lst)
 {
 	char	**argv;
-//	t_str	*tmp;
+	t_str	*tmp;
 	int		i;
 	int		len;
 
@@ -75,9 +76,9 @@ char	**consume_argv(t_str *lst)
 	while (i < len)
 	{
 		argv[i++] = lst->str;
-	//	tmp = lst;
+		tmp = lst;
 		lst = lst->next;
-	//	free(tmp);
+		free(tmp);
 	}
 	argv[i] = NULL;
 	return (argv);

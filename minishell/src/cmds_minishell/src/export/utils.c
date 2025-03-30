@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:35:39 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 14:26:04 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/06 14:35:41 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	edit_env(t_env *node, char *value, int equal_sign)
 {
 	if (!node || !value)
 		return ;
+	free(node->value);
 	node->value = value;
 	node->equal_sign = equal_sign;
 }

@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:29:53 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 11:07:13 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/06 14:29:55 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 # define CD_UTILS_H
 # include <global_utils.h>
 
-//int		change_directory(char *dir);
-int	change_directory(char *dir);
+int		change_directory(char *dir);
 char	*structure_path(char *curr_dir, char *dir);
 char	*join_paths(char *dirname, char *basename);
 char	*join_dir_chunks(char *dirname, char *basename);

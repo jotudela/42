@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:35:25 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/06 14:35:27 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/30 17:05:03 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	export(int argc, char **argv, t_env **env)
 {
-	int		i;
 	char	*ptr;
 	char	*key;
 	int		res;
@@ -23,12 +22,12 @@ int	export(int argc, char **argv, t_env **env)
 		return (1);
 	if (!argc)
 		return (print_exports(*env));
-	i = 0;
 	res = 0;
-	while (i < argc)
+	while (*argv)
 	{
-		ptr = argv[i++];
-		if (validate_arg(ptr))
+		ptr = *argv++;
+		if ((!ft_strchr(ptr, '=') && search_in_env(*env, ptr))
+			|| validate_arg(ptr))
 		{
 			res = 1;
 			continue ;

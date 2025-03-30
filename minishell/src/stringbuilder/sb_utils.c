@@ -6,7 +6,7 @@
 /*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:52:51 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/27 14:11:20 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/06 14:52:52 by mmeuric          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	sb_reallocate(t_strbuilder *sb, size_t len)
 	sb->capacity = align(sb->used_len + len + 1);
 	new = ft_calloc(1, sb->capacity);
 	ft_memcpy(new, sb->str, sb->used_len);
-	//free(sb->str);
+	free(sb->str);
 	sb->str = new;
 }
