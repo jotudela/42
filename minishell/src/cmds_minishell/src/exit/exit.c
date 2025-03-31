@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:34:08 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/06 14:34:29 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/31 16:17:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	my_exit(int argc, char *arg)
 	if (arg && !check_arg(arg))
 	{
 		print_err(arg, -6);
-		exit(255);
+		exit(get_exit_status());
 	}
 	if (argc > 1)
 	{

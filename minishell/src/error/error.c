@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmeuric <mmeuric@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:09:32 by mmeuric           #+#    #+#             */
-/*   Updated: 2025/03/18 04:14:50 by mmeuric          ###   ########.fr       */
+/*   Updated: 2025/03/31 16:21:13 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	print_err(char *preced, int msg_code)
 	else if (msg_code == -5)
 		(sb_append(sb, ": No such file or directory\n"), set_exit_status(1));
 	else if (msg_code == -6)
-		(sb_append(sb, ": numeric argument required\n"), set_exit_status(255));
+		(sb_append(sb, ": numeric argument required\n"), set_exit_status(2));
 	if (msg_code == 0)
 		perror(sb->str);
 	else
