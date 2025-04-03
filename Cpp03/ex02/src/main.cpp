@@ -6,12 +6,12 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:53:03 by jotudela          #+#    #+#             */
-/*   Updated: 2025/03/26 19:49:58 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/03 14:56:06 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"  // Inclure ScavTrap pour tester ScavTrap
-#include "FragTrap.hpp"  // Inclure FragTrap pour tester FragTrap
+#include "../inc/ScavTrap.hpp"  // Inclure ScavTrap pour tester ScavTrap
+#include "../inc/FragTrap.hpp"  // Inclure FragTrap pour tester FragTrap
 
 using std::cout;
 using std::endl;
