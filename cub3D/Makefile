@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/04/16 17:09:48 by jojo             ###   ########.fr        #
+#    Updated: 2025/04/28 16:25:30 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 ### ARGUMENTS
 
 NAME		= cub3D
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 CC			= cc
 
 # Libft
@@ -49,7 +49,10 @@ BLUE				:= \033[94m
 
 # SRC
 SRC_FILES	= main \
-			error
+			error \
+			init_and_check/ft_init \
+			init_and_check/get_rgb_value \
+			init_and_check/get_texture_path
 
 SRC_DIR := src
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
@@ -89,8 +92,8 @@ clean:
 	@make clean -sC $(LIBFT_PATH)
 	@rm -f $(OBJ_FILES)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o cub3D's files   🌀$(RESET)"
-	@make clean -sC $(MLX_PATH)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
+#	@make clean -sC $(MLX_PATH)
+#	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
 
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)

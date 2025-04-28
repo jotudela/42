@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/28 10:54:34 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/28 16:35:14 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ t_data  *init_data(void)
     if (!data->map)
         (error("error: allocation fail\n"), free(data), exit(1));
     return (data);
+}
+
+void    free_tab(char **tab)
+{
+    int i;
+
+    i = 0;
+    while (tab[i])
+    {
+        free(tab[i]);
+        i++;
+    }
+    free(tab);
 }
 
 void    free_data(t_data **data)
@@ -47,10 +60,11 @@ void    free_data(t_data **data)
         free((*data)->img.path_WE);
     if ((*data)->img.path_EA)
         free((*data)->img.path_EA);
-    if ((*data)->map.tab)
-        free_tab((*data)->map.tab);
-    if ((*data)->map.tmp)
-        free_tab((*data)->map.tmp);
+    if ((*data)->map->tab)
+        free_tab((*data)->map->tab);
+    if ((*data)->map->tmp)
+        free_tab((*data)->map->tmp);
+    free((*data)->map);
     free(*data);
     *data = NULL;
 }
@@ -77,4 +91,5 @@ int main(int ac, char **av)
     ft_is_good_format(av[1]);
     data = init_data();
     ft_init_data(&data, av[1]);
+    free_data(&data);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/16 18:29:16 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/28 16:02:43 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,9 @@ typedef struct s_data
 }           t_data;
 
 void    error(char *str);
+int    ft_init_data(t_data **data, char *file);
+void    free_data(t_data **data);
+int ft_get_rgb(t_data **data, char *line);
+void  ft_get_texture_path(t_data **data, char *line);
 
 #endif
