@@ -1,0 +1,102 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
+#    Updated: 2025/04/16 17:09:48 by jojo             ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+###################################################
+### ARGUMENTS
+
+NAME		= cub3D
+CFLAGS		= -Wall -Wextra -Werror
+CC			= cc
+
+# Libft
+LIBFT_NAME			:= libmaster.a
+LIBFT_PATH			:= Utils/
+UTILS				:= $(LIBFT_PATH)$(LIBFT_NAME)
+
+# MLX
+MLX_NAME			:= libmlx.a
+MLX_PATH			:= minilibx-linux/
+MLX					:= $(MLX_PATH)$(MLX_NAME)
+
+# Includes
+INC_MANDATORY		= -I ./inc/\
+					-I ./minilibx-linux/
+
+###################################################
+## COLORS
+
+RESET				:= \033[0m
+BOLD				:= \033[1m
+RED					:= \033[91m
+GREEN				:= \033[92m
+YELLOW				:= \033[33m
+ORANGE				:= \033[93m
+BLUE				:= \033[94m
+
+###################################################
+### SOURCES
+
+## MANDATORY PART
+
+# SRC
+SRC_FILES	= main \
+			error
+
+SRC_DIR := src
+SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
+
+# OBJ
+OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
+
+###################################################
+## RULES
+
+all: $(UTILS) $(NAME)
+
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
+
+$(UTILS):
+	@make -sC $(LIBFT_PATH)
+	@echo "\n\n$(BOLD)$(BLUE)-----------------------------------------------\n\n$(RESET)"
+
+$(MLX):
+	@echo "$(BOLD)$(RED)🛠️      Compiling MiniLibX      🛠️$(RESET)"
+	@echo "\n"	
+	@make all -sC $(MLX_PATH)
+	@echo "\n"	
+	@echo "$(BOLD)$(GREEN)😎     MiniLibX Compiled    😎$(RESET)"
+	@echo "\n"
+	@echo "$(BOLD)$(BLUE)-----------------------------------------------$(RESET)"
+	@echo "\n"
+
+$(NAME): $(UTILS) $(OBJ_FILES)
+	@echo "$(BOLD)$(RED)🛠️      Compiling cub3D    🛠️$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(UTILS) $(INC_MANDATORY) -lm -lz -o $(NAME)
+	@echo "$(BOLD)$(GREEN)🚀      cub3D fully compiled, ready to use       🚀$(RESET)"
+	@echo "\n$(BOLD)Usage: ./cub3D maps/map.cub$(RESET)"
+
+clean:
+	@make clean -sC $(LIBFT_PATH)
+	@rm -f $(OBJ_FILES)
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o cub3D's files   🌀$(RESET)"
+	@make clean -sC $(MLX_PATH)
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
+
+fclean: clean
+	@make fclean -sC $(LIBFT_PATH)
+	@rm -f $(NAME)
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned cub3D exec       🌀$(RESET)"
+
+re: fclean all
+
+.PHONY: all clean fclean re
