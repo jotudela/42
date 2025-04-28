@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rgb_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:58:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/28 17:47:42 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/28 21:50:12 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int ft_get_rgb_value(const char *str, int *index)
 
     while (str[i] == ' ' || str[i] == '\t')
         i++;
-    if (!str[i]) // Fin de string
+    if (!str[i])
         return (-1);
     if (str[i] == '-' || str[i] == '+')
         return (-1);
-    if (!(str[i] >= '0' && str[i] <= '9')) // Ce n'était pas prévu !
+    if (!(str[i] >= '0' && str[i] <= '9'))
         return (-1);
     while (str[i] >= '0' && str[i] <= '9')
     {
@@ -51,7 +51,7 @@ static int parse_rgb_values(char *tmp, int *rgb)
                 i++;
             if (tmp[i] != ',')
                 return (-1);
-            i++; // Avancer après la virgule
+            i++;
         }
         j++;
     }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
+#    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/04/28 16:25:30 by jotudela         ###   ########.fr        #
+#    Updated: 2025/04/28 18:56:58 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ $(MLX):
 
 $(NAME): $(UTILS) $(OBJ_FILES)
 	@echo "$(BOLD)$(RED)🛠️      Compiling cub3D    🛠️$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) $(UTILS) $(INC_MANDATORY) -lm -lz -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(UTILS) $(INC_MANDATORY) -lm -o $(NAME)
 	@echo "$(BOLD)$(GREEN)🚀      cub3D fully compiled, ready to use       🚀$(RESET)"
 	@echo "\n$(BOLD)Usage: ./cub3D maps/map.cub$(RESET)"
 
