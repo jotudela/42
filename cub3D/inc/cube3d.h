@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/29 11:05:10 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:04:43 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_map
     char        unknown;
     int     player;
     char        dir;
+    int     map_x;
+    int     map_y;
 }           t_map;
 
 typedef struct s_image
@@ -56,8 +58,8 @@ typedef struct s_image
     int     Cg; //vert
     int     Cb; //bleu
 
-    int     x;
-    int     y;
+    int     img_x;
+    int     img_y;
 }       t_image;
 
 typedef struct s_data
@@ -80,5 +82,8 @@ int ft_get_rgb(t_data **data, char *line);
 void  ft_get_texture_path(t_data **data, char *line);
 int    ft_reallocTab(t_data **data, char *line);
 int     ft_coppyTab(t_data **data);
+int     ft_checkPlayer(t_data **data);
+int     ft_checkChar(t_data **data);
+int flood_fill(t_data **data, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:30:27 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/29 11:06:06 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:36:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int     ft_coppyTab(t_data **data)
     int len_tab;
     int i;
 
+    if (!(*data)->map->tab)
+        return (-1);
     len_tab = ft_lenTab((*data)->map->tab) + 1;
     (*data)->map->tmp = ft_calloc(sizeof(char *), len_tab);
     if (!(*data)->map->tmp)

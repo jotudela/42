@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/04/29 10:55:31 by jotudela         ###   ########.fr        #
+#    Updated: 2025/04/29 13:12:42 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ SRC_FILES	= main \
 			init_and_check/get_texture_path \
 			init_and_check/ft_reallocTab \
 			init_and_check/ft_isGoodFormat \
-			init_and_check/init_and_free_data
+			init_and_check/init_and_free_data \
+			init_and_check/ft_checkMap
 
 SRC_DIR := src
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
