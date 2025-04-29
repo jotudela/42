@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/29 13:50:03 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:51:18 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void    print_data(t_data **data)
     if ((*data)->map->tmp)
     {
         i = 0;
-        while ((*data)->map->tab[i])
-            printf("%s", (*data)->map->tab[i++]);
+        while ((*data)->map->tmp[i])
+            printf("%s", (*data)->map->tmp[i++]);
         printf("\n");
     }
     printf("%c\n", (*data)->map->dir);
