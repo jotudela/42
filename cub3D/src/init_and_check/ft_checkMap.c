@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_checkMap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:56:00 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/29 15:43:42 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:52:25 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int     ft_checkPlayer(t_data **data)
     }
     if ((*data)->map->player > 1)
         return (-1);
+    else if ((*data)->map->player <= 0)
+        return (-2);
     ft_find_xy(data);
     return (0);
 }
@@ -95,12 +97,13 @@ int     ft_checkChar(t_data **data)
 
 int flood_fill(t_data **data, int x, int y)
 {
-    char **tmp = (*data)->map->tmp;
+    char **tmp;
     char current;
-
-    if (!tmp[y])
+    
+    tmp = (*data)->map->tmp;
+    if (y < 0 || !tmp[y])
         return (-1);
-    if ((int)ft_strlen(tmp[y]) <= x)
+    if (tmp[y][0] == '\0' || (int)ft_strlen(tmp[y]) <= x || x < 0)
         return (-1);
     current = tmp[y][x];
     if (current == '1' || current == 'V')
@@ -118,4 +121,3 @@ int flood_fill(t_data **data, int x, int y)
         return (-1);
     return (0);
 }
-
