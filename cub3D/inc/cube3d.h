@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/28 16:02:43 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:05:10 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,17 @@ typedef struct s_data
     t_image img;
 }           t_data;
 
+t_data  *init_data(void);
+void    free_tab(char **tab);
+void    free_data(t_data **data);
+void    ft_is_good_format(char *file);
 void    error(char *str);
 int    ft_init_data(t_data **data, char *file);
 void    free_data(t_data **data);
+void    free_tab(char **tab);
 int ft_get_rgb(t_data **data, char *line);
 void  ft_get_texture_path(t_data **data, char *line);
+int    ft_reallocTab(t_data **data, char *line);
+int     ft_coppyTab(t_data **data);
 
 #endif

@@ -6,80 +6,28 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/28 16:35:14 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:07:58 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cube3d.h"
 
-t_data  *init_data(void)
+void    print_data(t_data **data)
 {
-    t_data  *data;
-
-    data = ft_calloc(sizeof(*data), 1);
-    if (!data)
-        (error("error: allocation fail\n"), exit(1));
-    data->mlx = NULL;
-    data->win = NULL;
-    data->map = ft_calloc(sizeof(t_map), 1);
-    if (!data->map)
-        (error("error: allocation fail\n"), free(data), exit(1));
-    return (data);
-}
-
-void    free_tab(char **tab)
-{
-    int i;
-
+    int i = 0;
+    printf("path_NO: %s", (*data)->img.path_NO ? (*data)->img.path_NO : "NULL");
+    printf("path_SO: %s", (*data)->img.path_SO ? (*data)->img.path_SO : "NULL");
+    printf("path_WE: %s", (*data)->img.path_WE ? (*data)->img.path_WE : "NULL");
+    printf("path_EA: %s", (*data)->img.path_EA ? (*data)->img.path_EA : "NULL");
+    printf("C: %d\n", (*data)->img.C);
+    printf("F: %d\n\n", (*data)->img.F);
+    while ((*data)->map->tab[i])
+        printf("%s", (*data)->map->tab[i++]);
+    printf("\n\n\n");
     i = 0;
-    while (tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
-}
-
-void    free_data(t_data **data)
-{
-    if (!data || !*data)
-        return;
-    if ((*data)->img.NO)
-        free((*data)->img.NO);
-    if ((*data)->img.SO)
-        free((*data)->img.SO);
-    if ((*data)->img.WE)
-        free((*data)->img.WE);
-    if ((*data)->img.EA)
-        free((*data)->img.EA);
-    if ((*data)->img.path_NO)
-        free((*data)->img.path_NO);
-    if ((*data)->img.path_SO)
-        free((*data)->img.path_SO);
-    if ((*data)->img.path_WE)
-        free((*data)->img.path_WE);
-    if ((*data)->img.path_EA)
-        free((*data)->img.path_EA);
-    if ((*data)->map->tab)
-        free_tab((*data)->map->tab);
-    if ((*data)->map->tmp)
-        free_tab((*data)->map->tmp);
-    free((*data)->map);
-    free(*data);
-    *data = NULL;
-}
-
-void    ft_is_good_format(char *file)
-{
-    int len;
-
-    len = ft_strlen(file) - 1;
-    if (file[len] != 'b'
-        || file[len - 1] != 'u'
-        || file[len - 2] != 'c'
-        || file[len - 3] != '.')
-        (error("error: file: format is not on .cub !\n"), exit(1));
-    return ;
+    while ((*data)->map->tab[i])
+        printf("%s", (*data)->map->tab[i++]);
+    printf("\n");
 }
 
 int main(int ac, char **av)
@@ -91,5 +39,6 @@ int main(int ac, char **av)
     ft_is_good_format(av[1]);
     data = init_data();
     ft_init_data(&data, av[1]);
+    print_data(&data);
     free_data(&data);
 }
