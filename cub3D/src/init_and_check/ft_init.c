@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/29 18:39:15 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/30 09:23:11 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube3d.h"
 
-static int    ft_take_data2(t_data **data, int fd)
+static void ft_cleanGnl(int fd)
+{
+    char    *line;
+
+    line = get_next_line(fd);
+    while (line != NULL)
+    {
+        free(line);
+        line = get_next_line(fd);
+    }
+}
+
+static void ft_skipEmptyLine(int fd)
 {
     char    *line;
 
@@ -25,6 +37,21 @@ static int    ft_take_data2(t_data **data, int fd)
             line = get_next_line(fd);
             continue;
         }
+        else
+            return (free(line));
+    }
+}
+
+static int    ft_take_data2(t_data **data, int fd)
+{
+    char    *line;
+
+    ft_skipEmptyLine(fd);
+    line = get_next_line(fd);
+    while (line != NULL)
+    {
+        if (line[0] == '\n' && ft_strlen(line) == 1)
+            return (free(line), ft_cleanGnl(fd), -1);
         if (ft_reallocTab(data, line) == -1)
             return (free(line), -1);
         free(line);
