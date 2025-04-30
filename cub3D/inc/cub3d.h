@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 13:39:27 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:12:34 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ typedef struct s_image
     int     img_x;
     int     img_y;
 
-    // Image à dessiner
+    //Image à dessiner
     void    *img_ptr;
     char    *addr;
     int     bits_per_pixel;
     int     size_line;
     int     endian;
+
+    //Pour generer les textures
+    int     x;
+    int     y;
 }       t_image;
 
 typedef struct s_data

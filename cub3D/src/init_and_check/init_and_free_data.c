@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 13:56:44 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:46:56 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,17 @@ void    free_tab(char **tab)
 
 static void free_data2(t_data **data)
 {
+    if ((*data)->img.NO)
+        mlx_destroy_image((*data)->mlx, (*data)->img.NO);
+    if ((*data)->img.SO)
+        mlx_destroy_image((*data)->mlx, (*data)->img.SO);
+    if ((*data)->img.WE)
+        mlx_destroy_image((*data)->mlx, (*data)->img.WE);
+    if ((*data)->img.EA)
+        mlx_destroy_image((*data)->mlx, (*data)->img.EA);
     if ((*data)->img.img_ptr)
         mlx_destroy_image((*data)->mlx, (*data)->img.img_ptr);
-    if ((*data)->mlx)
+    if ((*data)->mlx && (*data)->win)
         mlx_destroy_window((*data)->mlx, (*data)->win);
     if ((*data)->mlx)
         (mlx_destroy_display((*data)->mlx), free((*data)->mlx));
@@ -54,14 +62,6 @@ void    free_data(t_data **data)
 {
     if (!data || !*data)
         return;
-    if ((*data)->img.NO)
-        free((*data)->img.NO);
-    if ((*data)->img.SO)
-        free((*data)->img.SO);
-    if ((*data)->img.WE)
-        free((*data)->img.WE);
-    if ((*data)->img.EA)
-        free((*data)->img.EA);
     if ((*data)->img.path_NO)
         free((*data)->img.path_NO);
     if ((*data)->img.path_SO)

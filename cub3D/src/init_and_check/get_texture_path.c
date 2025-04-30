@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:01:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:53 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:00:34 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ static void ft_verif_is_allocated(t_data ** data, int dir)
         free((*data)->img.path_WE);
     else if ((*data)->img.path_EA && dir == 3)
         free((*data)->img.path_EA);
+}
+
+static char *add_quotes(char *line)
+{
+    
 }
 
 void  ft_get_texture_path(t_data **data, char *line)
