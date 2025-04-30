@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 12:47:39 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:39:27 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,16 @@ typedef struct s_image
     int     Cg; //vert
     int     Cb; //bleu
 
+    //Taile de la fenetre
     int     img_x;
     int     img_y;
+
+    // Image à dessiner
+    void    *img_ptr;
+    char    *addr;
+    int     bits_per_pixel;
+    int     size_line;
+    int     endian;
 }       t_image;
 
 typedef struct s_data
@@ -88,6 +96,7 @@ int     flood_fill(t_data **data, int x, int y);
 void    cub3d(t_data **data);
 int     key_press(int keycode, t_data *data);
 int     close_cross(t_data *data);
+void    create_img(t_data **data);
 
 /* Functions utils */
 void    error(char *str);

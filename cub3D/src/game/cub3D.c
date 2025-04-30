@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 12:50:21 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:02:13 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static void generate(t_data **data)
                     (*data)->img.img_x, (*data)->img.img_y, "TEST");
     if (!(*data)->win)
         (free_data(data), error("Error\nGenerate new window failed !\n"), exit(1));
+    create_img(data);
 }
 
 void    cub3d(t_data **data)
 {
     generate(data);
+    mlx_put_image_to_window((*data)->mlx, (*data)->win, (*data)->img.img_ptr, 0, 0);
     mlx_key_hook((*data)->win, key_press, *data);
     mlx_hook((*data)->win, 17, 0, close_cross, *data);
     mlx_loop((*data)->mlx);
