@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 12:21:31 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:06:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void    free_data(t_data **data)
     if ((*data)->map->tmp)
         free_tab((*data)->map->tmp);
     free((*data)->map);
-    free_data2(data);
-    free(*data);
+    (free_data2(data), free(*data));
     *data = NULL;
 }
