@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_reallocTab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:30:27 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:46 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:57:47 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int    ft_reallocTab(t_data **data, char *line)
     int     len_tab;
     int     i;
 
+    if (!line)
+        return (0);
     if (!(*data)->map->tab)
         return (ft_allocFirst(data, line));
     len_tab = ft_lenTab((*data)->map->tab) + 2;

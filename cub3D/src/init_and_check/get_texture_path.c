@@ -6,7 +6,7 @@
 /*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:01:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 19:00:24 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/30 22:06:47 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char *add_quotes(char *line)
     int     i;
 
     tmp = ft_strtrim(line, " \t");
-    dest = ft_calloc(sizeof(char), (ft_strlen(tmp) + 3));
+    dest = ft_calloc(sizeof(char), (ft_strlen(tmp) + 2));
     if (!dest)
         return (free(tmp), NULL);
     dest[0] = '"';
@@ -41,7 +41,7 @@ static char *add_quotes(char *line)
         dest[i + 1] = tmp[i];
         i++;
     }
-    dest[i + 2] = '"';
+    dest[i] = '"';
     free(tmp);
     return (dest);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:37 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:55:10 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ static int    ft_take_data2(t_data **data, int fd)
     while (line != NULL)
     {
         if (line[0] == '\n' && ft_strlen(line) == 1)
-            return (free(line), ft_cleanGnl(fd), -1);
+        {
+            free(line);
+            line = ft_skipEmptyLine(fd);
+            if (line != NULL)
+                return (free(line), ft_cleanGnl(fd), -1);
+        }
         if (ft_reallocTab(data, line) == -1)
             return (free(line), -1);
         free(line);

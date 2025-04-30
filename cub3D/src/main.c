@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 17:36:29 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 22:11:23 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void    print_data(t_data **data)
 {
     int i = 0;
-    printf("path_NO: %s", (*data)->img.path_NO ? (*data)->img.path_NO : "NULL");
-    printf("path_SO: %s", (*data)->img.path_SO ? (*data)->img.path_SO : "NULL");
-    printf("path_WE: %s", (*data)->img.path_WE ? (*data)->img.path_WE : "NULL");
-    printf("path_EA: %s", (*data)->img.path_EA ? (*data)->img.path_EA : "NULL");
+    printf("path_NO: %s\n", (*data)->img.path_NO ? (*data)->img.path_NO : "NULL");
+    printf("path_SO: %s\n", (*data)->img.path_SO ? (*data)->img.path_SO : "NULL");
+    printf("path_WE: %s\n", (*data)->img.path_WE ? (*data)->img.path_WE : "NULL");
+    printf("path_EA: %s\n", (*data)->img.path_EA ? (*data)->img.path_EA : "NULL");
     printf("C: %d\n", (*data)->img.C);
     printf("F: %d\n\n", (*data)->img.F);
     if ((*data)->map->tab)
