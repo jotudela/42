@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 09:23:11 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:58:33 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void ft_cleanGnl(int fd)
     }
 }
 
-static void ft_skipEmptyLine(int fd)
+static char *ft_skipEmptyLine(int fd)
 {
     char    *line;
 
@@ -38,16 +38,16 @@ static void ft_skipEmptyLine(int fd)
             continue;
         }
         else
-            return (free(line));
+            return (line);
     }
+    return (NULL);
 }
 
 static int    ft_take_data2(t_data **data, int fd)
 {
     char    *line;
 
-    ft_skipEmptyLine(fd);
-    line = get_next_line(fd);
+    line = ft_skipEmptyLine(fd);
     while (line != NULL)
     {
         if (line[0] == '\n' && ft_strlen(line) == 1)
