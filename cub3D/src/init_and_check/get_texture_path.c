@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_texture_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:01:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 18:00:34 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:00:24 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,24 @@ static void ft_verif_is_allocated(t_data ** data, int dir)
 
 static char *add_quotes(char *line)
 {
-    
+    char    *tmp;
+    char    *dest;
+    int     i;
+
+    tmp = ft_strtrim(line, " \t");
+    dest = ft_calloc(sizeof(char), (ft_strlen(tmp) + 3));
+    if (!dest)
+        return (free(tmp), NULL);
+    dest[0] = '"';
+    i = 0;
+    while (tmp[i])
+    {
+        dest[i + 1] = tmp[i];
+        i++;
+    }
+    dest[i + 2] = '"';
+    free(tmp);
+    return (dest);
 }
 
 void  ft_get_texture_path(t_data **data, char *line)
@@ -44,11 +61,11 @@ void  ft_get_texture_path(t_data **data, char *line)
         dir = 3;
     ft_verif_is_allocated(data, dir);
     if (dir == 0)
-        (*data)->img.path_NO = ft_strtrim(line + 2, " \t");
+        (*data)->img.path_NO = add_quotes(line + 2);
     else if (dir == 1)
-        (*data)->img.path_SO = ft_strtrim(line + 2, " \t");
+        (*data)->img.path_SO = add_quotes(line + 2);
     else if (dir == 2)
-        (*data)->img.path_WE = ft_strtrim(line + 2, " \t");
+        (*data)->img.path_WE = add_quotes(line + 2);
     else if (dir == 3)
-        (*data)->img.path_EA = ft_strtrim(line + 2, " \t");
+        (*data)->img.path_EA = add_quotes(line + 2);
 }
