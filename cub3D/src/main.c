@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:19 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:25:54 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int main(int ac, char **av)
     ft_is_good_format(av[1]);
     data = init_data();
     ft_init_data(&data, av[1]);
-    //print_data(&data);
+    cub3d(&data);
     free_data(&data);
 }

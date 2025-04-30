@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 10:24:09 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:47:39 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "../Utils/libft/libft.h"
 # include "../Utils/ft_printf/ft_printf.h"
 # include "../Utils/get_next_line/get_next_line_bonus.h"
+# include <X11/keysym.h>
 # include "../minilibx-linux/mlx.h"
 
 typedef struct s_map
@@ -85,6 +86,8 @@ int     flood_fill(t_data **data, int x, int y);
 
 /* Functions for game */
 void    cub3d(t_data **data);
+int     key_press(int keycode, t_data *data);
+int     close_cross(t_data *data);
 
 /* Functions utils */
 void    error(char *str);

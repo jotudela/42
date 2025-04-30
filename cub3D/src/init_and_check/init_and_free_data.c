@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:57 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:21:31 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ void    free_tab(char **tab)
     free(tab);
 }
 
+static void free_data2(t_data **data)
+{
+    if ((*data)->mlx)
+        mlx_destroy_window((*data)->mlx, (*data)->win);
+    if ((*data)->mlx)
+        (mlx_destroy_display((*data)->mlx), free((*data)->mlx));
+}
+
 void    free_data(t_data **data)
 {
     if (!data || !*data)
@@ -65,6 +73,7 @@ void    free_data(t_data **data)
     if ((*data)->map->tmp)
         free_tab((*data)->map->tmp);
     free((*data)->map);
+    free_data2(data);
     free(*data);
     *data = NULL;
 }
