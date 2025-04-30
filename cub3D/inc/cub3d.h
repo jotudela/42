@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d.h                                           :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/29 18:40:27 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/30 10:24:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <math.h>
 # include "../Utils/libft/libft.h"
 # include "../Utils/ft_printf/ft_printf.h"
-#include "../Utils/get_next_line/get_next_line_bonus.h"
-//# include "../minilibx-linux/mlx.h"
+# include "../Utils/get_next_line/get_next_line_bonus.h"
+# include "../minilibx-linux/mlx.h"
 
 typedef struct s_map
 {
@@ -69,20 +69,26 @@ typedef struct s_data
     t_image img;
 }           t_data;
 
+/* Functions for parsing and check */
 t_data  *init_data(void);
-void    free_tab(char **tab);
-void    free_data(t_data **data);
-void    ft_is_good_format(char *file);
-void    error(char *str);
-int    ft_init_data(t_data **data, char *file);
-void    free_data(t_data **data);
-void    free_tab(char **tab);
-int ft_get_rgb(t_data **data, char *line);
-void  ft_get_texture_path(t_data **data, char *line);
-int    ft_reallocTab(t_data **data, char *line);
+int     ft_init_data(t_data **data, char *file);
+int     ft_get_rgb(t_data **data, char *line);
+void    ft_get_texture_path(t_data **data, char *line);
+int     ft_reallocTab(t_data **data, char *line);
 int     ft_coppyTab(t_data **data);
+
+/* Functions for check all data */
+void    ft_is_good_format(char *file);
 int     ft_checkPlayer(t_data **data);
 int     ft_checkChar(t_data **data);
-int flood_fill(t_data **data, int x, int y);
+int     flood_fill(t_data **data, int x, int y);
+
+/* Functions for game */
+void    cub3d(t_data **data);
+
+/* Functions utils */
+void    error(char *str);
+void    free_tab(char **tab);
+void    free_data(t_data **data);
 
 #endif

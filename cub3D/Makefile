@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/04/29 13:12:42 by jotudela         ###   ########.fr        #
+#    Updated: 2025/04/30 10:14:36 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ SRC_FILES	= main \
 			init_and_check/ft_reallocTab \
 			init_and_check/ft_isGoodFormat \
 			init_and_check/init_and_free_data \
-			init_and_check/ft_checkMap
+			init_and_check/ft_checkMap \
+			game/cub3D
 
 SRC_DIR := src
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
@@ -67,7 +68,7 @@ OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 ###################################################
 ## RULES
 
-all: $(UTILS) $(NAME)
+all: $(MLX) $(UTILS) $(NAME)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
@@ -86,9 +87,9 @@ $(MLX):
 	@echo "$(BOLD)$(BLUE)-----------------------------------------------$(RESET)"
 	@echo "\n"
 
-$(NAME): $(UTILS) $(OBJ_FILES)
+$(NAME): $(MLX) $(UTILS) $(OBJ_FILES)
 	@echo "$(BOLD)$(RED)🛠️      Compiling cub3D    🛠️$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) $(UTILS) $(INC_MANDATORY) -lm -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(MLX) $(UTILS) $(INC_MANDATORY) -lXext -lX11 -lm -lz -o $(NAME)
 	@echo "$(BOLD)$(GREEN)🚀      cub3D fully compiled, ready to use       🚀$(RESET)"
 	@echo "\n$(BOLD)Usage: ./cub3D maps/map.cub$(RESET)"
 
@@ -96,8 +97,8 @@ clean:
 	@make clean -sC $(LIBFT_PATH)
 	@rm -f $(OBJ_FILES)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o cub3D's files   🌀$(RESET)"
-#	@make clean -sC $(MLX_PATH)
-#	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
+	@make clean -sC $(MLX_PATH)
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
 
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)

@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isGoodFormat.c                                  :+:      :+:    :+:   */
+/*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 10:53:48 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:41 by jotudela         ###   ########.fr       */
+/*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
+/*   Updated: 2025/04/30 10:16:46 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-void    ft_is_good_format(char *file)
+void    cub3d(t_data **data)
 {
-    int len;
-
-    len = ft_strlen(file) - 1;
-    if (file[len] != 'b'
-        || file[len - 1] != 'u'
-        || file[len - 2] != 'c'
-        || file[len - 3] != '.')
-        (error("error: file: format is not on .cub !\n"), exit(1));
-    return ;
+    
 }

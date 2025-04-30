@@ -6,11 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:30:27 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/29 12:36:53 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:15:46 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube3d.h"
+#include "../../inc/cub3d.h"
 
 static int  ft_lenTab(char **tab)
 {

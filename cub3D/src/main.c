@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/29 16:51:18 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/30 10:15:19 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cube3d.h"
+#include "../inc/cub3d.h"
 
-void    print_data(t_data **data)
+/*void    print_data(t_data **data)
 {
     int i = 0;
     printf("path_NO: %s", (*data)->img.path_NO ? (*data)->img.path_NO : "NULL");
@@ -37,7 +37,7 @@ void    print_data(t_data **data)
     printf("%c\n", (*data)->map->dir);
     printf("%i\n", (*data)->map->map_x);
     printf("%i\n", (*data)->map->map_y);
-}
+}*/
 
 int main(int ac, char **av)
 {
@@ -48,6 +48,6 @@ int main(int ac, char **av)
     ft_is_good_format(av[1]);
     data = init_data();
     ft_init_data(&data, av[1]);
-    print_data(&data);
+    //print_data(&data);
     free_data(&data);
 }

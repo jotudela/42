@@ -6,11 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:01:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/29 14:52:22 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:15:53 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube3d.h"
+#include "../../inc/cub3d.h"
 
 static void ft_verif_is_allocated(t_data ** data, int dir)
 {

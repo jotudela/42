@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_rgb_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:58:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/28 21:50:12 by jojo             ###   ########.fr       */
+/*   Updated: 2025/04/30 10:15:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube3d.h"
+#include "../../inc/cub3d.h"
 
 static int ft_get_rgb_value(const char *str, int *index)
 {
