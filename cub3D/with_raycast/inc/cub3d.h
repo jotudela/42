@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/01 13:53:54 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/04/30 22:11:09 by jojo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,6 @@
 # include "../Utils/get_next_line/get_next_line_bonus.h"
 # include <X11/keysym.h>
 # include "../minilibx-linux/mlx.h"
-
-/* Configuration de la fenetre */
-# define TEXTURE_WIDTH 64
-# define TEXTURE_HEIGHT 64
-# define FOV 60
-
-/* Couleurs définies pour faciliter le débogage */
-# define RED 0xFF0000
-# define GREEN 0x00FF00
-# define BLUE 0x0000FF
-# define WHITE 0xFFFFFF
-# define BLACK 0x000000
-
-/* Codes des touches */
-# define KEY_ESC 65307
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_M 109  /* Pour activer/désactiver la minimap */
-
-/* Paramètres du joueur */
-# define MOVE_SPEED 0.05
-# define ROTATION_SPEED 0.03
-
-/* Structure pour les points et vecteurs */
-typedef struct s_vec
-{
-    double  x;
-    double  y;
-}           t_vec;
 
 typedef struct s_map
 {
@@ -79,9 +46,6 @@ typedef struct s_image
     char    *path_SO;
     char    *path_WE;
     char    *path_EA;
-    int     *texture_data[4]; /* Data de texture en pixels */
-    int     texture_width;
-    int     texture_height;
 
     //Variables pour le sol et le plafon
     int     F; //Sol
@@ -110,43 +74,12 @@ typedef struct s_image
     int     y;
 }       t_image;
 
-/* Structure pour le joueur */
-typedef struct s_player
-{
-    t_vec   pos;       /* Position x,y */
-    t_vec   dir;       /* Direction (vecteur unitaire) */
-    t_vec   plane;     /* Plan de caméra (perpendiculaire à dir) */
-    double  move_speed;
-    double  rot_speed;
-}           t_player;
-
-/* Structure pour le raycasting */
-typedef struct s_ray
-{
-    t_vec   dir;       /* Direction du rayon */
-    t_vec   delta_dist; /* Distance entre intersections */
-    t_vec   side_dist; /* Distance au prochain côté */
-    t_vec   map;       /* Position actuelle dans la grille */
-    t_vec   step;      /* Direction des pas (1 ou -1) */
-    int     side;      /* Mur touché (0 = vertical, 1 = horizontal) */
-    double  perp_wall_dist; /* Distance perpendiculaire au mur */
-    double  wall_x;    /* Coordonnée exacte de la collision */
-    int     line_height; /* Hauteur de la ligne à dessiner */
-    int     draw_start; /* Début de la ligne */
-    int     draw_end;   /* Fin de la ligne */
-    int     tex_x;     /* Coordonnée x de la texture */
-    int     tex_num;   /* Numéro de la texture à utiliser */
-}           t_ray;
-
 typedef struct s_data
 {
-    void        *mlx;
-    void        *win;
-    t_map       *map;
-    t_image     img;
-    t_player    player;
-    t_ray       ray;
-    int         minimap;
+    void    *mlx;
+    void    *win;
+    t_map   *map;
+    t_image img;
 }           t_data;
 
 /* Functions for parsing and check */
@@ -168,39 +101,6 @@ void    cub3d(t_data **data);
 int     key_press(int keycode, t_data *data);
 int     close_cross(t_data *data);
 void    create_img(t_data **data);
-void    init_player(t_data **data);
-void    load_textures(t_data **data);
-
-/* Functions for raycasting */
-void    raycast(t_data *data);
-void    calc_ray_dir(t_data *data, int x);
-void    perform_dda(t_data *data);
-void    calc_wall_height(t_data *data);
-void    draw_vertical_line(t_data *data, int x);
-void    draw_textured_line(t_data *data, int x);
-double  get_wall_x(t_data *data);
-int     get_tex_x(t_data *data, double wall_x);
-
-/* Functions for movement and controls */
-void    move_forward(t_data *data);
-void    move_backward(t_data *data);
-void    strafe_left(t_data *data);
-void    strafe_right(t_data *data);
-void    rotate_left(t_data *data);
-void    rotate_right(t_data *data);
-
-/* Functions for minimap (optional) */
-void    draw_minimap(t_data *data);
-void    draw_player_on_minimap(t_data *data);
-
-/* Functions for rendering */
-void    clear_screen(t_data *data);
-void    put_pixel(t_data *data, int x, int y, int color);
-int     game_loop(void *param);
-
-/* Math helper functions */
-double  normalize_angle(double angle);
-int     rgb_to_int(int r, int g, int b);
 
 /* Functions utils */
 void    error(char *str);
