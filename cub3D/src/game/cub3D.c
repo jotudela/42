@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 22:12:40 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/01 11:22:21 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ static int  generate_textures(t_data **data)
     (*data)->img.y = 32;
     (*data)->img.NO = mlx_xpm_file_to_image((*data)->mlx,
                     (*data)->img.path_NO,
-                    &(*data)->img.img_x,
-                    &(*data)->img.img_y);
+                    &(*data)->img.x,
+                    &(*data)->img.y);
     (*data)->img.SO = mlx_xpm_file_to_image((*data)->mlx,
                     (*data)->img.path_SO,
-                    &(*data)->img.img_x,
-                    &(*data)->img.img_y);
+                    &(*data)->img.x,
+                    &(*data)->img.y);
     (*data)->img.WE = mlx_xpm_file_to_image((*data)->mlx,
                     (*data)->img.path_WE,
-                    &(*data)->img.img_x,
-                    &(*data)->img.img_y);
+                    &(*data)->img.x,
+                    &(*data)->img.y);
     (*data)->img.EA = mlx_xpm_file_to_image((*data)->mlx,
                     (*data)->img.path_EA,
-                    &(*data)->img.img_x,
-                    &(*data)->img.img_y);
+                    &(*data)->img.x,
+                    &(*data)->img.y);
     if (!(*data)->img.NO || !(*data)->img.SO
         || !(*data)->img.WE || !(*data)->img.EA)
         return (-1);

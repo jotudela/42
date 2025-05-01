@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 22:11:23 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/01 10:58:26 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int ac, char **av)
     ft_is_good_format(av[1]);
     data = init_data();
     ft_init_data(&data, av[1]);
-    //print_data(&data);
+    print_data(&data);
     cub3d(&data);
     free_data(&data);
 }
