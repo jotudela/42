@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 09:26:10 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 13:32:19 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:54:46 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void draw_player(t_data *mlx, t_player *player, int tile_size)
 
     // Dessiner un trait pour marquer la direction (vert) avec une épaisseur
     int thickness = 5; // Choisis l'épaisseur que tu veux
-    draw_line_thick(mlx->mlx, mlx->win, px + size / 2, py + size / 2, directionX, directionY, 0xFF0000, thickness);
+    draw_line_thick(mlx->mlx, mlx->win, px + size / 2, py + size / 2, directionX, directionY, 0x00FF00, thickness);
 }

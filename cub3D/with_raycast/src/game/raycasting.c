@@ -6,20 +6,60 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:04:45 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 14:05:41 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:36:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
+static int get_pixel_color(t_image *img, int x, int y)
+{
+	char *pixel;
+
+	if (x < 0 || x >= img->img_x || y < 0 || y >= img->img_y)
+		return (0); // ou couleur par défaut
+
+	pixel = img->b_addr + (y * img->b_size_line + x * (img->b_bits_per_pixel / 8));
+	return (*(unsigned int *)pixel);
+}
+
+static void put_pixel_to_image2(t_image *img, int x, int y, int color)
+{
+    char *dst;
+
+    if (x < 0 || x >= img->img_x || y < 0 || y >= img->img_y)
+        return;
+    dst = img->f_addr + (y * img->f_size_line + x * (img->f_bits_per_pixel / 8));
+    *(unsigned int *)dst = color;
+}
+
+static void copy_image(t_image *img)
+{
+	for (int y = 0; y < img->img_y; y++)
+	{
+		for (int x = 0; x < img->img_x; x++)
+		{
+			int color = get_pixel_color(img, x, y);
+			put_pixel_to_image2(img, x, y, color);
+		}
+	}
+}
+
 void draw_vertical_line(t_data *data, int x, int drawStart, int drawEnd, int color)
 {
     for (int y = drawStart; y <= drawEnd; y++)
-        mlx_pixel_put(data->mlx, data->win, x, y, color);
+        put_pixel_to_image2(&data->img, x, y, color);
 }
 
 void raycasting(t_data *data)
 {
+    data->img.f_img_ptr = mlx_new_image(data->mlx, data->img.img_x, data->img.img_y);
+    data->img.f_addr = mlx_get_data_addr(
+        data->img.f_img_ptr,
+        &data->img.f_bits_per_pixel,
+        &data->img.f_size_line,
+        &data->img.f_endian);
+    copy_image(&(data)->img);
     for (int x = 0; x < data->img.img_x; x++)
     {
         double cameraX = 2 * x / (double)data->img.img_x - 1;
@@ -94,4 +134,6 @@ void raycasting(t_data *data)
         int color = (side == 1) ? 0xAAAAAA : 0xFFFFFF;
         draw_vertical_line(data, x, drawStart, drawEnd, color);
     }
+    mlx_put_image_to_window(data->mlx, data->win, data->img.f_img_ptr, 0, 0);
+    mlx_destroy_image(data->mlx, data->img.f_img_ptr);
 }

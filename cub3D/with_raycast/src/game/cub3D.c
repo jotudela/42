@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 14:05:27 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:11:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void init_player2(t_data **data, int x, int y)
         (*data)->player.dirX = 1;
         (*data)->player.dirY = 0;
         (*data)->player.planeX = 0;
-        (*data)->player.planeY = -0.66;
+        (*data)->player.planeY = 0.66;
     }
 }
 
@@ -70,7 +70,7 @@ static void init_player(t_data **data, int x, int y)
         (*data)->player.dirX = -1;
         (*data)->player.dirY = 0;
         (*data)->player.planeX = 0;
-        (*data)->player.planeY = 0.66;
+        (*data)->player.planeY = -0.66;
     }
     init_player2(data, x, y);
     (*data)->map->tab[y][x] = '0';
@@ -101,7 +101,6 @@ static void generate(t_data **data)
 void    cub3d(t_data **data)
 {
     generate(data);
-    mlx_put_image_to_window((*data)->mlx, (*data)->win, (*data)->img.img_ptr, 0, 0);
     raycasting(*data);
     mlx_hook((*data)->win, 2, 1L << 0, key_press, *data);
     mlx_hook((*data)->win, 3, 1L << 1, key_release, *data);

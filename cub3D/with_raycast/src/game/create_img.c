@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:38:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 09:36:03 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:13:40 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void ft_draw_img(t_data ** data)
                 color = (*data)->img.C;
             else
                 color = (*data)->img.F;
-            put_pixel((*data)->img.addr, x, y, color,
-                    (*data)->img.size_line, (*data)->img.bits_per_pixel);
+            put_pixel((*data)->img.b_addr, x, y, color,
+                    (*data)->img.b_size_line, (*data)->img.b_bits_per_pixel);
             x++;
         }
         y++;
@@ -48,14 +48,14 @@ static void ft_draw_img(t_data ** data)
 
 void    create_img(t_data **data)
 {
-    (*data)->img.img_ptr = mlx_new_image((*data)->mlx, (*data)->img.img_x, (*data)->img.img_y);
-    if (!(*data)->img.img_ptr)
+    (*data)->img.b_img_ptr = mlx_new_image((*data)->mlx, (*data)->img.img_x, (*data)->img.img_y);
+    if (!(*data)->img.b_img_ptr)
         (free_data(data), error("Error\nCreate new image failed !\n"), exit(1));
-    (*data)->img.addr = mlx_get_data_addr((*data)->img.img_ptr,
-                                            &(*data)->img.bits_per_pixel,
-                                            &(*data)->img.size_line,
-                                            &(*data)->img.endian);
-    if (!(*data)->img.addr)
+    (*data)->img.b_addr = mlx_get_data_addr((*data)->img.b_img_ptr,
+                                            &(*data)->img.b_bits_per_pixel,
+                                            &(*data)->img.b_size_line,
+                                            &(*data)->img.b_endian);
+    if (!(*data)->img.b_addr)
         (free_data(data), error("Error\nGet addr of image failed !\n"), exit(1));
     ft_draw_img(data);
 }
