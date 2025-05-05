@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 22:11:09 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/05 14:09:14 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 # include "../Utils/get_next_line/get_next_line_bonus.h"
 # include <X11/keysym.h>
 # include "../minilibx-linux/mlx.h"
+
+typedef struct s_minimap
+{
+    void    *m_img_ptr;
+    char    *m_pixels;
+    int     m_bits_per_pixel;
+    int     m_line_length;
+    int     m_endian;
+}           t_minimap;
 
 typedef struct s_map
 {
@@ -74,12 +83,36 @@ typedef struct s_image
     int     y;
 }       t_image;
 
+typedef struct s_player
+{
+    float x;
+    float y;
+    float dirX;
+    float dirY;
+    float planeX;
+    float planeY;
+}           t_player;
+
+typedef struct  s_keys
+{
+    int a;
+    int d;
+    int w;
+    int s;
+}           t_keys;
+
 typedef struct s_data
 {
-    void    *mlx;
-    void    *win;
-    t_map   *map;
-    t_image img;
+    void        *mlx;
+    void        *win;
+    int         is_map;
+    int         is_paused;
+    int         is_game;
+    t_map       *map;
+    t_minimap   minimap;
+    t_player    player;
+    t_image     img;
+    t_keys      keys;
 }           t_data;
 
 /* Functions for parsing and check */
@@ -99,8 +132,12 @@ int     flood_fill(t_data **data, int x, int y);
 /* Functions for game */
 void    cub3d(t_data **data);
 int     key_press(int keycode, t_data *data);
+int     key_release(int keycode, t_data *data);
+void    create_minimap(t_data **data);
+void    draw_player(t_data *mlx, t_player *player, int tile_size);
 int     close_cross(t_data *data);
 void    create_img(t_data **data);
+void    raycasting(t_data *data);
 
 /* Functions utils */
 void    error(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_free_data.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 22:11:48 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/05 11:19:06 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ t_data  *init_data(void)
     data->map = ft_calloc(sizeof(t_map), 1);
     if (!data->map)
         (error("error: allocation fail\n"), free(data), exit(1));
+    data->keys.a = 0;
+    data->keys.d = 0;
+    data->keys.w = 0;
+    data->keys.s = 0;
     return (data);
 }
 
@@ -42,6 +46,8 @@ void    free_tab(char **tab)
 
 static void free_data2(t_data **data)
 {
+    if ((*data)->minimap.m_img_ptr)
+        mlx_destroy_image((*data)->mlx, (*data)->minimap.m_img_ptr);
     if ((*data)->img.NO)
         mlx_destroy_image((*data)->mlx, (*data)->img.NO);
     if ((*data)->img.SO)
