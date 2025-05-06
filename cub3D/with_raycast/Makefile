@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/05/05 14:15:15 by jotudela         ###   ########.fr        #
+#    Updated: 2025/05/06 13:57:28 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC_FILES	= main \
 			init_and_check/get_texture_path \
 			init_and_check/ft_reallocTab \
 			init_and_check/ft_isGoodFormat \
+			init_and_check/normalize_map \
 			init_and_check/init_and_free_data \
 			init_and_check/ft_checkMap \
 			game/cub3D \

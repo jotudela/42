@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_reallocTab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:30:27 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 21:57:47 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/06 13:43:15 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-static int  ft_lenTab(char **tab)
+int  ft_lenTab(char **tab)
 {
     int i;
 
@@ -31,10 +31,34 @@ static int  ft_allocFirst(t_data **data, char *line)
     new_tab = ft_calloc(sizeof(char *), 2);
     if (!new_tab)
         return (-1);
+    if (line[ft_strlen(line) - 1] == '\n')
+        line[ft_strlen(line) - 1] = '\0';
     new_tab[0] = ft_strdup(line);
     new_tab[1] = NULL;
     (*data)->map->tab = new_tab;
     return (0);
+}
+
+static char *no_newline(char *line)
+{
+    char    *new_line;
+    int     len;
+    
+    len = ft_strlen(line);
+    if (len > 0 && line[len - 1] == '\n')
+    {
+        char *temp = ft_strdup(line);
+        if (!temp)
+            return (NULL);
+        temp[len - 1] = '\0';
+        new_line = ft_strdup(temp);
+        free(temp);
+    }
+    else
+        new_line = ft_strdup(line);
+    if (!new_line)
+        return (NULL);
+    return (new_line);
 }
 
 int    ft_reallocTab(t_data **data, char *line)
@@ -54,12 +78,12 @@ int    ft_reallocTab(t_data **data, char *line)
     i = 0;
     while ((*data)->map->tab[i])
     {
-        new_tab[i] = ft_strdup((*data)->map->tab[i]);
+        new_tab[i] = no_newline((*data)->map->tab[i]);
         if (!new_tab[i])
             return (free_tab(new_tab), -1);
         i++;
     }
-    new_tab[i++] = ft_strdup(line);
+    new_tab[i++] = no_newline(line);
     new_tab[i] = NULL;
     free_tab((*data)->map->tab);
     (*data)->map->tab = new_tab;

@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 09:26:10 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 16:54:46 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:24:55 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ void draw_line_thick(void *mlx, void *win, int x1, int y1, int x2, int y2, int c
 void draw_player(t_data *mlx, t_player *player, int tile_size)
 {
     int size = tile_size * 0.8;
-    int offset = (tile_size - size) / 2;
 
-    // Position du joueur
-    int px = player->x * tile_size + offset;
-    int py = player->y * tile_size + offset;
+    // Coordonnées de centre de la fenêtre
+    int center_x = 1280 / 2;
+    int center_y = 720 / 2;
+
+    int px = center_x - size / 2;
+    int py = center_y - size / 2;
 
     // Dessiner le joueur comme un carré rouge
     for (int y = 0; y < size; y++)
@@ -72,12 +74,10 @@ void draw_player(t_data *mlx, t_player *player, int tile_size)
         }
     }
 
-    // Calculer la position de la direction du joueur
-    int dirLength = tile_size / 2;  // Longueur de la ligne de direction
-    int directionX = px + size / 2 + (int)(player->dirX * dirLength);
-    int directionY = py + size / 2 + (int)(player->dirY * dirLength);
+    // Dessiner un trait de direction (vert)
+    int dirLength = tile_size / 2;
+    int directionX = center_x + (int)(player->dirX * dirLength);
+    int directionY = center_y + (int)(player->dirY * dirLength);
 
-    // Dessiner un trait pour marquer la direction (vert) avec une épaisseur
-    int thickness = 5; // Choisis l'épaisseur que tu veux
-    draw_line_thick(mlx->mlx, mlx->win, px + size / 2, py + size / 2, directionX, directionY, 0x00FF00, thickness);
+    draw_line_thick(mlx->mlx, mlx->win, center_x, center_y, directionX, directionY, 0x00FF00, 5);
 }

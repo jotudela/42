@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:24:16 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 18:39:25 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:50:37 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,35 @@ void draw_pause_menu(t_data *data)
 
 static void	update_camera(t_data *data)
 {
-	double rotSpeed = 0.05;
+	float rotSpeed = 0.05;
 	if (data->keys.left)
 	{
-		double oldDirX = data->player.dirX;
+		float oldDirX = data->player.dirX;
 		data->player.dirX = data->player.dirX * cos(-rotSpeed) - data->player.dirY * sin(-rotSpeed);
 		data->player.dirY = oldDirX * sin(-rotSpeed) + data->player.dirY * cos(-rotSpeed);
-		double oldPlaneX = data->player.planeX;
+		float oldPlaneX = data->player.planeX;
 		data->player.planeX = data->player.planeX * cos(-rotSpeed) - data->player.planeY * sin(-rotSpeed);
 		data->player.planeY = oldPlaneX * sin(-rotSpeed) + data->player.planeY * cos(-rotSpeed);
 	}
 	if (data->keys.right)
 	{
-		double oldDirX = data->player.dirX;
+		float oldDirX = data->player.dirX;
 		data->player.dirX = data->player.dirX * cos(rotSpeed) - data->player.dirY * sin(rotSpeed);
 		data->player.dirY = oldDirX * sin(rotSpeed) + data->player.dirY * cos(rotSpeed);
-		double oldPlaneX = data->player.planeX;
+		float oldPlaneX = data->player.planeX;
 		data->player.planeX = data->player.planeX * cos(rotSpeed) - data->player.planeY * sin(rotSpeed);
 		data->player.planeY = oldPlaneX * sin(rotSpeed) + data->player.planeY * cos(rotSpeed);
 	}
 }
 
-static int is_walkable(t_data *data, double x, double y)
+static int is_walkable(t_data *data, float x, float y)
 {
-	int map_x = (int)x;
-	int map_y = (int)y;
+	int map_x = (int)(x);  // Conversion en coordonnées de la map
+    int map_y = (int)(y);  // Même pour la coordonnée y
 
-	// Si la case est '0', c'est une zone vide (walkable)
-	if (data->map->tab[map_y][map_x] == '0')
+    if (map_x < 0 || map_x >= data->map->len_x || map_y < 0 || map_y >= data->map->len_y - 1)
+		return (0);
+    if (data->map->tab[map_y][map_x] == '0')
 		return (1);
 	return (0);
 }
@@ -64,8 +65,8 @@ static void handle_movement(int keycode, t_data *data)
     if (keycode == 119)
     {
         data->keys.w = 1;
-        double newX = data->player.x + data->player.dirX * 0.1;
-        double newY = data->player.y + data->player.dirY * 0.1;
+        float newX = data->player.x + data->player.dirX * 0.1;
+        float newY = data->player.y + data->player.dirY * 0.1;
         if (is_walkable(data, newX, data->player.y))
             data->player.x = newX;
         if (is_walkable(data, data->player.x, newY))
@@ -74,8 +75,8 @@ static void handle_movement(int keycode, t_data *data)
     if (keycode == 115)
     {
         data->keys.s = 1;
-        double newX = data->player.x - data->player.dirX * 0.1;
-        double newY = data->player.y - data->player.dirY * 0.1;
+        float newX = data->player.x - data->player.dirX * 0.1;
+        float newY = data->player.y - data->player.dirY * 0.1;
         if (is_walkable(data, newX, data->player.y))
             data->player.x = newX;
         if (is_walkable(data, data->player.x, newY))
@@ -84,8 +85,8 @@ static void handle_movement(int keycode, t_data *data)
     if (keycode == 97)
     {
         data->keys.a = 1;
-        double newX = data->player.x - data->player.planeX * 0.1;
-        double newY = data->player.y - data->player.planeY * 0.1;
+        float newX = data->player.x - data->player.planeX * 0.1;
+        float newY = data->player.y - data->player.planeY * 0.1;
         if (is_walkable(data, newX, data->player.y))
             data->player.x = newX;
         if (is_walkable(data, data->player.x, newY))
@@ -94,8 +95,8 @@ static void handle_movement(int keycode, t_data *data)
     if (keycode == 100)
     {
         data->keys.d = 1;
-        double newX = data->player.x + data->player.planeX * 0.1;
-        double newY = data->player.y + data->player.planeY * 0.1;
+        float newX = data->player.x + data->player.planeX * 0.1;
+        float newY = data->player.y + data->player.planeY * 0.1;
         if (is_walkable(data, newX, data->player.y))
             data->player.x = newX;
         if (is_walkable(data, data->player.x, newY))
@@ -117,10 +118,20 @@ static void handle_game_input(int keycode, t_data *data)
 {
     if (keycode == 109) // M
     {
+        float player_px = data->player.x * 30.0f;
+        float player_py = data->player.y * 30.0f;
+
+        // Centrer le joueur dans la fenêtre (par exemple, 1280x720)
+        int win_center_x = 1280 / 2;
+        int win_center_y = 720 / 2;
+
+        // Offset négatif pour que la map "bouge" autour du joueur
+        int map_draw_x = (int)(win_center_x - player_px);
+        int map_draw_y = (int)(win_center_y - player_py);
         data->is_map = 1;
         data->is_game = 0;
         clear_window(data, 1280, 720);
-        mlx_put_image_to_window(data->mlx, data->win, data->minimap.m_img_ptr, 0, 0);
+        mlx_put_image_to_window(data->mlx, data->win, data->minimap.m_img_ptr, map_draw_x, map_draw_y);
         draw_player(data, &data->player, 30);
     }
     else if (keycode == XK_Escape)
@@ -144,8 +155,6 @@ static void handle_map_input(int keycode, t_data *data)
     {
         data->is_map = 0;
         data->is_game = 1;
-        clear_window(data, 1280, 720);
-        mlx_put_image_to_window(data->mlx, data->win, data->img.b_img_ptr, 0, 0);
         raycasting(data);
     }
     else if (keycode == 97 || keycode == 100 || keycode == 119 || keycode == 115
@@ -153,7 +162,18 @@ static void handle_map_input(int keycode, t_data *data)
     {
         handle_movement(keycode, data);
         update_camera(data);
-        mlx_put_image_to_window(data->mlx, data->win, data->minimap.m_img_ptr, 0, 0);
+        float player_px = data->player.x * 30.0f;
+        float player_py = data->player.y * 30.0f;
+
+        // Centrer le joueur dans la fenêtre (par exemple, 1280x720)
+        int win_center_x = 1280 / 2;
+        int win_center_y = 720 / 2;
+
+        // Offset négatif pour que la map "bouge" autour du joueur
+        int map_draw_x = (int)(win_center_x - player_px);
+        int map_draw_y = (int)(win_center_y - player_py);
+        clear_window(data, 1280, 720);
+        mlx_put_image_to_window(data->mlx, data->win, data->minimap.m_img_ptr, map_draw_x, map_draw_y);
         draw_player(data, &data->player, 30);
     }
     else if (keycode == XK_Escape && data->is_paused == 1)

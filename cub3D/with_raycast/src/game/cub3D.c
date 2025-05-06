@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 18:11:16 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:48:46 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ static void init_player(t_data **data, int x, int y)
 
 static void generate(t_data **data)
 {
-    (*data)->player.x = (*data)->map->map_x;
-    (*data)->player.y = (*data)->map->map_y;
+    (*data)->player.x = (*data)->map->map_x + 0.5;
+    (*data)->player.y = (*data)->map->map_y + 0.5;
     init_player(data, (*data)->map->map_x, (*data)->map->map_y);
     (*data)->mlx = mlx_init();
     if (!(*data)->mlx)
@@ -94,7 +94,6 @@ static void generate(t_data **data)
                     (*data)->img.img_x, (*data)->img.img_y, "TEST");
     if (!(*data)->win)
         (free_data(data), error("Error\nGenerate new window failed !\n"), exit(1));
-    create_img(data);
     create_minimap(data);
 }
 

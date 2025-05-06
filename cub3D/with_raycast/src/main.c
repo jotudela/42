@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/05 15:13:05 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:53:08 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void    print_data(t_data **data)
     if ((*data)->map->tab)
     {
         while ((*data)->map->tab[i])
-            printf("%s", (*data)->map->tab[i++]);
+            printf("%s\n", (*data)->map->tab[i++]);
         printf("\n\n\n");
     }
     if ((*data)->map->tmp)
     {
         i = 0;
         while ((*data)->map->tmp[i])
-            printf("%s", (*data)->map->tmp[i++]);
+            printf("%s\n", (*data)->map->tmp[i++]);
         printf("\n");
     }
     printf("%c\n", (*data)->map->dir);
@@ -51,7 +51,7 @@ int main(int ac, char **av)
     data->is_paused = 0;
     data->is_game = 1;
     ft_init_data(&data, av[1]);
-    //print_data(&data);
+    print_data(&data);
     cub3d(&data);
     free_data(&data);
 }

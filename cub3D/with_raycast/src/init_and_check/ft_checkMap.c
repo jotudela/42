@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:56:00 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:31 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:49:30 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int     ft_checkChar(t_data **data)
     return (0);
 }
 
-int flood_fill(t_data **data, int x, int y)
+static int flood_fill(t_data **data, int x, int y)
 {
     char **tmp;
     char current;
@@ -119,5 +119,26 @@ int flood_fill(t_data **data, int x, int y)
         return (-1);
     if (flood_fill(data, x, y - 1) == -1)
         return (-1);
+    return (0);
+}
+
+int check_all_map(t_data *data)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (data->map->tmp[i])
+    {
+        j = 0;
+        while (data->map->tmp[i][j])
+        {
+            if (data->map->tmp[i][j] == '0')
+                if (flood_fill(&data, j, i) == -1)
+                    return (-1);
+            j++;
+        }
+        i++;
+    }
     return (0);
 }

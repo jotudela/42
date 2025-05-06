@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/05 18:09:42 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:45:38 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_map
     char        dir;
     int     map_x;
     int     map_y;
+    int     len_x;
+    int     len_y;
 }           t_map;
 
 typedef struct s_image
@@ -71,19 +73,12 @@ typedef struct s_image
     int     img_x;
     int     img_y;
 
-    //Image de base
-    void    *b_img_ptr;
-    char    *b_addr;
-    int     b_bits_per_pixel;
-    int     b_size_line;
-    int     b_endian;
-
     //Image finale
-    void    *f_img_ptr;
-    char    *f_addr;
-    int     f_bits_per_pixel;
-    int     f_size_line;
-    int     f_endian;
+    void    *img_ptr;
+    char    *addr;
+    int     bits_per_pixel;
+    int     size_line;
+    int     endian;
 
     //Pour generer les textures
     int     x;
@@ -130,13 +125,15 @@ int     ft_init_data(t_data **data, char *file);
 int     ft_get_rgb(t_data **data, char *line);
 void    ft_get_texture_path(t_data **data, char *line);
 int     ft_reallocTab(t_data **data, char *line);
+void    normalize_map(t_data **data);
+int     ft_lenTab(char **tab);
 int     ft_coppyTab(t_data **data);
 
 /* Functions for check all data */
 void    ft_is_good_format(char *file);
 int     ft_checkPlayer(t_data **data);
 int     ft_checkChar(t_data **data);
-int     flood_fill(t_data **data, int x, int y);
+int     check_all_map(t_data *data);
 
 /* Functions for game */
 void    cub3d(t_data **data);
@@ -145,8 +142,9 @@ int     key_release(int keycode, t_data *data);
 void    create_minimap(t_data **data);
 void    draw_player(t_data *mlx, t_player *player, int tile_size);
 int     close_cross(t_data *data);
-void    create_img(t_data **data);
 void    raycasting(t_data *data);
+void    create_img_background(t_data **data);
+void    draw_walls(t_data *data, int x, int drawStart, int drawEnd, int color);
 
 /* Functions utils */
 void    error(char *str);

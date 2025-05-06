@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/04/30 21:55:10 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/06 18:46:39 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ int    ft_init_data(t_data **data, char *file)
         (free_data(data), error("error: parsing: no player in map\n"), exit(1));
     if (ft_checkChar(data) == -1)
         (free_data(data), error("error: parsing: one or more char is invalid\n"), exit(1));
-    if (flood_fill(data, (*data)->map->map_x, (*data)->map->map_y) == -1)
+    if (check_all_map(*data) == -1)
         (free_data(data), error("error: parsing: map is invalid\n"), exit(1));
+    normalize_map(data);
     return (0);
 }

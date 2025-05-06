@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/05 18:10:30 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:30:23 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ static void free_data2(t_data **data)
         mlx_destroy_image((*data)->mlx, (*data)->img.WE);
     if ((*data)->img.EA)
         mlx_destroy_image((*data)->mlx, (*data)->img.EA);
-    if ((*data)->img.b_img_ptr)
-        mlx_destroy_image((*data)->mlx, (*data)->img.b_img_ptr);
     if ((*data)->mlx && (*data)->win)
         mlx_destroy_window((*data)->mlx, (*data)->win);
     if ((*data)->mlx)
