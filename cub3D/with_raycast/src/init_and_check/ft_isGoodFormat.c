@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:53:48 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:41 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/06 19:01:29 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void    ft_is_good_format(char *file)
     if (file[len] != 'b'
         || file[len - 1] != 'u'
         || file[len - 2] != 'c'
-        || file[len - 3] != '.')
+        || file[len - 3] != '.'
+        || len == 3)
         (error("error: file: format is not on .cub !\n"), exit(1));
     return ;
 }
