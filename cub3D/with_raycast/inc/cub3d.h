@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/07 17:32:20 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:43:17 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void    cub3d(t_data **data);
 int     game_loop(t_data *data);
 int     key_press(int keycode, t_data *data);
 int     key_release(int keycode, t_data *data);
+void    create_clear_img(t_data **data);
 void    create_minimap(t_data **data);
 void    draw_player(t_data *mlx, t_player *player, int tile_size);
 int     close_cross(t_data *data);

@@ -6,18 +6,11 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:24:16 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/07 17:30:46 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:48:54 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
-
-void	clear_window(t_data *data, int width, int height)
-{
-	void *clear_img = mlx_new_image(data->mlx, width, height);
-	mlx_put_image_to_window(data->mlx, data->win, clear_img, 0, 0);
-	mlx_destroy_image(data->mlx, clear_img);
-}
 
 void	draw_pause_menu(t_data *data)
 {
@@ -31,7 +24,7 @@ static void	update_camera(t_data *data, int mode)
 {
     float	rotSpeed;
     if (mode == 1) rotSpeed = data->player.rot;
-    else rotSpeed = data->player.rot / 6;
+    else rotSpeed = data->player.rot;
 	float	oldDirX;
 	float	oldPlaneX;
 
@@ -69,7 +62,7 @@ void	handle_movement_loop(t_data *data, int mode)
 {
 	float	moveSpeed;
     if (mode == 1) moveSpeed = data->player.move;
-    else moveSpeed = data->player.move / 6;
+    else moveSpeed = data->player.move;
 	float	newX, newY;
 
 	if (data->keys.w)
@@ -114,7 +107,7 @@ static void	handle_map_input(t_data *data)
 	int		map_draw_x = (int)(win_center_x - player_px);
 	int		map_draw_y = (int)(win_center_y - player_py);
 
-    clear_window(data, 1280, 720);
+    create_clear_img(&data);
 	mlx_put_image_to_window(data->mlx, data->win, data->minimap.m_img_ptr, map_draw_x, map_draw_y);
 	draw_player(data, &data->player, 30);
 }
@@ -134,7 +127,7 @@ int	key_press(int keycode, t_data *data)
 		{
 			data->is_game = 0;
 			data->is_paused = 1;
-			clear_window(data, 1280, 720);
+			create_clear_img(&data);
 			draw_pause_menu(data);
 		}
 		if (keycode == XK_m)
@@ -154,7 +147,7 @@ int	key_press(int keycode, t_data *data)
 		{
 			data->is_paused = 0;
 			data->is_game = 1;
-			clear_window(data, 1280, 720);
+			create_clear_img(&data);
 			raycasting(data);
 		}
 		else if (keycode == XK_2)

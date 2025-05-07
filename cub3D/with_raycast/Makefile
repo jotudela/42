@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/05/06 13:57:28 by jotudela         ###   ########.fr        #
+#    Updated: 2025/05/07 18:45:11 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,8 @@ SRC_FILES	= main \
 			game/create_img \
 			game/create_minimap \
 			game/create_player \
-			game/raycasting
+			game/raycasting \
+			game/create_clear_image
 
 SRC_DIR := src
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
