@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/06 18:45:38 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:32:20 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct s_player
     float dirY;
     float planeX;
     float planeY;
+    float move;
+    float rot;
 }           t_player;
 
 typedef struct  s_keys
@@ -137,6 +139,7 @@ int     check_all_map(t_data *data);
 
 /* Functions for game */
 void    cub3d(t_data **data);
+int     game_loop(t_data *data);
 int     key_press(int keycode, t_data *data);
 int     key_release(int keycode, t_data *data);
 void    create_minimap(t_data **data);

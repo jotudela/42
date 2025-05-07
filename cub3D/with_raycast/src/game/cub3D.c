@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/06 18:48:46 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:07:55 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,16 @@ static void generate(t_data **data)
     if (!(*data)->win)
         (free_data(data), error("Error\nGenerate new window failed !\n"), exit(1));
     create_minimap(data);
+    (*data)->player.move = 0.05;
+    (*data)->player.rot = 0.05;
 }
 
 void    cub3d(t_data **data)
 {
     generate(data);
-    raycasting(*data);
     mlx_hook((*data)->win, 2, 1L << 0, key_press, *data);
     mlx_hook((*data)->win, 3, 1L << 1, key_release, *data);
     mlx_hook((*data)->win, 17, 0, close_cross, *data);
+    mlx_loop_hook((*data)->mlx, game_loop, *data);
     mlx_loop((*data)->mlx);
 }
