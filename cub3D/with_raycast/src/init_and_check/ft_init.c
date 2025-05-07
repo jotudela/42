@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/06 18:46:39 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:48:21 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int    ft_init_data(t_data **data, char *file)
         (free_data(data), error("error: file: can't open file !\n"), exit(1));
     if (ft_take_data(data, fd) == -1)
         (free_data(data), error("error: parsing: take data 1 fail\n"), close(fd), exit(1));
+    if ((*data)->img.C == (*data)->img.F)
+        (free_data(data), error("Error\nCeilling and floor have same color !\n"), close(fd), exit(1));
     if (ft_take_data2(data, fd) == -1)
         (free_data(data), error("error: parsing: take data 2 fail\n"), close(fd), exit(1));
     close(fd);
