@@ -116,15 +116,15 @@ t_data	*init_data(void);
 int		ft_init_data(t_data **data, char *file);
 int		ft_get_rgb(t_data **data, char *line);
 void	ft_get_texture_path(t_data **data, char *line);
-int		ft_reallocTab(t_data **data, char *line);
+int		ft_realloctab(t_data **data, char *line);
 void	normalize_map(t_data **data);
-int		ft_lenTab(char **tab);
+int		ft_lentab(char **tab);
 int		ft_coppyTab(t_data **data);
 
 /* Functions for check all data */
 void	ft_is_good_format(char *file);
-int		ft_checkPlayer(t_data **data);
-int		ft_checkChar(t_data **data);
+int		ft_checkplayer(t_data **data);
+int		ft_checkchar(t_data **data);
 int		check_all_map(t_data *data);
 
 /* Functions for game */
