@@ -12,16 +12,16 @@
 
 #include "../../inc/cub3d.h"
 
-void    ft_is_good_format(char *file)
+void	ft_is_good_format(char *file)
 {
-    int len;
+	int	len;
 
-    len = ft_strlen(file) - 1;
-    if (file[len] != 'b'
-        || file[len - 1] != 'u'
-        || file[len - 2] != 'c'
-        || file[len - 3] != '.'
-        || len == 3)
-        (error("error: file: format is not on .cub !\n"), exit(1));
-    return ;
+	len = ft_strlen(file) - 1;
+	if (file[len] != 'b'
+		|| file[len - 1] != 'u'
+		|| file[len - 2] != 'c'
+		|| file[len - 3] != '.'
+		|| len == 3)
+		(error("error: file: format is not on .cub !\n"), exit(1));
+	return ;
 }

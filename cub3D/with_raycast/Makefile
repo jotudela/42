@@ -49,7 +49,7 @@ BLUE				:= \033[94m
 
 # SRC
 SRC_FILES	= main \
-			error \
+			utils \
 			init_and_check/ft_init \
 			init_and_check/get_rgb_value \
 			init_and_check/get_texture_path \
