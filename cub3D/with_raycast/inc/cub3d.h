@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/09 10:39:37 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:13:03 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,60 +63,55 @@ typedef struct s_image
 	t_tex_info	so;
 	t_tex_info	we;
 	t_tex_info	ea;
-	char	*path_no;
-	char	*path_so;
-	char	*path_we;
-	char	*path_ea;
-	int		f;
-	int		fr;
-	int		fg;
-	int		fb;
-	int		c;
-	int		cr;
-	int		cg;
-	int		cb;
-	int		img_x;
-	int		img_y;
-	void	*img_ptr;
-	char	*addr;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
-	int		x;
-	int		y;
+	char		*path_no;
+	char		*path_so;
+	char		*path_we;
+	char		*path_ea;
+	int			f;
+	int			fr;
+	int			fg;
+	int			fb;
+	int			c;
+	int			cr;
+	int			cg;
+	int			cb;
+	int			img_x;
+	int			img_y;
+	int			color;
+	void		*img_ptr;
+	char		*addr;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+	int			x;
+	int			y;
 }			t_image;
 
 typedef struct s_raycast
 {
-    float cameraX;
-    float rayDirX;
-    float rayDirY;
-
-    int mapX;
-    int mapY;
-
-    float sideDistX;
-    float sideDistY;
-    float deltaDistX;
-    float deltaDistY;
-    float perpWallDist;
-
-    int stepX;
-    int stepY;
-    int hit;
-    int side;
-
-    int lineHeight;
-    int drawStart;
-    int drawEnd;
-
-    float wallX;
-    int texX;
-    int texY;
-    int texNum;
-
-    int d;
-    unsigned int color;
+	float			camerax;
+	float			raydirx;
+	float			raydiry;
+	float			sidedistx;
+	float			sidedisty;
+	float			deltadistx;
+	float			deltadisty;
+	float			perpwalldist;
+	float			wallx;
+	int				mapx;
+	int				mapy;
+	int				stepx;
+	int				stepy;
+	int				hit;
+	int				side;
+	int				lineheight;
+	int				drawstart;
+	int				drawend;
+	int				texx;
+	int				texy;
+	int				texnum;
+	int				d;
+	unsigned int	color;
 }			t_raycast;
 
 typedef struct s_player
@@ -183,7 +178,7 @@ void	draw_player(t_data *mlx, t_player *player, int tile_size);
 int		close_cross(t_data *data);
 void	raycasting(t_data *data);
 void	create_img_background(t_data **data);
-void	draw_walls(t_data *data, int x, int drawStart, int drawEnd, t_tex_info *tex, int texX, int lineHeight);
+void	draw_walls(t_data *data, int x, t_tex_info *tex, t_raycast r);
 
 /* Functions utils */
 void	error(char *str);
