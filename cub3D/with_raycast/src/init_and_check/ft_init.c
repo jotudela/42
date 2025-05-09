@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/08 16:31:26 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/09 09:18:00 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	check_info(t_data **data, int mod)
 {
 	if (mod == 0)
 	{
-		if ((*data)->img.path_NO && (*data)->img.path_SO
-			&& (*data)->img.path_WE && (*data)->img.path_EA
-			&& (*data)->img.F && (*data)->img.C)
+		if ((*data)->img.path_no && (*data)->img.path_so
+			&& (*data)->img.path_we && (*data)->img.path_ea
+			&& (*data)->img.f && (*data)->img.c)
 			return (0);
 		return (-1);
 	}
@@ -31,6 +31,7 @@ static int	check_info(t_data **data, int mod)
 			(free_data(data), error("Error\nparsing:"
 					" map is invalid\n"), exit(1));
 	}
+	return (0);
 }
 
 static char	*ft_skipemptyline(int fd)
@@ -122,7 +123,7 @@ int	ft_init_data(t_data **data, char *file)
 		(free_data(data), error("Error\nparsing: "
 				"take data 2 fail\n"), close(fd), exit(1));
 	close(fd);
-	if (ft_coppyTab(data) == -1)
+	if (ft_coppytab(data) == -1)
 		(free_data(data), error("Error\nparsing: fatal\n"), exit(1));
 	fd = ft_checkplayer(data);
 	if (fd == -1)

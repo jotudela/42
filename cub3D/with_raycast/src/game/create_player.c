@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 09:26:10 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/06 17:24:55 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 09:17:12 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void draw_player(t_data *mlx, t_player *player, int tile_size)
 
     // Dessiner un trait de direction (vert)
     int dirLength = tile_size / 2;
-    int directionX = center_x + (int)(player->dirX * dirLength);
-    int directionY = center_y + (int)(player->dirY * dirLength);
+    int directionX = center_x + (int)(player->dirx * dirLength);
+    int directionY = center_y + (int)(player->diry * dirLength);
 
     draw_line_thick(mlx->mlx, mlx->win, center_x, center_y, directionX, directionY, 0x00FF00, 5);
 }

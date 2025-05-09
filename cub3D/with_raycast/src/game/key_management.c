@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:24:16 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/07 18:48:54 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 09:38:04 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,26 @@ static void	update_camera(t_data *data, int mode)
     float	rotSpeed;
     if (mode == 1) rotSpeed = data->player.rot;
     else rotSpeed = data->player.rot;
-	float	oldDirX;
-	float	oldPlaneX;
+	float	olddirx;
+	float	oldplanex;
 
 	if (data->keys.left)
 	{
-		oldDirX = data->player.dirX;
-		data->player.dirX = data->player.dirX * cos(-rotSpeed) - data->player.dirY * sin(-rotSpeed);
-		data->player.dirY = oldDirX * sin(-rotSpeed) + data->player.dirY * cos(-rotSpeed);
-		oldPlaneX = data->player.planeX;
-		data->player.planeX = data->player.planeX * cos(-rotSpeed) - data->player.planeY * sin(-rotSpeed);
-		data->player.planeY = oldPlaneX * sin(-rotSpeed) + data->player.planeY * cos(-rotSpeed);
+		olddirx = data->player.dirx;
+		data->player.dirx = data->player.dirx * cos(-rotSpeed) - data->player.diry * sin(-rotSpeed);
+		data->player.diry = olddirx * sin(-rotSpeed) + data->player.diry * cos(-rotSpeed);
+		oldplanex = data->player.planex;
+		data->player.planex = data->player.planex * cos(-rotSpeed) - data->player.planey * sin(-rotSpeed);
+		data->player.planey = oldplanex * sin(-rotSpeed) + data->player.planey * cos(-rotSpeed);
 	}
 	if (data->keys.right)
 	{
-		oldDirX = data->player.dirX;
-		data->player.dirX = data->player.dirX * cos(rotSpeed) - data->player.dirY * sin(rotSpeed);
-		data->player.dirY = oldDirX * sin(rotSpeed) + data->player.dirY * cos(rotSpeed);
-		oldPlaneX = data->player.planeX;
-		data->player.planeX = data->player.planeX * cos(rotSpeed) - data->player.planeY * sin(rotSpeed);
-		data->player.planeY = oldPlaneX * sin(rotSpeed) + data->player.planeY * cos(rotSpeed);
+		olddirx = data->player.dirx;
+		data->player.dirx = data->player.dirx * cos(rotSpeed) - data->player.diry * sin(rotSpeed);
+		data->player.diry = olddirx * sin(rotSpeed) + data->player.diry * cos(rotSpeed);
+		oldplanex = data->player.planex;
+		data->player.planex = data->player.planex * cos(rotSpeed) - data->player.planey * sin(rotSpeed);
+		data->player.planey = oldplanex * sin(rotSpeed) + data->player.planey * cos(rotSpeed);
 	}
 }
 
@@ -67,29 +67,29 @@ void	handle_movement_loop(t_data *data, int mode)
 
 	if (data->keys.w)
 	{
-		newX = data->player.x + data->player.dirX * moveSpeed;
-		newY = data->player.y + data->player.dirY * moveSpeed;
+		newX = data->player.x + data->player.dirx * moveSpeed;
+		newY = data->player.y + data->player.diry * moveSpeed;
 		if (is_walkable(data, newX, data->player.y)) data->player.x = newX;
 		if (is_walkable(data, data->player.x, newY)) data->player.y = newY;
 	}
 	if (data->keys.s)
 	{
-		newX = data->player.x - data->player.dirX * moveSpeed;
-		newY = data->player.y - data->player.dirY * moveSpeed;
+		newX = data->player.x - data->player.dirx * moveSpeed;
+		newY = data->player.y - data->player.diry * moveSpeed;
 		if (is_walkable(data, newX, data->player.y)) data->player.x = newX;
 		if (is_walkable(data, data->player.x, newY)) data->player.y = newY;
 	}
 	if (data->keys.a)
 	{
-		newX = data->player.x - data->player.planeX * moveSpeed;
-		newY = data->player.y - data->player.planeY * moveSpeed;
+		newX = data->player.x - data->player.planex * moveSpeed;
+		newY = data->player.y - data->player.planey * moveSpeed;
 		if (is_walkable(data, newX, data->player.y)) data->player.x = newX;
 		if (is_walkable(data, data->player.x, newY)) data->player.y = newY;
 	}
 	if (data->keys.d)
 	{
-		newX = data->player.x + data->player.planeX * moveSpeed;
-		newY = data->player.y + data->player.planeY * moveSpeed;
+		newX = data->player.x + data->player.planex * moveSpeed;
+		newY = data->player.y + data->player.planey * moveSpeed;
 		if (is_walkable(data, newX, data->player.y)) data->player.x = newX;
 		if (is_walkable(data, data->player.x, newY)) data->player.y = newY;
 	}

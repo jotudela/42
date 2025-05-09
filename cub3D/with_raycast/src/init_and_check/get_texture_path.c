@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:01:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/01 11:25:46 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 09:11:16 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static void	ft_verif_is_allocated(t_data **data, int dir)
 {
-	if ((*data)->img.path_NO && dir == 0)
-		free((*data)->img.path_NO);
-	else if ((*data)->img.path_SO && dir == 1)
-		free((*data)->img.path_SO);
-	else if ((*data)->img.path_WE && dir == 2)
-		free((*data)->img.path_WE);
-	else if ((*data)->img.path_EA && dir == 3)
-		free((*data)->img.path_EA);
+	if ((*data)->img.path_no && dir == 0)
+		free((*data)->img.path_no);
+	else if ((*data)->img.path_so && dir == 1)
+		free((*data)->img.path_so);
+	else if ((*data)->img.path_we && dir == 2)
+		free((*data)->img.path_we);
+	else if ((*data)->img.path_ea && dir == 3)
+		free((*data)->img.path_ea);
 }
 
 void	ft_get_texture_path(t_data **data, char *line)
@@ -39,11 +39,11 @@ void	ft_get_texture_path(t_data **data, char *line)
 		dir = 3;
 	ft_verif_is_allocated(data, dir);
 	if (dir == 0)
-		(*data)->img.path_NO = ft_strtrim(line + 2, " \t\n");
+		(*data)->img.path_no = ft_strtrim(line + 2, " \t\n");
 	else if (dir == 1)
-		(*data)->img.path_SO = ft_strtrim(line + 2, " \t\n");
+		(*data)->img.path_so = ft_strtrim(line + 2, " \t\n");
 	else if (dir == 2)
-		(*data)->img.path_WE = ft_strtrim(line + 2, " \t\n");
+		(*data)->img.path_we = ft_strtrim(line + 2, " \t\n");
 	else if (dir == 3)
-		(*data)->img.path_EA = ft_strtrim(line + 2, " \t\n");
+		(*data)->img.path_ea = ft_strtrim(line + 2, " \t\n");
 }

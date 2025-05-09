@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:38:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/06 09:29:44 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:10:08 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,36 @@ static void put_pixel_to_image2(t_image *img, int x, int y, int color)
 
     if (x < 0 || x >= img->img_x || y < 0 || y >= img->img_y)
         return;
-    dst = img->addr + (y * img->size_line + x * (img->bits_per_pixel / 8));
+
+    int real_y = y;
+    if (img->size_line < 0)
+        real_y = img->img_y - 1 - y;
+
+    dst = img->addr + (real_y * abs(img->size_line) + x * (img->bits_per_pixel / 8));
     *(unsigned int *)dst = color;
 }
 
-/*static void copy_image(t_image *img)
+void draw_walls(t_data *data, int x, int drawStart, int drawEnd, t_tex_info *tex, int texX, int lineHeight)
 {
-	for (int y = 0; y < img->img_y; y++)
-	{
-		for (int x = 0; x < img->img_x; x++)
-		{
-			int color = get_pixel_color(img, x, y);
-			put_pixel_to_image2(img, x, y, color);
-		}
-	}
-}*/
+    int y, d, texY;
+    unsigned int color;
 
-void draw_walls(t_data *data, int x, int drawStart, int drawEnd, int color)
-{
-    for (int y = drawStart; y <= drawEnd; y++)
+    for (y = drawStart; y < drawEnd; y++)
+    {
+        d = y * 256 - data->img.img_y * 128 + lineHeight * 128;
+        texY = ((d * tex->height) / lineHeight) / 256;
+
+        if (texY < 0)
+            texY = 0;
+        if (texY >= tex->height)
+            texY = tex->height - 1;
+
+        color = *(unsigned int *)(tex->addr +
+            (texY * tex->size_line + texX * (tex->bits_per_pixel / 8)));
         put_pixel_to_image2(&data->img, x, y, color);
+    }
 }
+
 
 static void put_pixel(char *data, int x, int y, int color, int size_line, int bpp)
 {
@@ -74,9 +83,9 @@ static void ft_draw_img(t_data ** data)
         while (x < (*data)->img.img_x)
         {
             if (y < (*data)->img.img_y / 2)
-                color = (*data)->img.C;
+                color = (*data)->img.c;
             else
-                color = (*data)->img.F;
+                color = (*data)->img.f;
             put_pixel((*data)->img.addr, x, y, color,
                     (*data)->img.size_line, (*data)->img.bits_per_pixel);
             x++;

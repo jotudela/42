@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/06 09:30:23 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:28:43 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ static void	free_data2(t_data **data)
 {
 	if ((*data)->minimap.m_img_ptr)
 		mlx_destroy_image((*data)->mlx, (*data)->minimap.m_img_ptr);
-	if ((*data)->img.no)
-		mlx_destroy_image((*data)->mlx, (*data)->img.no);
-	if ((*data)->img.so)
-		mlx_destroy_image((*data)->mlx, (*data)->img.so);
-	if ((*data)->img.we)
-		mlx_destroy_image((*data)->mlx, (*data)->img.we);
-	if ((*data)->img.ea)
-		mlx_destroy_image((*data)->mlx, (*data)->img.ea);
+	if ((*data)->img.no.img_ptr)
+		mlx_destroy_image((*data)->mlx, (*data)->img.no.img_ptr);
+	if ((*data)->img.so.img_ptr)
+		mlx_destroy_image((*data)->mlx, (*data)->img.so.img_ptr);
+	if ((*data)->img.we.img_ptr)
+		mlx_destroy_image((*data)->mlx, (*data)->img.we.img_ptr);
+	if ((*data)->img.ea.img_ptr)
+		mlx_destroy_image((*data)->mlx, (*data)->img.ea.img_ptr);
 	if ((*data)->mlx && (*data)->win)
 		mlx_destroy_window((*data)->mlx, (*data)->win);
 	if ((*data)->mlx)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/08 16:12:52 by jojo             ###   ########.fr       */
+/*   Updated: 2025/05/09 10:39:37 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,23 @@ typedef struct s_map
 	int		len_y;
 }			t_map;
 
+typedef struct s_tex_info
+{
+	void	*img_ptr;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}			t_tex_info;
+
 typedef struct s_image
 {
-	void	*no;
-	void	*so;
-	void	*we;
-	void	*ea;
+	t_tex_info	no;
+	t_tex_info	so;
+	t_tex_info	we;
+	t_tex_info	ea;
 	char	*path_no;
 	char	*path_so;
 	char	*path_we;
@@ -74,6 +85,39 @@ typedef struct s_image
 	int		x;
 	int		y;
 }			t_image;
+
+typedef struct s_raycast
+{
+    float cameraX;
+    float rayDirX;
+    float rayDirY;
+
+    int mapX;
+    int mapY;
+
+    float sideDistX;
+    float sideDistY;
+    float deltaDistX;
+    float deltaDistY;
+    float perpWallDist;
+
+    int stepX;
+    int stepY;
+    int hit;
+    int side;
+
+    int lineHeight;
+    int drawStart;
+    int drawEnd;
+
+    float wallX;
+    int texX;
+    int texY;
+    int texNum;
+
+    int d;
+    unsigned int color;
+}			t_raycast;
 
 typedef struct s_player
 {
@@ -119,7 +163,7 @@ void	ft_get_texture_path(t_data **data, char *line);
 int		ft_realloctab(t_data **data, char *line);
 void	normalize_map(t_data **data);
 int		ft_lentab(char **tab);
-int		ft_coppyTab(t_data **data);
+int		ft_coppytab(t_data **data);
 
 /* Functions for check all data */
 void	ft_is_good_format(char *file);
@@ -134,11 +178,12 @@ int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
 void	create_clear_img(t_data **data);
 void	create_minimap(t_data **data);
+int		generate_textures(t_data *data);
 void	draw_player(t_data *mlx, t_player *player, int tile_size);
 int		close_cross(t_data *data);
 void	raycasting(t_data *data);
 void	create_img_background(t_data **data);
-void	draw_walls(t_data *data, int x, int drawStart, int drawEnd, int color);
+void	draw_walls(t_data *data, int x, int drawStart, int drawEnd, t_tex_info *tex, int texX, int lineHeight);
 
 /* Functions utils */
 void	error(char *str);

@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/05/07 18:45:11 by jotudela         ###   ########.fr        #
+#    Updated: 2025/05/09 10:27:01 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC_FILES	= main \
 			init_and_check/init_and_free_data \
 			init_and_check/ft_checkMap \
 			game/cub3D \
+			game/generate_textures \
 			game/key_management \
 			game/create_img \
 			game/create_minimap \

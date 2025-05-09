@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 09:30:27 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/06 13:43:15 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 09:11:48 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static char	*no_newline(char *line)
 	if (len > 0 && line[len - 1] == '\n')
 	{
 		tmp = ft_strdup(line);
-		if (!temp)
+		if (!tmp)
 			return (NULL);
-		temp[len - 1] = '\0';
-		new_line = ft_strdup(temp);
-		free(temp);
+		tmp[len - 1] = '\0';
+		new_line = ft_strdup(tmp);
+		free(tmp);
 	}
 	else
 		new_line = ft_strdup(line);

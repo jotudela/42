@@ -6,46 +6,20 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/07 17:07:55 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:41:05 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-static int	generate_textures(t_data **data)
-{
-	(*data)->img.x = 32;
-	(*data)->img.y = 32;
-	(*data)->img.no = mlx_xpm_file_to_image((*data)->mlx,
-			(*data)->img.path_no,
-			&(*data)->img.x,
-			&(*data)->img.y);
-	(*data)->img.so = mlx_xpm_file_to_image((*data)->mlx,
-			(*data)->img.path_so,
-			&(*data)->img.x,
-			&(*data)->img.y);
-	(*data)->img.we = mlx_xpm_file_to_image((*data)->mlx,
-			(*data)->img.path_we,
-			&(*data)->img.x,
-			&(*data)->img.y);
-	(*data)->img.ea = mlx_xpm_file_to_image((*data)->mlx,
-			(*data)->img.path_ea,
-			&(*data)->img.x,
-			&(*data)->img.y);
-	if (!(*data)->img.no || !(*data)->img.so
-		|| !(*data)->img.we || !(*data)->img.ea)
-		return (-1);
-	return (0);
-}
-
 static void	init_player2(t_data **data, int x, int y)
 {
 	if ((*data)->map->tab[y][x] == 'E')
 	{
-		(*data)->player.dirX = 1;
-		(*data)->player.dirY = 0;
-		(*data)->player.planeX = 0;
-		(*data)->player.planeY = 0.66;
+		(*data)->player.dirx = 1;
+		(*data)->player.diry = 0;
+		(*data)->player.planex = 0;
+		(*data)->player.planey = 0.66;
 	}
 }
 
@@ -89,7 +63,7 @@ static void	generate(t_data **data)
 		(free_data(data), error("Error\nGet screen size failed !\n"), exit(1));
 	(*data)->img.img_x /= 3;
 	(*data)->img.img_y /= 3;
-	if (generate_textures(data) == -1)
+	if (generate_textures(*data) == -1)
 		(free_data(data), error("Error\nFailed "
 				"to generate textures !\n"), exit(1));
 	(*data)->win = mlx_new_window((*data)->mlx,

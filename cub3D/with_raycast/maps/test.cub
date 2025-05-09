@@ -1,7 +1,7 @@
-NO textures/wall.xpm
-SO textures/wall.xpm
-WE textures/wall.xpm
-EA textures/wall.xpm
+NO textures/N_Test.xpm
+SO textures/S_Test.xpm
+WE textures/W_Test.xpm
+EA textures/E_Test.xpm
 
 F 220,100,0
 C 225,30,0
