@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 10:41:05 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:13:21 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	generate(t_data **data)
 		(free_data(data), error("Error\nFailed "
 				"to generate textures !\n"), exit(1));
 	(*data)->win = mlx_new_window((*data)->mlx,
-			(*data)->img.img_x, (*data)->img.img_y, "TEST");
+			(*data)->img.img_x, (*data)->img.img_y, "cub3D");
 	if (!(*data)->win)
 		(free_data(data), error("Error\nGenerate "
 				"new window failed !\n"), exit(1));
