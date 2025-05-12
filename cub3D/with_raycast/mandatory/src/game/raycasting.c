@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:04:45 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 18:15:58 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/12 09:06:37 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ static void	search_wall(t_data *data, t_raycast *r)
 		}
 		if (r->mapy < 0 || r->mapy >= data->map->len_y
 			|| r->mapx < 0 || r->mapx >= data->map->len_x
-			|| data->map->tab[r->mapy][r->mapx] == '1'
-			|| data->map->tab[r->mapy][r->mapx] == ' ')
+			|| data->map->tab[r->mapy][r->mapx] == '1')
 			r->hit = 1;
 	}
 }
