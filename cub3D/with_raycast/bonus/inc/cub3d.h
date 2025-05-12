@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/09 18:11:04 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:55:49 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void	draw_walls(t_data *data, int x, t_tex_info *tex, t_raycast r);
 void	handle_map_input(t_data *data);
 void	handle_movement_loop(t_data *data);
 void	update_camera(t_data *data);
+void	render_map_to_final_image(t_data *data, char **map, int tile_size);
 
 /* Functions utils */
 void	error(char *str);

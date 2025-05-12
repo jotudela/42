@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:04:45 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 18:15:58 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:52:30 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	raycasting(t_data *data)
 		draw_walls(data, x, tex, r);
 		x++;
 	}
+	render_map_to_final_image(data, data->map->tab, 30);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
 	mlx_destroy_image(data->mlx, data->img.img_ptr);
+	//draw_player_minimap(data->mlx, 30);
 }
