@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   raycasting_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:04:45 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/12 18:52:30 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:28:18 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static void	calcul_pos(t_data *data, t_raycast *r, int x)
 {
@@ -116,5 +116,4 @@ void	raycasting(t_data *data)
 	render_map_to_final_image(data, data->map->tab, 30);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
 	mlx_destroy_image(data->mlx, data->img.img_ptr);
-	//draw_player_minimap(data->mlx, 30);
 }

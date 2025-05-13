@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_rgb_value.c                                    :+:      :+:    :+:   */
+/*   get_rgb_value_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:58:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:49 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:24:03 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static int	ft_get_rgb_value(const char *str, int *index)
 {

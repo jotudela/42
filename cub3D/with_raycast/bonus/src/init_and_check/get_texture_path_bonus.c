@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_texture_path.c                                 :+:      :+:    :+:   */
+/*   get_texture_path_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:01:54 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 09:11:16 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:24:18 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static void	ft_verif_is_allocated(t_data **data, int dir)
 {

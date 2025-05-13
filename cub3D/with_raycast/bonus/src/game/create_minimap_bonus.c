@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_minimap.c                                   :+:      :+:    :+:   */
+/*   create_minimap_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:19:13 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 18:22:57 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:26:11 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 void	put_pixel_to_image(t_minimap *img, int x, int y, int color)
 {

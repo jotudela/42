@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   generate_textures.c                                :+:      :+:    :+:   */
+/*   generate_textures_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:11:26 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 16:13:12 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:27:30 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static int	xpm_to_img(t_tex_info *tex, char *path, t_data *data)
 {

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isGoodFormat.c                                  :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 10:53:48 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/06 19:01:29 by jotudela         ###   ########.fr       */
+/*   Created: 2025/04/16 16:40:10 by jojo              #+#    #+#             */
+/*   Updated: 2025/05/13 11:22:21 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../inc/cub3d_bonus.h"
 
-void	ft_is_good_format(char *file)
+int	main(int ac, char **av)
 {
-	int	len;
+	t_data	*data;
 
-	len = ft_strlen(file) - 1;
-	if (file[len] != 'b'
-		|| file[len - 1] != 'u'
-		|| file[len - 2] != 'c'
-		|| file[len - 3] != '.'
-		|| len == 3)
-		(error("error: file: format is not on .cub !\n"), exit(1));
-	return ;
+	if (ac != 2)
+		(error("error: exec: arguments format './cub3D maps/.cub'\n"), exit(1));
+	ft_is_good_format(av[1]);
+	data = init_data();
+	data->is_map = 0;
+	data->is_paused = 0;
+	data->is_game = 1;
+	ft_init_data(&data, av[1]);
+	cub3d(&data);
+	free_data(&data);
 }

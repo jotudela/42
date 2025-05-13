@@ -6,15 +6,15 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/05/12 18:01:09 by jotudela         ###   ########.fr        #
+#    Updated: 2025/05/13 11:21:00 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ###################################################
 ### ARGUMENTS
 
-NAME		= cub3D
-CFLAGS		= -Wall -Wextra -Werror -g
+NAME		= cub3D_bonus
+CFLAGS		= -Wall -Wextra -Werror
 CC			= cc
 
 # Libft
@@ -28,7 +28,7 @@ MLX_PATH			:= minilibx-linux/
 MLX					:= $(MLX_PATH)$(MLX_NAME)
 
 # Includes
-INC_MANDATORY		= -I ./inc/\
+INC_BONUS		= -I ./inc/\
 					-I ./minilibx-linux/
 
 ###################################################
@@ -48,35 +48,35 @@ BLUE				:= \033[94m
 ## MANDATORY PART
 
 # SRC
-SRC_FILES	= main \
-			utils \
-			init_and_check/ft_init \
-			init_and_check/get_rgb_value \
-			init_and_check/get_texture_path \
-			init_and_check/ft_reallocTab \
-			init_and_check/ft_isGoodFormat \
-			init_and_check/normalize_map \
-			init_and_check/init_and_free_data \
-			init_and_check/ft_checkMap \
-			game/cub3D \
-			game/generate_textures \
-			game/key_management \
-			game/handle_mouvement \
-			game/close_cross \
-			game/draw_pause_menu \
-			game/create_img \
-			game/create_minimap \
-			game/create_player \
-			game/raycasting \
-			game/raycasting2 \
-			game/create_clear_image \
-			game/draw_minimap
+SRC_FILES	= main_bonus \
+			utils_bonus \
+			init_and_check/ft_init_bonus \
+			init_and_check/get_rgb_value_bonus \
+			init_and_check/get_texture_path_bonus \
+			init_and_check/ft_reallocTab_bonus \
+			init_and_check/ft_isGoodFormat_bonus \
+			init_and_check/normalize_map_bonus \
+			init_and_check/init_and_free_data_bonus \
+			init_and_check/ft_checkMap_bonus \
+			game/cub3D_bonus \
+			game/generate_textures_bonus \
+			game/key_management_bonus \
+			game/handle_mouvement_bonus \
+			game/close_cross_bonus \
+			game/draw_pause_menu_bonus \
+			game/create_img_bonus \
+			game/create_minimap_bonus \
+			game/create_player_bonus \
+			game/raycasting_bonus \
+			game/raycasting2_bonus \
+			game/create_clear_image_bonus \
+			game/draw_minimap_bonus
 
 SRC_DIR := src
-SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
+SRC_BONUS := $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 
 # OBJ
-OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
+OBJ_FILES	:= $(SRC_BONUS:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 
 ###################################################
 ## RULES
@@ -84,7 +84,7 @@ OBJ_FILES	:= $(SRC_MANDATORY:$(SRC_DIR)/%.c=$(SRC_DIR)/%.o)
 all: $(MLX) $(UTILS) $(NAME)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(INC_MANDATORY) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 
 $(UTILS):
 	@make -sC $(LIBFT_PATH)
@@ -101,22 +101,22 @@ $(MLX):
 	@echo "\n"
 
 $(NAME): $(MLX) $(UTILS) $(OBJ_FILES)
-	@echo "$(BOLD)$(RED)🛠️      Compiling cub3D    🛠️$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) $(MLX) $(UTILS) $(INC_MANDATORY) -lXext -lX11 -lm -lz -o $(NAME)
-	@echo "$(BOLD)$(GREEN)🚀      cub3D fully compiled, ready to use       🚀$(RESET)"
-	@echo "\n$(BOLD)Usage: ./cub3D maps/map.cub$(RESET)"
+	@echo "$(BOLD)$(RED)🛠️      Compiling cub3D_bonus    🛠️$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(MLX) $(UTILS) $(INC_BONUS) -lXext -lX11 -lm -lz -o $(NAME)
+	@echo "$(BOLD)$(GREEN)🚀      cub3D_bonus fully compiled, ready to use       🚀$(RESET)"
+	@echo "\n$(BOLD)Usage: ./cub3D_bonus maps/map.cub$(RESET)"
 
 clean:
 	@make clean -sC $(LIBFT_PATH)
 	@rm -f $(OBJ_FILES)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o cub3D's files   🌀$(RESET)"
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o cub3D_bonus's files   🌀$(RESET)"
 	@make clean -sC $(MLX_PATH)
 	@echo "$(BOLD)$(ORANGE)🌀     Cleaned .o MiniLibX's files  🌀$(RESET)"
 
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)
 	@rm -f $(NAME)
-	@echo "$(BOLD)$(ORANGE)🌀     Cleaned cub3D exec       🌀$(RESET)"
+	@echo "$(BOLD)$(ORANGE)🌀     Cleaned cub3D_bonus exec       🌀$(RESET)"
 
 re: fclean all
 

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_clear_image.c                               :+:      :+:    :+:   */
+/*   create_clear_image_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:38:16 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 13:38:10 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:25:35 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static void	put_pixel2(char *data, int color, int i)
 {

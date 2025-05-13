@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_management.c                                   :+:      :+:    :+:   */
+/*   key_management_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:24:16 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/12 18:53:46 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:27:59 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static int	key_press2(int keycode, t_data *data)
 {

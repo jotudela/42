@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting2.c                                      :+:      :+:    :+:   */
+/*   raycasting2_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:11 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 18:13:47 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:28:30 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 void	which_tex(t_data *data, t_raycast *r, t_tex_info **tex)
 {

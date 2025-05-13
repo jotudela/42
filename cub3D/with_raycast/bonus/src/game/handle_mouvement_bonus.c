@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_mouvement.c                                 :+:      :+:    :+:   */
+/*   handle_mouvement_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:26:06 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/12 18:43:23 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:27:44 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static void	update_camera2(t_data *data, float rs, float oldx, float oldplx)
 {

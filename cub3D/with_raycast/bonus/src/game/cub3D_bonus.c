@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/12 16:13:21 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:30:02 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "../../inc/cub3d_bonus.h"
 
 static void	init_player2(t_data **data, int x, int y)
 {
@@ -67,7 +67,7 @@ static void	generate(t_data **data)
 		(free_data(data), error("Error\nFailed "
 				"to generate textures !\n"), exit(1));
 	(*data)->win = mlx_new_window((*data)->mlx,
-			(*data)->img.img_x, (*data)->img.img_y, "cub3D");
+			(*data)->img.img_x, (*data)->img.img_y, "cub3D_bonus");
 	if (!(*data)->win)
 		(free_data(data), error("Error\nGenerate "
 				"new window failed !\n"), exit(1));
