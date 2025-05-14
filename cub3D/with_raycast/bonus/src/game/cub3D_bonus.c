@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/13 11:30:02 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:05:34 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static void	generate(t_data **data)
 	if (!(*data)->win)
 		(free_data(data), error("Error\nGenerate "
 				"new window failed !\n"), exit(1));
-	create_minimap(data);
 	(*data)->player.move = 0.05;
 	(*data)->player.rot = 0.05;
 }

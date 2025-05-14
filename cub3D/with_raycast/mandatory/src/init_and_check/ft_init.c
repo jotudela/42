@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 17:19:46 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/09 09:18:00 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:14:11 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	ft_init_data(t_data **data, char *file)
 	int	fd;
 
 	fd = open(file, O_RDONLY);
-	if (!fd)
+	if (fd == -1)
 		(free_data(data), error("Error\nfile: can't open file !\n"), exit(1));
 	if (ft_take_data(data, fd) == -1)
 		(free_data(data), error("Error\nparsing: "

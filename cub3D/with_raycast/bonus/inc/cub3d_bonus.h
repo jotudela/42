@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/13 11:21:30 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:06:15 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@
 # include "../Utils/get_next_line/get_next_line_bonus.h"
 # include <X11/keysym.h>
 # include "../minilibx-linux/mlx.h"
-
-typedef struct s_minimap
-{
-	void	*m_img_ptr;
-	char	*m_pixels;
-	int		m_bits_per_pixel;
-	int		m_line_length;
-	int		m_endian;
-	int		color;
-}			t_minimap;
 
 typedef struct s_map
 {
@@ -141,11 +131,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	int			is_map;
-	int			is_paused;
-	int			is_game;
 	t_map		*map;
-	t_minimap	minimap;
 	t_player	player;
 	t_image		img;
 	t_keys		keys;
@@ -172,18 +158,13 @@ void	cub3d(t_data **data);
 int		game_loop(t_data *data);
 int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
-void	create_clear_img(t_data **data);
-void	create_minimap(t_data **data);
 int		generate_textures(t_data *data);
-void	draw_player(t_data *mlx, int tile_size);
 int		close_cross(t_data *data);
 void	raycasting(t_data *data);
 void	which_tex(t_data *data, t_raycast *r, t_tex_info **tex);
 void	create_img_background(t_data **data);
-void	draw_pause_menu(t_data *data);
 int		is_walkable(t_data *data, float x, float y);
 void	draw_walls(t_data *data, int x, t_tex_info *tex, t_raycast r);
-void	handle_map_input(t_data *data);
 void	handle_movement_loop(t_data *data);
 void	update_camera(t_data *data);
 void	render_map_to_final_image(t_data *data, char **map, int tile_size);

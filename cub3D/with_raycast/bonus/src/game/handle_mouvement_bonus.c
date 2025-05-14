@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:26:06 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/13 11:27:44 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:06:05 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,4 @@ void	handle_movement_loop(t_data *data)
 			data->player.y = ny;
 	}
 	handle_movement_loop2(data, ms, nx, ny);
-}
-
-void	handle_map_input(t_data *data)
-{
-	int		win_center_x;
-	int		win_center_y;
-	int		map_draw_x;
-	int		map_draw_y;
-
-	win_center_x = 1280 / 2;
-	win_center_y = 720 / 2;
-	map_draw_x = (int)(win_center_x - (data->player.x * 30.0f));
-	map_draw_y = (int)(win_center_y - (data->player.y * 30.0f));
-	handle_movement_loop(data);
-	create_clear_img(&data);
-	mlx_put_image_to_window(data->mlx, data->win, data->minimap.m_img_ptr,
-		map_draw_x, map_draw_y);
-	draw_player(data, 30);
 }

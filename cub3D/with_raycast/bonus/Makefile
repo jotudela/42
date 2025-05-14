@@ -6,7 +6,7 @@
 #    By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/05/13 11:21:00 by jotudela         ###   ########.fr        #
+#    Updated: 2025/05/14 11:08:19 by jotudela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,13 +63,9 @@ SRC_FILES	= main_bonus \
 			game/key_management_bonus \
 			game/handle_mouvement_bonus \
 			game/close_cross_bonus \
-			game/draw_pause_menu_bonus \
 			game/create_img_bonus \
-			game/create_minimap_bonus \
-			game/create_player_bonus \
 			game/raycasting_bonus \
 			game/raycasting2_bonus \
-			game/create_clear_image_bonus \
 			game/draw_minimap_bonus
 
 SRC_DIR := src
