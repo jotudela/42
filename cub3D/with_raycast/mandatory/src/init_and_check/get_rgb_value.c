@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 15:58:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/04/30 10:15:49 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:33:25 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static int	ft_get_rgb_value(const char *str, int *index)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + (str[i] - '0');
+		if (res >= 255)
+			return (-1);
 		i++;
 	}
 	if (res < 0 || res > 255)
