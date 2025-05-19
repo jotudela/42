@@ -2,10 +2,13 @@
 # define _BUREAUCRAT_HPP_
 
 #include <iostream>
+#include "Form.hpp"
+
+class Form;
 
 class Bureaucrat
 {
-    protected:
+    private:
         const std::string _name;
         size_t  _grade;
     public:
@@ -24,6 +27,9 @@ class Bureaucrat
         //Increment/decrement grade
         void incGrade();
         void decGrade();
+
+        //Other functions
+        void signForm( Form& form );
 
         //Exceptions functions
         class GradeTooHightException : public std::exception
