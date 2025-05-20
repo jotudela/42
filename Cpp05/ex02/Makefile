@@ -3,7 +3,7 @@ CC		= c++
 CPPFLAGS	= -std=c++98 -Wall -Wextra -Werror
 
 # Nom de l'exécutable
-NAME		= Form
+NAME		= ex02
 
 # Couleurs
 RESET		:= \033[0m
@@ -14,12 +14,18 @@ GREEN		:= \033[92m
 # Fichiers sources
 SRC_FILES	= src/main.cpp \
 			src/Bureaucrat.cpp \
-			src/AForm.cpp
+			src/AForm.cpp \
+			src/ShrubberyCreationForm.cpp \
+			src/RobotomyRequestForm.cpp \
+			src/PresidentialPardonForm.cpp
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Includes
 INC			= inc/Bureacrat.hpp \
-			inc/AForm.hpp
+			inc/AForm.hpp \
+			inc/ShrubberyCreationForm.hpp \
+			inc/RobotomyRequestForm.hpp \
+			inc/PresidentialPardonForm.hpp
 
 # Commandes
 RM		= rm -f

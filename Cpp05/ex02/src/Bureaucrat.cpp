@@ -1,4 +1,5 @@
 #include "../inc/Bureaucrat.hpp"
+#include "../inc/AForm.hpp"
 
 using std::cout;
 using std::string;
@@ -33,12 +34,12 @@ Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other )
     return *this;
 }
 
-const string Bureaucrat::getName()
+const string Bureaucrat::getName() const
 {
     return _name;
 }
 
-size_t Bureaucrat::getGrade()
+size_t Bureaucrat::getGrade() const
 {
     return _grade;
 }
@@ -57,14 +58,25 @@ void Bureaucrat::decGrade()
     this->_grade += 1;
 }
 
-void Bureaucrat::signForm( Form& form )
+void Bureaucrat::signForm( AForm& form )
 {
     try {
         form.beSigned(*this);
-        cout << this->_name << " signed " << form.getFormName() << endl;
+        cout << this->_name << " signed " << form.getAFormName() << endl;
     } catch (const std::exception& e) {
-        std::cout << this->_name << " couldn't sign " << form.getFormName()
-                  << " because " << e.what() << std::endl;
+        cout << this->_name << " couldn't sign " << form.getAFormName()
+                  << " because " << e.what() << endl;
+    }
+}
+
+void Bureaucrat::executeForm( AForm const& form ) const
+{
+    try {
+        form.execute(*this);
+        cout << this->_name << " executed " << form.getAFormName() << endl;
+    } catch (const std::exception& e) {
+        cout << this->_name << " couldn't execute " << form.getAFormName()
+                  << " because " << e.what() << endl;
     }
 }
 

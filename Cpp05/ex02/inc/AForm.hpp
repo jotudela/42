@@ -59,6 +59,15 @@ class AForm
                     return "Grade too low to sign this AForm!";
                 }
         };
+
+        class FormNotSignedException : public std::exception
+        {
+            public:
+                virtual const char* what() const throw()
+                {
+                    return "Form is not signed, cannot be executed!";
+                }
+        };
 };
 
 std::ostream &operator<<( std::ostream &out, AForm &_AForm );

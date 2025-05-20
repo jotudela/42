@@ -44,7 +44,7 @@ size_t AForm::getGradeExec() const
 void AForm::beSigned( Bureaucrat& bureaucrat )
 {
     if (bureaucrat.getGrade() > this->_gradeSign)
-        throw Form::GradeTooLowException();
+        throw AForm::GradeTooLowException();
     this->_isSigned = true;
 }
 

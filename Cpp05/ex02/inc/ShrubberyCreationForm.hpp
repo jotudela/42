@@ -2,6 +2,7 @@
 # define _SHRUBBERYCREATIONFORM_HPP_
 
 # include "AForm.hpp"
+# include <fstream>
 
 class ShrubberyCreationForm : public AForm
 {
@@ -13,12 +14,7 @@ class ShrubberyCreationForm : public AForm
         ShrubberyCreationForm();
         ShrubberyCreationForm( const std::string& target );
         virtual ~ShrubberyCreationForm();
-
-        ShrubberyCreationForm( ShrubberyCreationForm const& copy ) :
-            _target(copy._target){
-                std::cout << "Copy constructor called" << std::endl; 
-            }
-
+        ShrubberyCreationForm( ShrubberyCreationForm const& copy );
         ShrubberyCreationForm& operator=( const ShrubberyCreationForm& other );
 
         //Getters function
@@ -26,16 +22,6 @@ class ShrubberyCreationForm : public AForm
 
         //Other functions
         virtual void execute( Bureaucrat const& executor ) const;
-
-        //Exception
-        class FormNotSignedException : public std::exception
-        {
-            public:
-                virtual const char* what() const throw()
-                {
-                    return "Form is not signed, cannot be executed!";
-                }
-        };
 };
 
 #endif
