@@ -3,7 +3,7 @@ CC		= c++
 CPPFLAGS	= -std=c++98 -Wall -Wextra -Werror
 
 # Nom de l'exécutable
-NAME		= Bureaucrat
+NAME		= Form
 
 # Couleurs
 RESET		:= \033[0m
@@ -13,11 +13,13 @@ GREEN		:= \033[92m
 
 # Fichiers sources
 SRC_FILES	= src/main.cpp \
-			src/Bureaucrat.cpp
+			src/Bureaucrat.cpp \
+			src/Form.cpp
 OBJ_FILES	= $(SRC_FILES:.cpp=.o)
 
 # Includes
-INC			= inc/Bureacrat.hpp
+INC			= inc/Bureacrat.hpp \
+			inc/Form.hpp
 
 # Commandes
 RM		= rm -f

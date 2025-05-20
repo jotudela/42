@@ -3,7 +3,9 @@
 
 # include "Bureaucrat.hpp"
 
-class Form : public Bureaucrat
+class Bureaucrat;
+
+class Form
 {
     private:
         const std::string _name;
@@ -30,8 +32,8 @@ class Form : public Bureaucrat
         //Getters functions
         const std::string getFormName() const;
         bool getIsSigned() const;
-        const size_t getGradeSign() const;
-        const size_t getGradeExec() const;
+        size_t getGradeSign() const;
+        size_t getGradeExec() const;
 
         //Other functions
         void beSigned( Bureaucrat& bureaucrat );
@@ -42,7 +44,7 @@ class Form : public Bureaucrat
             public:
                 virtual const char* what() const throw()
                 {
-                    return "Grade too hight to sign or execute form!";
+                    return "Grade too high to sign this form!";
                 }
         };
 
@@ -51,7 +53,7 @@ class Form : public Bureaucrat
             public:
                 virtual const char* what() const throw()
                 {
-                    return "Grade too low to sign or execute form!";
+                    return "Grade too low to sign this form!";
                 }
         };
 };

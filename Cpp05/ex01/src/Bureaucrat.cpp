@@ -57,13 +57,13 @@ void Bureaucrat::decGrade()
     this->_grade += 1;
 }
 
-void Bureaucrat::signForm(Form& form)
+void Bureaucrat::signForm( Form& form )
 {
     try {
         form.beSigned(*this);
-        std::cout << this->_name << " signed " << form.getName() << std::endl;
+        cout << this->_name << " signed " << form.getFormName() << endl;
     } catch (const std::exception& e) {
-        std::cout << this->_name << " couldn’t sign " << form.getName()
+        std::cout << this->_name << " couldn't sign " << form.getFormName()
                   << " because " << e.what() << std::endl;
     }
 }

@@ -31,12 +31,12 @@ bool Form::getIsSigned() const
     return _isSigned;
 }
 
-const size_t Form::getGradeSign() const
+size_t Form::getGradeSign() const
 {
     return _gradeSign;
 }
 
-const size_t Form::getGradeExec() const
+size_t Form::getGradeExec() const
 {
     return _gradeExec;
 }
