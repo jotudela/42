@@ -4,7 +4,10 @@
 # include <iostream>
 # include <stdint.h>
 
-typedef struct s_data {} Data;
+typedef struct s_data
+{
+    int x;
+}           Data;
 
 class Serializer
 {

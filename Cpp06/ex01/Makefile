@@ -3,7 +3,7 @@ CC		= c++
 CPPFLAGS	= -std=c++98 -Wall -Wextra -Werror
 
 # Nom de l'exécutable
-NAME		= convert
+NAME		= serializer
 
 # Couleurs
 RESET		:= \033[0m
