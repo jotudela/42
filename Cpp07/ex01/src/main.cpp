@@ -1,27 +1,39 @@
-#include "iter.hpp"
+#include "../inc/iter.hpp"
 
-// Fonction de lecture (const)
-template <typename T>
-void printElement(const T& x) {
-    std::cout << x << std::endl;
-}
+int main()
+{
+    int arrayInt[5] = {4, -9, 42, -12, 0};
+    
+    float arrayFloat[5] = {4.42f, -9.9f, 42.42f, -12.12f, 0.0f};
 
-// Fonction de modification (non-const)
-template <typename T>
-void increment(T& x) {
-    x += 1;
-}
+    std::string arrayString[5] = {"Heap is Better",
+                            "Stack is Better",
+                            "Elon Musk is Better",
+                            "Jeff Bezos is better",
+                            "Nutella is better with butter"};
 
-int main() {
-    // Tableau non-const
-    int array1[] = {1, 2, 3, 4, 5};
-    int len1 = sizeof(array1) / sizeof(array1[0]);
+    double arrayNope[5] = {4.33, -9.7, 42.2, -12.1, 0.9};
+    
+    const int arrayInt2[5] = {4, -9, 42, -12, 0};
 
-    std::cout << "Avant incrementation :" << std::endl;
-    iter(array1, len1, printElement);
-    std::cout << "Apres incrementation :" << std::endl;
-    iter(array1, len1, static_cast<void(*)(int&)>(increment<int>));
-    iter(array1, len1, static_cast<void(*)(const int&)>(printElement<int>));
+    std::cout << "Array of int:\n" << std::endl;
+    iter<int>(arrayInt, 5, *basicFunction<int>);
+    std::cout << std::endl;
+
+    std::cout << "Array of float:\n" << std::endl;
+    iter<float>(arrayFloat, 5, *basicFunction<float>);
+    std::cout << std::endl;
+
+    std::cout << "Array of string:\n" << std::endl;
+    iter<std::string>(arrayString, 5, *basicFunction<std::string>);
+    std::cout << std::endl;
+
+    std::cout << "Array of double:\n" << std::endl;
+    iter<double>(arrayNope, 5, *basicFunction<double>);
+    std::cout << std::endl;
+
+    std::cout << "Array of const int:" << std::endl;
+    iter(arrayInt2, 5, *basicFunction2<const int>);
 
     return 0;
 }
