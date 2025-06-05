@@ -17,7 +17,7 @@ RUN openssl req -x509 -nodes -days 365 \
     -subj "/C=FR/ST=42/L=Inception/O=42/CN=jotudela.42.fr"
 
 # Copie de la configuration personnalisée de nginx
-COPY default.conf /etc/nginx/sites-available/default
+COPY ./conf/default.conf /etc/nginx/sites-available/default
 RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Exposer uniquement le port 443 (HTTPS)
