@@ -6,7 +6,7 @@
 #    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/03 11:12:15 by jojo              #+#    #+#              #
-#    Updated: 2025/06/04 12:44:57 by jojo             ###   ########.fr        #
+#    Updated: 2025/06/05 22:20:04 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ down:
 
 fclean: down
 	@echo "🔥 Suppression des images et des volumes..."
-	@docker rmi mariadb:42 wordpress:42 nginx:42 || true
+	@docker rmi mariadb wordpress nginx || true
 	@docker volume rm srcs_mariadb_volume srcs_wordpress_volume || true
 	@rm -rf $(DATA_DIR)/mariadb $(DATA_DIR)/wordpress
 
@@ -62,9 +62,9 @@ re: fclean all
 backup: backup-mariadb backup-wordpress
 
 backup-mariadb:
-	docker exec mariadb tar cf - -C /var/lib/mysql . | tar xf - -C $(DATA_DIR)/mariadb
+	@docker exec mariadb tar cf - -C /var/lib/mysql . | tar xf - -C $(DATA_DIR)/mariadb
 
 backup-wordpress:
-	docker exec wordpress tar cf - -C /var/www/html . | tar xf - -C $(DATA_DIR)/wordpress
+	@docker exec wordpress tar cf - -C /var/www/html . | tar xf - -C $(DATA_DIR)/wordpress
 	
 .PHONY: all setup build up down fclean re backup backup-mariadb backup-wordpress
