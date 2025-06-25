@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:38:32 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/09 13:51:40 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:05:12 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	put_pixel(char *data, int color, int i)
 	data[i + 2] = (color & 0x00FF0000) >> 16;
 }
 
-static void	ft_draw_img(t_data **data)
+void	ft_draw_img(t_data **data)
 {
 	int	y;
 	int	x;

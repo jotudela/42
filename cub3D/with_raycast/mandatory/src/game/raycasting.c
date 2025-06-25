@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:04:45 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/12 09:06:37 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:14:45 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	raycasting(t_data *data)
 	t_raycast	r;
 	int			x;
 
-	create_img_background(&data);
 	x = 0;
 	tex = NULL;
+	ft_draw_img(&data);
 	while (x < data->img.img_x)
 	{
 		calcul_pos(data, &r, x);
@@ -113,5 +113,4 @@ void	raycasting(t_data *data)
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
-	mlx_destroy_image(data->mlx, data->img.img_ptr);
 }

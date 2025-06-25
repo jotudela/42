@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:13:51 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/12 16:13:02 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:17:09 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ static void	generate(t_data **data)
 				"new window failed !\n"), exit(1));
 	(*data)->player.move = 0.05;
 	(*data)->player.rot = 0.05;
+	create_img_background(data);
+}
+
+static void	do_game(t_data **data)
+{
+	mlx_loop_hook((*data)->mlx, game_loop, *data);
+	mlx_loop((*data)->mlx);
 }
 
 void	cub3d(t_data **data)
@@ -81,6 +88,5 @@ void	cub3d(t_data **data)
 	mlx_hook((*data)->win, 2, 1L << 0, key_press, *data);
 	mlx_hook((*data)->win, 3, 1L << 1, key_release, *data);
 	mlx_hook((*data)->win, 17, 0, close_cross, *data);
-	mlx_loop_hook((*data)->mlx, game_loop, *data);
-	mlx_loop((*data)->mlx);
+	do_game(data);
 }
