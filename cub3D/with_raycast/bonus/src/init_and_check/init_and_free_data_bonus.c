@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:52:04 by jotudela          #+#    #+#             */
-/*   Updated: 2025/05/14 11:05:21 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:34:14 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	free_tab(char **tab)
 
 static void	free_data2(t_data **data)
 {
+	if ((*data)->img.img_ptr)
+		mlx_destroy_image((*data)->mlx, (*data)->img.img_ptr);
 	if ((*data)->img.no.img_ptr)
 		mlx_destroy_image((*data)->mlx, (*data)->img.no.img_ptr);
 	if ((*data)->img.so.img_ptr)

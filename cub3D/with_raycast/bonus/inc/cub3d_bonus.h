@@ -6,7 +6,7 @@
 /*   By: jotudela <jotudela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:42:55 by jojo              #+#    #+#             */
-/*   Updated: 2025/05/14 11:06:15 by jotudela         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:37:05 by jotudela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ void	error(char *str);
 void	ft_cleangnl(int fd);
 void	free_tab(char **tab);
 void	free_data(t_data **data);
+void	ft_draw_img(t_data **data);
 
 #endif
