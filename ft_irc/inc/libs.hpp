@@ -1,5 +1,11 @@
 #pragma once
 
+
+#define IRC_MESSAGE_MAX 512
+#define MAX_EVENTS 1000
+#define BUFFER_SIZE 4096
+
+
 #include <sys/socket.h>     // socket(), bind(), accept(), setsockopt()
 #include <netinet/in.h>     // sockaddr_in, htons(), htonl(), ntohs(), ntohl()
 #include <arpa/inet.h>      // inet_addr(), inet_ntoa()
