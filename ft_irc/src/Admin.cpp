@@ -10,12 +10,6 @@ Admin::Admin() : _nickName(""), _userName("")
     _staff = false;
 }
 
-Admin::Admin( string nickName, string userName ) : _nickName(nickName), _userName(userName)
-{
-    _admin = false;
-    _staff = false;
-}
-
 Admin::~Admin(){}
 
 void Admin::setAdminStatus()

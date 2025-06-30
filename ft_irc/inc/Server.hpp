@@ -10,6 +10,7 @@ class Server
         int _port;
         int _serverFd;
         int _epollFD;
+        std::string _topic;
         std::string _passWord;
         bool _running;
         Admin _admin;
@@ -27,6 +28,7 @@ class Server
         ~Server();
 
         const std::string& getPassWord() const;
+        const std::string& getTopic() const;
         int getPort() const;
 
         const std::string& getAdminNickName() const;

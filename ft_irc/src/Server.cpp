@@ -19,6 +19,9 @@ _epollFD(-1), _passWord(passWord), _running(false)
     cout << endl << "Enter admin user name : ";
     cin >> userName;
     cout << endl;
+    cout << "Enter the Topic of the Server : ";
+    cin >> _topic;
+    cout << endl;
 
     _admin.setAdminNames(nickName, userName);
 }
@@ -28,6 +31,11 @@ Server::~Server(){}
 const string& Server::getPassWord() const
 {
     return _passWord;
+}
+
+const string& Server::getTopic() const
+{
+    return _topic;
 }
 
 int Server::getPort() const

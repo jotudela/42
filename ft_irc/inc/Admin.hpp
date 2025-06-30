@@ -17,7 +17,6 @@ class Admin
     public:
 
         Admin();
-        Admin( std::string nickName, std::string userName );
         ~Admin();
 
         void setAdminStatus();
