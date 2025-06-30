@@ -6,7 +6,7 @@
 #    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/06/30 17:22:45 by jojo             ###   ########.fr        #
+#    Updated: 2025/06/30 21:36:58 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ BLUE				:= \033[94m
 # SRC
 SRC_FILES	= main \
 			Server \
-			Admin
+			Admin \
+			User
 
 SRC_DIR := src
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .cpp, $(SRC_FILES)))

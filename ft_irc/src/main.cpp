@@ -16,4 +16,5 @@ int main( int ac, char **av )
     cout << serv.getPassWord() << " " << serv.getPort() << endl;
     cout << serv.getAdminNickName() << " " << serv.getAdminUserName() << endl;
     cout << serv.getTopic() << endl;
+    serv.setUpServer();
 }

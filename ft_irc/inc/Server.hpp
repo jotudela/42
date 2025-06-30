@@ -2,6 +2,7 @@
 
 #include "libs.hpp"
 #include "Admin.hpp"
+#include "User.hpp"
 
 class Server
 {
@@ -10,10 +11,13 @@ class Server
         int _port;
         int _serverFd;
         int _epollFD;
+        int _opt;
         std::string _topic;
         std::string _passWord;
         bool _running;
         Admin _admin;
+        std::map<int, Admin> _staffs;
+        std::map<int, User> _users;
 
         struct sockaddr_in _serverAddr;
         struct epoll_event _events[MAX_EVENTS];
@@ -35,6 +39,9 @@ class Server
         const std::string& getAdminUserName() const;
         const std::string& getStaffNickName() const;
         const std::string& getStaffUserName() const;
+
+        void makeNonBlocking(int fd);
+        void setUpServer();
 
         void run();
 };
