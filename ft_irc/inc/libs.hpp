@@ -3,7 +3,6 @@
 
 #define IRC_MESSAGE_MAX 512
 #define MAX_EVENTS 1000
-#define BUFFER_SIZE 4096
 
 
 #include <sys/socket.h>     // socket(), bind(), accept(), setsockopt()
@@ -31,3 +30,5 @@
 
 
 #include <cerrno>           // errno
+#include <cstdio>
+#include <sstream>

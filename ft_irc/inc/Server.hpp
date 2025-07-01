@@ -4,6 +4,8 @@
 #include "Admin.hpp"
 #include "User.hpp"
 
+enum InputState { WAIT_NICK = 0, WAIT_USER = 1, REGISTERED = 2 };
+
 class Server
 {
     private:
@@ -17,11 +19,13 @@ class Server
         bool _running;
         Admin _admin;
         std::map<int, Admin> _staffs;
-        std::map<int, User> _users;
+        std::map<int, User *> _users;
+        std::map<int, InputState> _userStates;
+        std::map<int, std::string> _tempNick;
 
         struct sockaddr_in _serverAddr;
         struct epoll_event _events[MAX_EVENTS];
-        char _buffer[BUFFER_SIZE];
+        char _buffer[IRC_MESSAGE_MAX];
 
         Server( const Server & );
         Server& operator=( const Server & );

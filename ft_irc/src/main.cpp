@@ -13,8 +13,9 @@ int main( int ac, char **av )
         return 1;
     }
     Server serv(std::atoi(av[1]), av[2]);
-    cout << serv.getPassWord() << " " << serv.getPort() << endl;
-    cout << serv.getAdminNickName() << " " << serv.getAdminUserName() << endl;
-    cout << serv.getTopic() << endl;
+    //cout << serv.getPassWord() << " " << serv.getPort() << endl;
+    //cout << serv.getAdminNickName() << " " << serv.getAdminUserName() << endl;
+    //cout << serv.getTopic() << endl;
     serv.setUpServer();
+    serv.run();
 }
