@@ -171,6 +171,77 @@ int Server::commandUser( int event_fd )
     input.erase(remove(input.begin(), input.end(), '\n'), input.end());
     input.erase(remove(input.begin(), input.end(), '\r'), input.end());
 
+    if (_userStates[event_fd] == REGISTERED || _userStates[event_fd] == JOINED)
+    {
+
+        istringstream iss(input);
+        string command;
+        iss >> command;
+
+        // Récupère le reste de la ligne après la commande
+        std::string rest;
+        std::getline(iss, rest);
+
+        // Nettoyer les espaces en début
+        rest.erase(0, rest.find_first_not_of(" \t"));
+
+        // Séparer le message (commence par :)
+        size_t msg_pos = rest.find(" :");
+        string target, msg;
+
+        if (msg_pos != string::npos) {
+            target = rest.substr(0, msg_pos);
+            msg = rest.substr(msg_pos + 2); // saute " :"
+        } else {
+            target = rest;
+            msg = "";
+        }
+
+        // Trim le target
+        target.erase(0, target.find_first_not_of(" \t"));
+        target.erase(target.find_last_not_of(" \t") + 1);
+
+        // Vérification
+        if (command == "PRIVMSG")
+        {
+            if (target.empty() || msg.empty())
+            {
+                std::string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
+                write(event_fd, err.c_str(), err.size());
+                return -1;
+            }
+        }
+
+        if (_users.count(event_fd) || _staffs.count(event_fd))  // On vérifie que l'expéditeur existe
+        {
+            // Recherche d'un destinataire avec ce nick
+            int receiver_fd = -1;
+            for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+            {
+                if (it->second->getNickName() == target)
+                {
+                    receiver_fd = it->first;
+                    break;
+                }
+            }
+
+            for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+            {
+                if (it->second->getNickName() == target)
+                {
+                    receiver_fd = it->first;
+                    break;
+                }
+            }
+            
+            string fullMsg = _users[event_fd]->getNickName() + " to you " + ": " + msg + "\r\n";
+            if (target == this->getAdminNickName())
+                cout << fullMsg;
+            else if (receiver_fd != -1)
+                write(receiver_fd, fullMsg.c_str(), fullMsg.size());
+        }
+    }
+
     switch (_userStates[event_fd])
     {
         case WAIT_NICK:
@@ -252,6 +323,8 @@ int Server::commandUser( int event_fd )
                 write(event_fd, channel.c_str(), channel.length());
                 _userStates[event_fd] = WAIT_PASSWORD;
             }
+            else if (command == "PRIVMSG")
+                break;
             else
             {
                 string msg = ":server 421 * " + command + " :Unknown command\r\n";
@@ -287,37 +360,42 @@ int Server::commandUser( int event_fd )
         case JOINED:
         {
             istringstream iss(input);
-            string command, target;
+            string command;
+            iss >> command;
 
-            iss >> command >> target;
+            // Récupère le reste de la ligne après la commande
+            std::string rest;
+            std::getline(iss, rest);
 
-            // Vérification : command et target doivent exister
-            if (command != "PRIVMSG" || target.empty())
-            {
-                string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
-                write(event_fd, err.c_str(), err.size());
-                break;
+            // Nettoyer les espaces en début
+            rest.erase(0, rest.find_first_not_of(" \t"));
+
+            // Séparer le message (commence par :)
+            size_t msg_pos = rest.find(" :");
+            string target, msg;
+
+            if (msg_pos != string::npos) {
+                target = rest.substr(0, msg_pos);
+                msg = rest.substr(msg_pos + 2); // saute " :"
+            } else {
+                target = rest;
+                msg = "";
             }
 
-            // Nettoyage
+            // Trim le target
             target.erase(0, target.find_first_not_of(" \t"));
             target.erase(target.find_last_not_of(" \t") + 1);
-            if (!target.empty() && target[0] == ':')
-                target.erase(0, 1);
 
-            // Récupération du message
-            string message;
-            getline(iss, message);
-            if (!message.empty())
-            {
-                message.erase(0, message.find_first_not_of(" \t"));
-                if (message[0] == ':')
-                    message.erase(0, 1);
+            // Vérification
+            if (command != "PRIVMSG" || target.empty() || msg.empty()) {
+                string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
+                write(event_fd, err.c_str(), err.size());
             }
+
 
             if (target == ("#" + this->getTopic()))
             {
-                string fullMsg = _users[event_fd]->getNickName() + " from " + target + " : " + message + "\r\n";
+                string fullMsg = _users[event_fd]->getNickName() + " from " + target + " : " + msg + "\r\n";
 
                 for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
                 {
@@ -331,30 +409,7 @@ int Server::commandUser( int event_fd )
                     if (fd != event_fd)
                         write(fd, fullMsg.c_str(), fullMsg.size());
                 }
-            }
-            else if (_users.count(event_fd))  // On vérifie que l'expéditeur existe
-            {
-                // Recherche d'un destinataire avec ce nick
-                int receiver_fd = -1;
-                for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
-                {
-                    if (it->second->getNickName() == target && _userStates[it->first] == JOINED)
-                    {
-                        receiver_fd = it->first;
-                        break;
-                    }
-                }
-
-                if (receiver_fd != -1)
-                {
-                    string fullMsg = _users[event_fd]->getNickName() + " to you " + ": " + message + "\r\n";
-                    write(receiver_fd, fullMsg.c_str(), fullMsg.size());
-                }
-                else
-                {
-                    string err = ":server 401 " + target + " :No such nick/channel\r\n";
-                    write(event_fd, err.c_str(), err.size());
-                }
+                cout << fullMsg;
             }
             break;
         }
