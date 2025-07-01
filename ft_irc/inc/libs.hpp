@@ -32,3 +32,4 @@
 #include <cerrno>           // errno
 #include <cstdio>
 #include <sstream>
+#include <algorithm>

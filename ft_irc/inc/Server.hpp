@@ -4,7 +4,7 @@
 #include "Admin.hpp"
 #include "User.hpp"
 
-enum InputState { WAIT_NICK = 0, WAIT_USER = 1, REGISTERED = 2 };
+enum InputState { WAIT_NICK = 0, WAIT_USER = 1, REGISTERED = 2, WAIT_PASSWORD = 3, JOINED = 4 };
 
 class Server
 {
@@ -18,10 +18,11 @@ class Server
         std::string _passWord;
         bool _running;
         Admin _admin;
-        std::map<int, Admin> _staffs;
+        std::map<int, Admin *> _staffs;
         std::map<int, User *> _users;
-        std::map<int, InputState> _userStates;
+        std::map<int, int> _userStates;
         std::map<int, std::string> _tempNick;
+        std::map<int, std::string> _tempUser;
 
         struct sockaddr_in _serverAddr;
         struct epoll_event _events[MAX_EVENTS];
@@ -48,4 +49,7 @@ class Server
         void setUpServer();
 
         void run();
+        int createNewUser();
+        int commandAdminStaff();
+        int commandUser( int event_fd );
 };
