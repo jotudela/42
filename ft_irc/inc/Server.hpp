@@ -16,9 +16,13 @@ class Server
         int _opt;
         std::string _topic;
         std::string _passWord;
+
         bool _running;
+        bool _invite;
+
         Admin _admin;
         std::map<int, Admin *> _staffs;
+        std::map<int, int> _staffStates;
         std::map<int, User *> _users;
         std::map<int, int> _userStates;
         std::map<int, std::string> _tempNick;
@@ -49,7 +53,10 @@ class Server
         void setUpServer();
 
         void run();
+        void freeData();
         int createNewUser();
         int commandAdminStaff();
         int commandUser( int event_fd );
+        int userToStaff( int fd );
+        int staffToUser( int fd );
 };

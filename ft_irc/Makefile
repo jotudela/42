@@ -6,7 +6,7 @@
 #    By: jojo <jojo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:48:36 by jtudela           #+#    #+#              #
-#    Updated: 2025/06/30 21:36:58 by jojo             ###   ########.fr        #
+#    Updated: 2025/07/02 12:26:32 by jojo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 ### ARGUMENTS
 
 NAME		= ircserv
-CFLAGS		= -std=c++98 -Wall -Wextra -Werror
+CFLAGS		= -std=c++98 -Wall -Wextra -Werror -g
 CC			= c++
 
 # Includes
@@ -40,7 +40,8 @@ BLUE				:= \033[94m
 SRC_FILES	= main \
 			Server \
 			Admin \
-			User
+			User \
+			setUp
 
 SRC_DIR := src
 SRC_MANDATORY := $(addprefix $(SRC_DIR)/, $(addsuffix .cpp, $(SRC_FILES)))

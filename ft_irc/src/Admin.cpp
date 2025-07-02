@@ -24,6 +24,11 @@ void Admin::setStaffStatus()
     _admin = false;
 }
 
+void Admin::setStatus( bool registered )
+{
+    _registered = registered;
+}
+
 void Admin::setAdminNames( const std::string& nickName, const std::string& userName )
 {
     _nickName = nickName;
@@ -44,6 +49,11 @@ bool Admin::getAdminStatus() const
 bool Admin::getStaffStatus() const
 {
     return _staff;
+}
+
+bool Admin::getStatus() const
+{
+    return _registered;
 }
 
 const std::string& Admin::getNickName() const

@@ -9,7 +9,7 @@ using std::remove;
 using std::istringstream;
 
 Server::Server( int port, string passWord ) : _port(port), _serverFd(-1),
-_epollFD(-1), _passWord(passWord), _running(true)
+_epollFD(-1), _passWord(passWord), _running(true), _invite(false)
 {
     string nickName;
     string userName;
@@ -65,86 +65,135 @@ const std::string& Server::getStaffUserName() const
     return _admin.getUserName();
 }
 
-void Server::makeNonBlocking( int fd )
-{
-    fcntl(fd, F_SETFL, O_NONBLOCK);
-}
-
-void Server::setUpServer()
-{
-    // Création du socket d'écoute
-    _serverFd = socket(AF_INET, SOCK_STREAM, 0);
-    this->makeNonBlocking(_serverFd);
-
-    _opt = 1;
-    setsockopt(_serverFd, SOL_SOCKET, SO_REUSEADDR, &_opt, sizeof(_opt));
-
-    _serverAddr.sin_family = AF_INET;
-    _serverAddr.sin_addr.s_addr = INADDR_ANY;
-    _serverAddr.sin_port = htons(_port);
-
-    bind(_serverFd, (sockaddr*)&_serverAddr, sizeof(_serverAddr));
-    listen(_serverFd, SOMAXCONN);
-
-    // Création de l'instance epoll
-    _epollFD = epoll_create1(0);
-
-    // Ajout du socket d'écoute à epoll
-    _events[0].events = EPOLLIN;
-    _events[0].data.fd = _serverFd;
-    epoll_ctl(_epollFD, EPOLL_CTL_ADD, _serverFd, &_events[0]);
-
-    // Ajout de l'entrée standard (fd 0)
-    this->makeNonBlocking(STDIN_FILENO);
-    epoll_event stdin_ev;
-    memset(&stdin_ev, 0, sizeof(stdin_ev));
-    stdin_ev.events = EPOLLIN;
-    stdin_ev.data.fd = STDIN_FILENO;
-    epoll_ctl(_epollFD, EPOLL_CTL_ADD, STDIN_FILENO, &stdin_ev);
-}
-
-int Server::createNewUser()
-{
-    int client_fd = accept(_serverFd, NULL, NULL);
-    if (client_fd == -1)
-    {
-        perror("accept");
-        return -1;
-    }
-
-    makeNonBlocking(client_fd);
-
-    epoll_event client_event;
-    memset(&client_event, 0, sizeof(client_event));
-    client_event.events = EPOLLIN | EPOLLET;
-    client_event.data.fd = client_fd;
-
-    if (epoll_ctl(_epollFD, EPOLL_CTL_ADD, client_fd, &client_event) == -1)
-    {
-        perror("epoll_ctl: client_fd");
-        close(client_fd);
-        return -1;
-    }
-
-    _users[client_fd] = new User();
-    _userStates[client_fd] = WAIT_NICK;
-    _tempNick[client_fd] = "";
-    _tempUser[client_fd] = "";
-    return 0;
-}
-
 int Server::commandAdminStaff()
 {
     string input;
-    getline(cin, input);
+    getline(std::cin, input);
+
     if (input == "QUIT")
     {
         cout << "Shutting down server.\n";
         _running = false;
         return -1;
     }
+
+    istringstream iss(input);
+    string cmd;
+    iss >> cmd;
+
+    if (cmd == "MODE")
+    {
+        string subcmd, nickname;
+        iss >> subcmd >> nickname;
+
+        // MODE i : active/désactive le mode "invitation-only" du canal
+        if (subcmd == "i" && nickname.empty())
+        {
+            _invite = !_invite;
+            cout << "[MODE] Canal mode invitation ";
+            cout << (_invite ? "ACTIVÉ." : "DÉSACTIVÉ.") << endl;
+            return 0;
+        }
+
+        // MODE o <nickname> : promotion/démotion
+        if (subcmd == "o" && !nickname.empty())
+        {
+            // Promotion
+            std::map<int, User*>::iterator uit;
+            for (uit = _users.begin(); uit != _users.end(); ++uit)
+            {
+                if (uit->second->getNickName() == nickname)
+                {
+                    if (userToStaff(uit->first) == 0)
+                        cout << "[PROMOTION] " << nickname << " est maintenant staff." << endl;
+                    else
+                        cout << "[ERREUR] Impossible de promouvoir " << nickname << endl;
+                    return 0;
+                }
+            }
+
+            // Démotion
+            std::map<int, Admin*>::iterator sit;
+            for (sit = _staffs.begin(); sit != _staffs.end(); ++sit)
+            {
+                if (sit->second->getNickName() == nickname)
+                {
+                    if (staffToUser(sit->first) == 0)
+                        cout << "[RÉTROGRADATION] " << nickname << " est redevenu user." << endl;
+                    else
+                        cout << "[ERREUR] Impossible de rétrograder " << nickname << endl;
+                    return 0;
+                }
+            }
+
+            cout << "[!] Aucun utilisateur trouvé avec le nickname : " << nickname << endl;
+            return 0;
+        }
+
+        // Commande invalide
+        cout << "[ERREUR] Syntaxe invalide pour MODE." << endl;
+    }
+    else if (cmd == "KICK")
+    {
+        string kick_nick;
+        iss >> kick_nick;
+
+        if (!kick_nick.empty())
+        {
+            int fdToKick = -1;
+            std::map<int, User*>::iterator it;
+            for (it = _users.begin(); it != _users.end(); ++it)
+            {
+                if (it->second->getNickName() == kick_nick)
+                {
+                    fdToKick = it->first;
+                    break;
+                }
+            }
+
+            if (fdToKick != -1)
+            {
+                _userStates[fdToKick] = REGISTERED;
+                string kickMsg = ":server KICK " + kick_nick + " : " + getTopic() + "\r\n";
+                write(fdToKick, kickMsg.c_str(), kickMsg.size());
+                cout << "[KICK] " << kick_nick << " a été retiré du channel." << std::endl;
+            }
+            else
+                cout << "[!] Aucun utilisateur trouvé avec le nickname : " << kick_nick << endl;
+        }
+        else
+            cout << "[ERREUR] Syntaxe : KICK <nickname>" << endl;
+    }
+    else if (cmd == "TOPIC")
+    {
+        string channel_or_topic;
+        getline(iss, channel_or_topic);
+
+        // Trim leading spaces
+        channel_or_topic.erase(0, channel_or_topic.find_first_not_of(" \t"));
+
+        if (channel_or_topic.empty())
+        {
+            if (_topic.empty())
+                cout << "[TOPIC] Aucun topic n'est défini." << endl;
+            else
+                cout << "[TOPIC] Sujet actuel : " << _topic << endl;
+        }
+        else
+        {
+            // Nouveau sujet
+            size_t pos = channel_or_topic.find(':');
+            if (pos != string::npos)
+                _topic = channel_or_topic.substr(pos + 1);
+            else
+                _topic = channel_or_topic;
+
+            cout << "[TOPIC] Nouveau sujet défini : " << _topic << endl;
+        }
+    }
     else
         cout << "[Server command] " << input << endl;
+
     return 0;
 }
 
@@ -154,24 +203,36 @@ int Server::commandUser( int event_fd )
     int count = read(event_fd, _buffer, IRC_MESSAGE_MAX);
     if (count <= 0)
     {
-        if (_users[event_fd]->getStatus())
+        if (_users[event_fd] && _users[event_fd]->getStatus())
+        {
             cout << "Client disconnected: " << _users[event_fd]->getNickName() << endl;
-
-        close(event_fd);
-        epoll_ctl(_epollFD, EPOLL_CTL_DEL, event_fd, NULL);
-        delete _users[event_fd];
-        _users.erase(event_fd);
-        _userStates.erase(event_fd);
-        _tempNick.erase(event_fd);
-        _tempUser.erase(event_fd);
-        return -1;
+            close(event_fd);
+            epoll_ctl(_epollFD, EPOLL_CTL_DEL, event_fd, NULL);
+            delete _users[event_fd];
+            _users.erase(event_fd);
+            _userStates.erase(event_fd);
+            _tempNick.erase(event_fd);
+            _tempUser.erase(event_fd);
+            return -1;
+        }
+        else if (_staffs[event_fd] && _staffs[event_fd]->getStatus())
+        {
+            cout << "Staff disconnected: " << _staffs[event_fd]->getNickName() << endl;
+            close(event_fd);
+            epoll_ctl(_epollFD, EPOLL_CTL_DEL, event_fd, NULL);
+            delete _staffs[event_fd];
+            _staffs.erase(event_fd);
+            _staffStates.erase(event_fd);
+            return -1;
+        }
     }
 
     string input(_buffer, count);
     input.erase(remove(input.begin(), input.end(), '\n'), input.end());
     input.erase(remove(input.begin(), input.end(), '\r'), input.end());
 
-    if (_userStates[event_fd] == REGISTERED || _userStates[event_fd] == JOINED)
+    if (_userStates[event_fd] == REGISTERED || _userStates[event_fd] == JOINED
+        || _staffStates[event_fd] == JOINED)
     {
 
         istringstream iss(input);
@@ -179,8 +240,8 @@ int Server::commandUser( int event_fd )
         iss >> command;
 
         // Récupère le reste de la ligne après la commande
-        std::string rest;
-        std::getline(iss, rest);
+        string rest;
+        getline(iss, rest);
 
         // Nettoyer les espaces en début
         rest.erase(0, rest.find_first_not_of(" \t"));
@@ -189,10 +250,13 @@ int Server::commandUser( int event_fd )
         size_t msg_pos = rest.find(" :");
         string target, msg;
 
-        if (msg_pos != string::npos) {
+        if (msg_pos != string::npos)
+        {
             target = rest.substr(0, msg_pos);
             msg = rest.substr(msg_pos + 2); // saute " :"
-        } else {
+        }
+        else
+        {
             target = rest;
             msg = "";
         }
@@ -206,7 +270,7 @@ int Server::commandUser( int event_fd )
         {
             if (target.empty() || msg.empty())
             {
-                std::string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
+                string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
                 write(event_fd, err.c_str(), err.size());
                 return -1;
             }
@@ -233,12 +297,28 @@ int Server::commandUser( int event_fd )
                     break;
                 }
             }
+
+            string nickname;
+
+            if (_users.count(event_fd))
+                nickname = _users[event_fd]->getNickName();
+            else if (_staffs.count(event_fd))
+                nickname = _staffs[event_fd]->getNickName();
             
-            string fullMsg = _users[event_fd]->getNickName() + " to you " + ": " + msg + "\r\n";
+            string fullMsg = nickname + " to you " + ": " + msg + "\r\n";
             if (target == this->getAdminNickName())
                 cout << fullMsg;
             else if (receiver_fd != -1)
                 write(receiver_fd, fullMsg.c_str(), fullMsg.size());
+            else if (receiver_fd == -1)
+            {
+                string topic = this->getTopic();
+                if (target != topic && target != "#" + topic)
+                {
+                    string err = ":server 401 " + target + " :No such nick/channel\r\n";
+                    write(event_fd, err.c_str(), err.size());
+                }
+            }
         }
     }
 
@@ -285,7 +365,7 @@ int Server::commandUser( int event_fd )
                 _userStates[event_fd] = REGISTERED;
                 _users[event_fd]->setNickName(_tempNick[event_fd]);
                 _users[event_fd]->setUserName(_tempUser[event_fd]);
-                _users[event_fd]->setStatus(false);
+                _users[event_fd]->setStatus(true);
 
                 string welcome = ":server 001 " + _tempNick[event_fd] + " :Welcome to the IRC server!\r\n";
                 write(event_fd, welcome.c_str(), welcome.size());
@@ -316,6 +396,12 @@ int Server::commandUser( int event_fd )
                 {
                     string msg = ":server 403 * " + channel + " :No such channel\r\n";
                     write(event_fd, msg.c_str(), msg.size());
+                    break;
+                }
+                if (_invite == true)
+                {
+                    string msg = ":server 473 * " + channel + " :This channel is by invitation only\r\n";
+                    write(event_fd, msg.c_str(), msg.length());
                     break;
                 }
 
@@ -395,7 +481,14 @@ int Server::commandUser( int event_fd )
 
             if (target == ("#" + this->getTopic()))
             {
-                string fullMsg = _users[event_fd]->getNickName() + " from " + target + " : " + msg + "\r\n";
+                string nickname;
+
+                if (_users.count(event_fd))
+                    nickname = _users[event_fd]->getNickName();
+                else if (_staffs.count(event_fd))
+                    nickname = _staffs[event_fd]->getNickName();
+
+                string fullMsg = nickname + " from " + target + " : " + msg + "\r\n";
 
                 for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
                 {
@@ -451,6 +544,7 @@ void Server::run()
             }
         }
     }
+    this->freeData();
     close(_epollFD);
     close(_serverFd);
 }
