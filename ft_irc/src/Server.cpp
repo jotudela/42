@@ -9,7 +9,8 @@ using std::remove;
 using std::istringstream;
 
 Server::Server( int port, string passWord ) : _port(port), _serverFd(-1),
-_epollFD(-1), _passWord(passWord), _running(true), _invite(false)
+_epollFD(-1), _userLimit(10), _currentUsers(0), _passWord(passWord),
+_running(true), _invite(false)
 {
     string nickName;
     string userName;
@@ -84,7 +85,30 @@ int Server::commandAdminStaff()
     if (cmd == "MODE")
     {
         string subcmd, nickname;
-        iss >> subcmd >> nickname;
+        iss >> subcmd;
+
+        if (subcmd == "k")
+        {
+            string rest;
+            getline(iss, rest); // récupère tout ce qui reste après "k"
+            
+            // Trim leading spaces
+            rest.erase(0, rest.find_first_not_of(" \t"));
+
+            if (rest.empty())
+            {
+                _passWord = "";
+                cout << "[MODE] Password deleted." << endl;
+            }
+            else
+            {
+                _passWord = rest;
+                cout << "[MODE] The new password is : " << _passWord << "." << endl;
+            }
+            return 0;
+        }
+
+        iss >> nickname;
 
         // MODE i : active/désactive le mode "invitation-only" du canal
         if (subcmd == "i" && nickname.empty())
@@ -157,6 +181,31 @@ int Server::commandAdminStaff()
             return 0;
         }
 
+        if (subcmd == "l")
+        {
+            if (nickname.empty())  // Pas de paramètre => suppression de la limite
+            {
+                _userLimit = -1;
+                cout << "[MODE] Limite d'utilisateurs supprimée." << endl;
+            }
+            else  // MODE l <nombre>
+            {
+                istringstream numStream(nickname);
+                int limit;
+                numStream >> limit;
+                if (limit < _currentUsers)
+                    cout << "[MODE] Cannot define limit of users under number of current users." << endl;
+                else if (limit > -1)
+                {
+                    _userLimit = limit;
+                    cout << "[MODE] Limite d'utilisateurs définie à " << limit << "." << endl;
+                }
+                else
+                    cout << "[ERREUR] Valeur invalide pour la limite : " << nickname << endl;
+            }
+            return 0;
+        }
+
         // Commande invalide
         cout << "[ERREUR] Syntaxe invalide pour MODE." << endl;
     }
@@ -181,6 +230,7 @@ int Server::commandAdminStaff()
             if (fdToKick != -1)
             {
                 _userStates[fdToKick] = REGISTERED;
+                _currentUsers -= 1;
                 string kickMsg = ":server KICK " + kick_nick + " : " + getTopic() + "\r\n";
                 write(fdToKick, kickMsg.c_str(), kickMsg.size());
                 cout << "[KICK] " << kick_nick << " a été retiré du channel." << std::endl;
@@ -205,7 +255,14 @@ int Server::commandAdminStaff()
             {
                 if (uit->second && uit->second->getNickName() == invite_nick)
                 {
+                    if (_currentUsers >= _userLimit)
+                    {
+                        string msg = "Cannot invite " + _users[uit->first]->getNickName() + " : the user limit is reached.";
+                        cout << msg << endl;
+                        return 0;
+                    }
                     _userStates[uit->first] = JOINED;
+                    _currentUsers += 1;
                     cout << "[INVITE] " << invite_nick << " a été invité à rejoindre le canal." << endl;
 
                     string notice = ":server NOTICE " + invite_nick + " : Vous avez été invité à rejoindre le channel.\r\n";
@@ -334,7 +391,7 @@ int Server::commandUser( int event_fd )
             }
         }
 
-        if (_users.count(event_fd) || _staffs.count(event_fd))  // On vérifie que l'expéditeur existe
+        if ((_users.count(event_fd) || _staffs.count(event_fd)) && command == "PRIVMSG")  // On vérifie que l'expéditeur existe
         {
             // Vérifie que l'expéditeur est valide et récupère son nickname
             string nickname;
@@ -469,6 +526,25 @@ int Server::commandUser( int event_fd )
                     write(event_fd, msg.c_str(), msg.length());
                     break;
                 }
+                if (_currentUsers == _userLimit)
+                {
+                    string err = ":server 471 " + _users[event_fd]->getNickName() + " #" + _topic + " : Cannot join channel (limit reached)\r\n";
+                    write(event_fd, err.c_str(), err.size());
+                    break;
+                }
+                if (_passWord.empty())
+                {
+                    string msg = "✅ You have joined channel " + this->getTopic() + "\r\n";
+                    write(event_fd, msg.c_str(), msg.size());
+
+                    cout << "User " << _users[event_fd]->getNickName()
+                                << " joined channel: " << this->getTopic() << endl;
+
+                    _users[event_fd]->setStatus(true);
+                    _userStates[event_fd] = JOINED;
+                    _currentUsers += 1;
+                    break;
+                }
 
                 channel = "Please enter password : ";
                 write(event_fd, channel.c_str(), channel.length());
@@ -499,6 +575,7 @@ int Server::commandUser( int event_fd )
 
                 _users[event_fd]->setStatus(true);
                 _userStates[event_fd] = JOINED;
+                _currentUsers += 1;
             }
             else
             {

@@ -14,6 +14,8 @@ class Server
         int _serverFd;
         int _epollFD;
         int _opt;
+        int _userLimit;
+        int _currentUsers;
         std::string _topic;
         std::string _passWord;
 
