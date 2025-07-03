@@ -82,6 +82,7 @@ int Server::userToStaff( int fd )
     staff->setStaffNames(user->getNickName(), user->getUserName());
     staff->setStaffStatus();
     staff->setStatus(true);
+    staff->setTStatus(true);
     _staffStates[fd] = JOINED;
 
     // Ajoute dans le map des staffs
@@ -109,6 +110,7 @@ int Server::staffToUser( int fd )
     User* user = new User();
     user->setNickName(staff->getNickName());
     user->setUserName(staff->getUserName());
+    user->setStatus(true);
     _users[fd] = user;
 
     delete _staffs[fd];

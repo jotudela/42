@@ -130,6 +130,33 @@ int Server::commandAdminStaff()
             return 0;
         }
 
+        if (subcmd == "t" && !nickname.empty())
+        {
+            std::map<int, Admin*>::iterator sit;
+            for (sit = _staffs.begin(); sit != _staffs.end(); ++sit)
+            {
+                if (sit->second->getNickName() == nickname)
+                {
+                    if (sit->second->getTStatus() == true)
+                    {
+                        sit->second->setTStatus(false);
+                        string msg = "You are no longer entitled to the topic command.\n";
+                        write(sit->first, msg.c_str(), msg.length());
+                        return 0;
+                    }
+                    else if (sit->second->getTStatus() == false)
+                    {
+                        sit->second->setTStatus(true);
+                        string msg = "You have rights again for the topic command.\n";
+                        write(sit->first, msg.c_str(), msg.length());
+                        return 0;
+                    }
+                }
+            }
+            cout << "[!] Aucun utilisateur trouvé avec le nickname : " << nickname << endl;
+            return 0;
+        }
+
         // Commande invalide
         cout << "[ERREUR] Syntaxe invalide pour MODE." << endl;
     }
@@ -163,6 +190,37 @@ int Server::commandAdminStaff()
         }
         else
             cout << "[ERREUR] Syntaxe : KICK <nickname>" << endl;
+    }
+    else if (cmd == "INVITE")
+    {
+        string invite_nick;
+        iss >> invite_nick;
+
+        if (!invite_nick.empty())
+        {
+            bool found = false;
+
+            std::map<int, User*>::iterator uit;
+            for (uit = _users.begin(); uit != _users.end(); ++uit)
+            {
+                if (uit->second && uit->second->getNickName() == invite_nick)
+                {
+                    _userStates[uit->first] = JOINED;
+                    cout << "[INVITE] " << invite_nick << " a été invité à rejoindre le canal." << endl;
+
+                    string notice = ":server NOTICE " + invite_nick + " : Vous avez été invité à rejoindre le channel.\r\n";
+                    write(uit->first, notice.c_str(), notice.size());
+
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                cout << "[!] Aucun utilisateur trouvé avec le nickname : " << invite_nick << endl;
+        }
+        else
+            cout << "[ERREUR] Syntaxe : INVITE <nickname>" << endl;
     }
     else if (cmd == "TOPIC")
     {
@@ -278,39 +336,46 @@ int Server::commandUser( int event_fd )
 
         if (_users.count(event_fd) || _staffs.count(event_fd))  // On vérifie que l'expéditeur existe
         {
+            // Vérifie que l'expéditeur est valide et récupère son nickname
+            string nickname;
+            if (_users.count(event_fd) && _users[event_fd])
+                nickname = _users[event_fd]->getNickName();
+            else if (_staffs.count(event_fd) && _staffs[event_fd])
+                nickname = _staffs[event_fd]->getNickName();
+            else
+                return -1; // Expéditeur non valide
+
             // Recherche d'un destinataire avec ce nick
             int receiver_fd = -1;
-            for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+            std::map<int, User*>::iterator uit;
+            for (uit = _users.begin(); uit != _users.end(); ++uit)
             {
-                if (it->second->getNickName() == target)
+                if (uit->second && uit->second->getNickName() == target)
                 {
-                    receiver_fd = it->first;
+                    receiver_fd = uit->first;
                     break;
                 }
             }
 
-            for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+            if (receiver_fd == -1)
             {
-                if (it->second->getNickName() == target)
+                std::map<int, Admin*>::iterator ait;
+                for (ait = _staffs.begin(); ait != _staffs.end(); ++ait)
                 {
-                    receiver_fd = it->first;
-                    break;
+                    if (ait->second && ait->second->getNickName() == target)
+                    {
+                        receiver_fd = ait->first;
+                        break;
+                    }
                 }
             }
 
-            string nickname;
-
-            if (_users.count(event_fd))
-                nickname = _users[event_fd]->getNickName();
-            else if (_staffs.count(event_fd))
-                nickname = _staffs[event_fd]->getNickName();
-            
-            string fullMsg = nickname + " to you " + ": " + msg + "\r\n";
+            string fullMsg = nickname + " to you : " + msg + "\r\n";
             if (target == this->getAdminNickName())
                 cout << fullMsg;
             else if (receiver_fd != -1)
                 write(receiver_fd, fullMsg.c_str(), fullMsg.size());
-            else if (receiver_fd == -1)
+            else
             {
                 string topic = this->getTopic();
                 if (target != topic && target != "#" + topic)
