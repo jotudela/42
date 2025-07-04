@@ -306,6 +306,104 @@ int Server::commandAdminStaff()
             cout << "[TOPIC] Nouveau sujet défini : " << _topic << endl;
         }
     }
+    else if (cmd == "PRIVMSG")
+    {
+        string rest;
+        getline(iss, rest);
+
+        // Nettoyer les espaces en début
+        rest.erase(0, rest.find_first_not_of(" \t"));
+
+        // Séparer la cible et le message (message commence par :)
+        size_t msg_pos = rest.find(" :");
+        string target, msg;
+
+        if (msg_pos != string::npos)
+        {
+            target = rest.substr(0, msg_pos);
+            msg = rest.substr(msg_pos + 2); // saute " :"
+        }
+        else
+        {
+            target = rest;
+            msg = "";
+        }
+
+        // Nettoyage
+        target.erase(0, target.find_first_not_of(" \t"));
+        target.erase(target.find_last_not_of(" \t") + 1);
+
+        // Vérif de base
+        if (target.empty() || msg.empty())
+        {
+            cout << "[PRIVMSG] Erreur : PRIVMSG <cible> :<message>\n";
+            return 0;
+        }
+
+        string adminNick = "@" + this->getAdminNickName();
+
+        // Cas 1 : message vers un canal
+        if (target == "#" + this->getTopic())
+        {
+            string fullMsg = ":" + adminNick + " PRIVMSG " + target + " : " + msg + "\r\n";
+
+            // Envoyer aux users
+            for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+            {
+                int fd = it->first;
+                if (_userStates[fd] == JOINED)
+                    write(fd, fullMsg.c_str(), fullMsg.size());
+            }
+
+            // Envoyer aux autres staffs
+            for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+            {
+                write(it->first, fullMsg.c_str(), fullMsg.size());
+            }
+            return 0;
+        }
+
+        // Cas 2 : message privé à un user/staff
+        int receiver_fd = -1;
+
+        // Cherche parmi les users
+        for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+        {
+            if (it->second && it->second->getNickName() == target)
+            {
+                receiver_fd = it->first;
+                break;
+            }
+        }
+
+        // Sinon cherche parmi les staffs
+        if (receiver_fd == -1)
+        {
+            for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+            {
+                if (it->second && it->second->getNickName() == target)
+                {
+                    receiver_fd = it->first;
+                    break;
+                }
+            }
+        }
+
+        string fullMsg = ":" + adminNick + " PRIVMSG " + target + " : " + msg + "\r\n";
+
+        if (receiver_fd != -1)
+        {
+            write(receiver_fd, fullMsg.c_str(), fullMsg.size());
+            cout << "[PRIVMSG] MP envoyé à " << target << " : " << msg << endl;
+        }
+        else
+        {
+            string err = ":server 401 " + target + " :No such nick/channel\r\n";
+            cout << "[PRIVMSG] Erreur : utilisateur " << target << " introuvable.\n";
+        }
+
+        return 0;
+    }
     else
         cout << "[Server command] " << input << endl;
 
@@ -463,8 +561,60 @@ int Server::commandUser( int event_fd )
             }
             else
             {
-                _tempNick[event_fd] = nick;
-                _userStates[event_fd] = WAIT_USER;
+                bool nicknameTaken = false;
+
+                // Vérifier si le nickname existe déjà dans les utilisateurs
+                for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+                {
+                    if (it->second && it->second->getNickName() == nick)
+                    {
+                        nicknameTaken = true;
+                        break;
+                    }
+                }
+
+                // Vérifier si le nickname existe déjà dans les admins
+                if (!nicknameTaken)
+                {
+                    for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+                    {
+                        if (it->second && it->second->getNickName() == nick)
+                        {
+                            nicknameTaken = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Vérifier si un autre client l’a temporairement pris
+                if (!nicknameTaken)
+                {
+                    for (std::map<int, std::string>::iterator it = _tempNick.begin(); it != _tempNick.end(); ++it)
+                    {
+                        if (it->first != event_fd && it->second == nick)
+                        {
+                            nicknameTaken = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!nicknameTaken)
+                {
+                    if (this->getAdminNickName() == nick)
+                        nicknameTaken = true;
+                }
+
+                if (nicknameTaken)
+                {
+                    string err = ":server 433 * " + nick + " :Nickname is already in use\r\n";
+                    write(event_fd, err.c_str(), err.size());
+                }
+                else
+                {
+                    _tempNick[event_fd] = nick;
+                    _userStates[event_fd] = WAIT_USER;
+                }
             }
             break;
         }
