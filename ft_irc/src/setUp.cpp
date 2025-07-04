@@ -91,11 +91,8 @@ int Server::userToStaff( int fd )
     // Supprime de la map des users
     delete _users[fd];
     _users.erase(fd);
-    _userStates.erase(fd);
     _tempNick.erase(fd);
     _tempUser.erase(fd);
-
-    std::cout << "User promu en staff : " << staff->getNickName() << std::endl;
 
     return 0;
 }
@@ -116,8 +113,6 @@ int Server::staffToUser( int fd )
     delete _staffs[fd];
     _staffs.erase(fd);
     _staffStates.erase(fd);
-
-    std::cout << "Staff rétrogradé en user : " << user->getNickName() << std::endl;
 
     return 0;
 }

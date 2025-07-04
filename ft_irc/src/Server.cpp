@@ -452,6 +452,283 @@ int Server::commandUser( int event_fd )
         string command;
         iss >> command;
 
+        if (_staffStates[event_fd] == JOINED)
+        {
+            if (command == "MODE")
+            {
+                string subcmd, nickname;
+                iss >> subcmd;
+
+                if (subcmd == "k")
+                {
+                    string rest;
+                    getline(iss, rest); // récupère tout ce qui reste après "k"
+                    
+                    // Trim leading spaces
+                    rest.erase(0, rest.find_first_not_of(" \t"));
+
+                    if (rest.empty())
+                    {
+                        _passWord = "";
+                        write(event_fd, "[MODE] Password deleted.\n", 26);
+                    }
+                    else
+                    {
+                        _passWord = rest;
+                        string msg = "[MODE] The new password is : " +  _passWord + ".\n";
+                        write(event_fd, msg.c_str(), msg.length());
+                    }
+                    return 0;
+                }
+
+                iss >> nickname;
+
+                // MODE i : active/désactive le mode "invitation-only" du canal
+                if (subcmd == "i" && nickname.empty())
+                {
+                    _invite = !_invite;
+                    string msg = string("[MODE] Canal mode invitation ") + (_invite ? "ACTIVÉ.\n" : "DÉSACTIVÉ.\n");
+                    write(event_fd, msg.c_str(), msg.length());
+                    return 0;
+                }
+
+                // MODE o <nickname> : promotion/démotion
+                if (subcmd == "o" && !nickname.empty()
+                    && nickname != _staffs[event_fd]->getNickName())
+                {
+                    // Promotion
+                    string msg = "[PROMOTION] " + nickname + " est maintenant staff.\n";
+                    string msg2 = "[PROMOTION] " + nickname + " you are now staff.\n";
+                    string err = "[ERREUR] Impossible de promouvoir " + nickname + ".\n";
+                    std::map<int, User*>::iterator uit;
+                    for (uit = _users.begin(); uit != _users.end(); ++uit)
+                    {
+                        if (uit->second->getNickName() == nickname)
+                        {
+                            if (userToStaff(uit->first) == 0)
+                            {
+                                write(event_fd, msg.c_str(), msg.length());
+                                write(uit->first, msg2.c_str(), msg2.length());
+                            }
+                            else
+                                write(event_fd, err.c_str(), err.length());
+                            return 0;
+                        }
+                    }
+
+                    // Démotion
+                    msg = "[RÉTROGRADATION] " + nickname + " est redevenu user.\n";
+                    msg2 = "[RÉTROGRADATION] " + nickname + " you are now user.\n";
+                    err = "[ERREUR] Impossible de rétrograder " + nickname + ".\n";
+                    string err2 = "[!] Aucun utilisateur trouvé avec le nickname : " + nickname + ".\n";
+                    std::map<int, Admin*>::iterator sit;
+                    for (sit = _staffs.begin(); sit != _staffs.end(); ++sit)
+                    {
+                        if (sit->second->getNickName() == nickname)
+                        {
+                            if (staffToUser(sit->first) == 0)
+                            {
+                                write(event_fd, msg.c_str(), msg.length());
+                                write(sit->first, msg2.c_str(), msg2.length());
+                            }
+                            else
+                                write(event_fd, err.c_str(), err.length());
+                            return 0;
+                        }
+                    }
+
+                    write(event_fd, err2.c_str(), err2.length());
+                    return 0;
+                }
+
+                if (subcmd == "t" && !nickname.empty()
+                    && _staffs[event_fd]->getTStatus() == true)
+                {
+                    string err = "[!] Aucun utilisateur trouvé avec le nickname : " + nickname + ".\n";
+                    std::map<int, Admin*>::iterator sit;
+                    for (sit = _staffs.begin(); sit != _staffs.end(); ++sit)
+                    {
+                        if (sit->second->getNickName() == nickname)
+                        {
+                            if (sit->second->getTStatus() == true)
+                            {
+                                sit->second->setTStatus(false);
+                                string msg = "You are no longer entitled to the topic command.\n";
+                                write(sit->first, msg.c_str(), msg.length());
+                                return 0;
+                            }
+                            else if (sit->second->getTStatus() == false)
+                            {
+                                sit->second->setTStatus(true);
+                                string msg = "You have rights again for the topic command.\n";
+                                write(sit->first, msg.c_str(), msg.length());
+                                return 0;
+                            }
+                        }
+                    }
+                    write(event_fd, err.c_str(), err.length());
+                    return 0;
+                }
+
+                if (subcmd == "l")
+                {
+                    if (nickname.empty())  // Pas de paramètre => suppression de la limite
+                    {
+                        _userLimit = -1;
+                        string msg = "[MODE] Limite d'utilisateurs supprimée.\n";
+                        write(event_fd, msg.c_str(), msg.length());
+                    }
+                    else  // MODE l <nombre>
+                    {
+                        istringstream numStream(nickname);
+                        int limit;
+                        numStream >> limit;
+                        string err1 = "[MODE] Cannot define limit of users under number of current users.\n";
+                        std::ostringstream oss;
+                        oss << "[MODE] Limite d'utilisateurs définie à " << limit << ".\n";
+                        std::string msg = oss.str();
+                        string err2 = "[ERREUR] Valeur invalide pour la limite : " + nickname + ".\n";
+                        if (limit < _currentUsers)
+                            write(event_fd, err1.c_str(), err1.length());
+                        else if (limit > -1)
+                        {
+                            _userLimit = limit;
+                            write(event_fd, msg.c_str(), msg.length());
+                        }
+                        else
+                            write(event_fd, err2.c_str(), err2.length());
+                    }
+                    return 0;
+                }
+                // Commande invalide
+                string err3 = "[ERREUR] Syntaxe invalide pour MODE.\n";
+                write(event_fd, err3.c_str(), err3.length());
+                return 0;
+            }
+            else if (command == "KICK")
+            {
+                string kick_nick;
+                iss >> kick_nick;
+
+                if (!kick_nick.empty())
+                {
+                    int fdToKick = -1;
+                    std::map<int, User*>::iterator it;
+                    for (it = _users.begin(); it != _users.end(); ++it)
+                    {
+                        if (it->second->getNickName() == kick_nick)
+                        {
+                            fdToKick = it->first;
+                            break;
+                        }
+                    }
+
+                    if (fdToKick != -1)
+                    {
+                        _userStates[fdToKick] = REGISTERED;
+                        _currentUsers -= 1;
+                        string kickMsg = ":server KICK " + kick_nick + " : " + getTopic() + "\r\n";
+                        string msg = "[KICK] " + kick_nick + " a été retiré du channel.\n";
+                        write(fdToKick, kickMsg.c_str(), kickMsg.size());
+                        write(event_fd, msg.c_str(), msg.length());
+                    }
+                    else
+                    {
+                        string err = "[!] Aucun utilisateur trouvé avec le nickname : " + kick_nick + ".\n";
+                        write(event_fd, err.c_str(), err.length());
+                        return 0;
+                    }
+                }
+                else
+                {
+                    string err = "[ERREUR] Syntaxe : KICK <nickname>\n";
+                    write(event_fd, err.c_str(), err.length());
+                }
+                return 0;
+            }
+            else if (command == "INVITE")
+            {
+                string invite_nick;
+                iss >> invite_nick;
+
+                if (!invite_nick.empty())
+                {
+                    bool found = false;
+
+                    std::map<int, User*>::iterator uit;
+                    for (uit = _users.begin(); uit != _users.end(); ++uit)
+                    {
+                        if (uit->second && uit->second->getNickName() == invite_nick)
+                        {
+                            if (_currentUsers >= _userLimit)
+                            {
+                                string msg = "Cannot invite " + _users[uit->first]->getNickName() + " : the user limit is reached.\n";
+                                write(event_fd, msg.c_str(), msg.length());
+                                return 0;
+                            }
+                            _userStates[uit->first] = JOINED;
+                            _currentUsers += 1;
+
+                            string notice = ":server NOTICE " + invite_nick + " : Vous avez été invité à rejoindre le channel.\r\n";
+                            write(uit->first, notice.c_str(), notice.size());
+
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        string err = "[!] Aucun utilisateur trouvé avec le nickname : " + invite_nick + ".\n";
+                        write(event_fd, err.c_str(), err.length());
+                    }
+                    return 0;
+                }
+                else
+                {
+                    string err = "[ERREUR] Syntaxe : INVITE <nickname>\n";
+                    write(event_fd, err.c_str(), err.length());
+                }
+                return 0;
+            }
+            else if (command == "TOPIC" && _staffs[event_fd]->getTStatus() == true)
+            {
+                string channel_or_topic;
+                getline(iss, channel_or_topic);
+
+                // Trim leading spaces
+                channel_or_topic.erase(0, channel_or_topic.find_first_not_of(" \t"));
+
+                string msg;
+                if (channel_or_topic.empty())
+                {
+                    if (_topic.empty())
+                    {
+                        msg = "[TOPIC] Aucun topic n'est défini.\n";
+                        write(event_fd, msg.c_str(), msg.length());
+                    }
+                    else
+                    {
+                        msg = "[TOPIC] Sujet actuel : " + _topic + ".\n";
+                        write(event_fd, msg.c_str(), msg.length());
+                    }
+                }
+                else
+                {
+                    // Nouveau sujet
+                    size_t pos = channel_or_topic.find(':');
+                    if (pos != string::npos)
+                        _topic = channel_or_topic.substr(pos + 1);
+                    else
+                        _topic = channel_or_topic;
+
+                    msg = "[TOPIC] Nouveau sujet défini : " + _topic + ".\n";
+                    write(event_fd, msg.c_str(), msg.length());
+                }
+                return 0;
+            }
+        }
+
         // Récupère le reste de la ligne après la commande
         string rest;
         getline(iss, rest);
@@ -765,9 +1042,12 @@ int Server::commandUser( int event_fd )
             target.erase(target.find_last_not_of(" \t") + 1);
 
             // Vérification
-            if (command != "PRIVMSG" || target.empty() || msg.empty()) {
-                string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
-                write(event_fd, err.c_str(), err.size());
+            if (_users.count(event_fd))
+            {
+                if (command != "PRIVMSG" || target.empty() || msg.empty()) {
+                    string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
+                    write(event_fd, err.c_str(), err.size());
+                }
             }
 
 
