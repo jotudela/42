@@ -68,18 +68,33 @@ const std::string& Server::getStaffUserName() const
 
 void Server::printMsgAdmin( const string& msg ) const
 {
-    cout << VIOLET"(ADMIN😎)"RESET
+    cout << VIOLET "(ADMIN😎)" RESET
         << " " + this->getAdminNickName()
         << " " + getCurrentTime()
         << endl
         << msg;
 }
 
-void Server::printMsgUserStaff( int fd, const string& msg, const string& nickName ) const
+void Server::printMsgUser( int fd, const string& msg, const string& nickName ) const
 {
-    //Users
     write(fd, CYAN, strlen(CYAN));
     write(fd, "(USER🙂)", 11);
+    write(fd, RESET, strlen(RESET));
+    write(fd, " ", 1);
+
+    write(fd, nickName.c_str(), nickName.length());
+    write(fd, " ", 1);
+    string time = getCurrentTime();
+    write(fd, time.c_str(), time.length());
+
+    write(fd, "\n", 1);
+    write(fd, msg.c_str(), msg.length());
+}
+
+void Server::printMsgStaff( int fd, const std::string& msg, const std::string& nickName ) const
+{
+    write(fd, BLEU, strlen(BLEU));
+    write(fd, "(STAFF🤓)", 12);
     write(fd, RESET, strlen(RESET));
     write(fd, " ", 1);
 
@@ -375,7 +390,7 @@ int Server::commandAdminStaff()
             return 0;
         }
 
-        string adminNick = "@" + this->getAdminNickName();
+        string adminNick = this->getAdminNickName();
 
         // Cas 1 : message vers un canal
         if (target == "#" + this->getTopic())
@@ -1091,11 +1106,18 @@ int Server::commandUser( int event_fd )
             if (target == ("#" + this->getTopic()))
             {
                 string nickname;
+                void (Server::*function)(int, const string &, const string &) const;
 
                 if (_users.count(event_fd))
+                {
                     nickname = _users[event_fd]->getNickName();
+                    function = &Server::printMsgUser;
+                }
                 else if (_staffs.count(event_fd))
+                {
                     nickname = _staffs[event_fd]->getNickName();
+                    function = &Server::printMsgStaff;
+                }
 
                 string fullMsg = "Channel " + target + " : " + msg + "\r\n";
 
@@ -1103,15 +1125,15 @@ int Server::commandUser( int event_fd )
                 {
                     int fd = it->first;
                     if (_userStates[fd] == JOINED && fd != event_fd)
-                        this->printMsgUserStaff(fd, fullMsg, _users[event_fd]->getNickName());
+                        (this->*function)(fd, fullMsg, nickname);
                 }
                 for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
                 {
                     int fd = it->first;
                     if (fd != event_fd)
-                        write(fd, fullMsg.c_str(), fullMsg.size());
+                        (this->*function)(fd, fullMsg, nickname);
                 }
-                cout << fullMsg;
+                (this->*function)(1, fullMsg, nickname);
             }
             break;
         }

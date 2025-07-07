@@ -63,7 +63,8 @@ class Server
         int staffToUser( int fd );
 
         void printMsgAdmin( const std::string& msg ) const;
-        void printMsgUserStaff( int fd, const std::string& msg, const std::string& nickName ) const;
+        void printMsgUser( int fd, const std::string& msg, const std::string& nickName ) const;
+        void printMsgStaff( int fd, const std::string& msg, const std::string& nickName ) const;
 };
 
 std::string getCurrentTime();
