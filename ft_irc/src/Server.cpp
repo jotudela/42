@@ -66,8 +66,25 @@ const std::string& Server::getStaffUserName() const
     return _admin.getUserName();
 }
 
-void Server::printMsgAdmin( const string& msg ) const
+void Server::printMsgAdmin( int fd, const string& msg ) const
 {
+    if (fd != 0)
+    {
+        write(fd, VIOLET, strlen(VIOLET));
+        write(fd, "(ADMIN😎)", 12);
+        write(fd, RESET, strlen(RESET));
+        write(fd, " ", 1);
+
+        string nick = this->getAdminNickName();
+        write(fd, nick.c_str(), nick.length());
+        write(fd, " ", 1);
+        string time = getCurrentTime();
+        write(fd, time.c_str(), time.length());
+
+        write(fd, "\n", 1);
+        write(fd, msg.c_str(), msg.length());
+        return ;
+    }
     cout << VIOLET "(ADMIN😎)" RESET
         << " " + this->getAdminNickName()
         << " " + getCurrentTime()
@@ -116,14 +133,14 @@ string getCurrentTime()
     return string(buffer);
 }
 
-int Server::commandAdminStaff()
+int Server::commandAdmin()
 {
     string input;
     getline(std::cin, input);
 
     if (input == "QUIT")
     {
-        this->printMsgAdmin("Shutting down server.\n");
+        this->printMsgAdmin(0, "Shutting down server.\n");
         _running = false;
         return -1;
     }
@@ -395,21 +412,19 @@ int Server::commandAdminStaff()
         // Cas 1 : message vers un canal
         if (target == "#" + this->getTopic())
         {
-            string fullMsg = ":" + adminNick + " PRIVMSG " + target + " : " + msg + "\r\n";
+            string fullMsg = string("Channel ") + ("#") + _topic + " : " + msg + "\r\n";
 
             // Envoyer aux users
             for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
             {
                 int fd = it->first;
                 if (_userStates[fd] == JOINED)
-                    write(fd, fullMsg.c_str(), fullMsg.size());
+                    this->printMsgAdmin(fd, fullMsg);
             }
 
             // Envoyer aux autres staffs
             for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
-            {
-                write(it->first, fullMsg.c_str(), fullMsg.size());
-            }
+                this->printMsgAdmin(it->first, fullMsg);
             return 0;
         }
 
@@ -439,13 +454,10 @@ int Server::commandAdminStaff()
             }
         }
 
-        string fullMsg = ":" + adminNick + " PRIVMSG " + target + " : " + msg + "\r\n";
+        string fullMsg = "MP to you : " + msg + "\r\n";
 
         if (receiver_fd != -1)
-        {
-            write(receiver_fd, fullMsg.c_str(), fullMsg.size());
-            cout << "[PRIVMSG] MP envoyé à " << target << " : " << msg << endl;
-        }
+            this->printMsgAdmin(receiver_fd, fullMsg);
         else
         {
             string err = ":server 401 " + target + " :No such nick/channel\r\n";
@@ -460,7 +472,7 @@ int Server::commandAdminStaff()
     return 0;
 }
 
-int Server::commandUser( int event_fd )
+int Server::commandUserStaff( int event_fd )
 {
     memset(_buffer, 0, IRC_MESSAGE_MAX);
     int count = read(event_fd, _buffer, IRC_MESSAGE_MAX);
@@ -1165,12 +1177,12 @@ void Server::run()
             }
             else if (event_fd == STDIN_FILENO)
             {
-                if (this->commandAdminStaff() == -1)
+                if (this->commandAdmin() == -1)
                     continue;
             }
             else
             {
-                if (this->commandUser(event_fd) == -1)
+                if (this->commandUserStaff(event_fd) == -1)
                     continue;
             }
         }
