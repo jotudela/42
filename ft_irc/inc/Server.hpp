@@ -61,4 +61,9 @@ class Server
         int commandUser( int event_fd );
         int userToStaff( int fd );
         int staffToUser( int fd );
+
+        void printMsgAdmin( const std::string& msg ) const;
+        void printMsgUserStaff( int fd, const std::string& msg, const std::string& nickName ) const;
 };
+
+std::string getCurrentTime();

@@ -66,6 +66,41 @@ const std::string& Server::getStaffUserName() const
     return _admin.getUserName();
 }
 
+void Server::printMsgAdmin( const string& msg ) const
+{
+    cout << VIOLET"(ADMIN😎)"RESET
+        << " " + this->getAdminNickName()
+        << " " + getCurrentTime()
+        << endl
+        << msg;
+}
+
+void Server::printMsgUserStaff( int fd, const string& msg, const string& nickName ) const
+{
+    //Users
+    write(fd, CYAN, strlen(CYAN));
+    write(fd, "(USER🙂)", 11);
+    write(fd, RESET, strlen(RESET));
+    write(fd, " ", 1);
+
+    write(fd, nickName.c_str(), nickName.length());
+    write(fd, " ", 1);
+    string time = getCurrentTime();
+    write(fd, time.c_str(), time.length());
+
+    write(fd, "\n", 1);
+    write(fd, msg.c_str(), msg.length());
+}
+
+string getCurrentTime()
+{
+    time_t now = time(NULL);
+    struct tm *t = localtime(&now);
+    char buffer[80];
+    strftime(buffer, sizeof(buffer), "%H:%M", t);
+    return string(buffer);
+}
+
 int Server::commandAdminStaff()
 {
     string input;
@@ -73,7 +108,7 @@ int Server::commandAdminStaff()
 
     if (input == "QUIT")
     {
-        cout << "Shutting down server.\n";
+        this->printMsgAdmin("Shutting down server.\n");
         _running = false;
         return -1;
     }
@@ -1062,13 +1097,13 @@ int Server::commandUser( int event_fd )
                 else if (_staffs.count(event_fd))
                     nickname = _staffs[event_fd]->getNickName();
 
-                string fullMsg = nickname + " from " + target + " : " + msg + "\r\n";
+                string fullMsg = "Channel " + target + " : " + msg + "\r\n";
 
                 for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
                 {
                     int fd = it->first;
                     if (_userStates[fd] == JOINED && fd != event_fd)
-                        write(fd, fullMsg.c_str(), fullMsg.size());
+                        this->printMsgUserStaff(fd, fullMsg, _users[event_fd]->getNickName());
                 }
                 for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
                 {

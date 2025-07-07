@@ -4,6 +4,11 @@
 #define IRC_MESSAGE_MAX 512
 #define MAX_EVENTS 1000
 
+#define VIOLET "\033[35m"
+#define BLEU "\033[34m"
+#define CYAN "\033[36m"
+#define RESET "\033[0m"
+
 
 #include <sys/socket.h>     // socket(), bind(), accept(), setsockopt()
 #include <netinet/in.h>     // sockaddr_in, htons(), htonl(), ntohs(), ntohl()
