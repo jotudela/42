@@ -426,6 +426,7 @@ int Server::commandUser( int event_fd )
             _userStates.erase(event_fd);
             _tempNick.erase(event_fd);
             _tempUser.erase(event_fd);
+            _currentUsers -= 1;
             return -1;
         }
         else if (_staffs[event_fd] && _staffs[event_fd]->getStatus())
@@ -436,6 +437,7 @@ int Server::commandUser( int event_fd )
             delete _staffs[event_fd];
             _staffs.erase(event_fd);
             _staffStates.erase(event_fd);
+            _currentUsers -= 1;
             return -1;
         }
     }
