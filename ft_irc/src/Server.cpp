@@ -92,6 +92,44 @@ void Server::printMsgAdmin( int fd, const string& msg ) const
         << msg;
 }
 
+void Server::printMsgServer( int fd, const string& msg ) const
+{
+    if (fd != 0)
+    {
+        write(fd, RED, strlen(RED));
+        write(fd, "(SERVER", 8);
+        write(fd, RESET, strlen(RESET));
+        write(fd, "🖥", 5);
+        write(fd, RED, strlen(RED));
+        write(fd, ")", 1);
+        write(fd, RESET, strlen(RESET));
+        write(fd, " ", 1);
+
+        string time = getCurrentTime();
+        write(fd, time.c_str(), time.length());
+
+        write(fd, "\n", 1);
+        write(fd, msg.c_str(), msg.length());
+        write(fd, "\n", 1);
+        return ;
+    }
+    write(1, RED, strlen(RED));
+    write(1, "(SERVER", 8);
+    write(1, RESET, strlen(RESET));
+    write(1, "🖥", 5);
+    write(1, RED, strlen(RED));
+    write(1, ")", 1);
+    write(1, RESET, strlen(RESET));
+    write(1, " ", 1);
+
+    string time = getCurrentTime();
+    write(1, time.c_str(), time.length());
+
+    write(1, "\n", 1);
+    write(1, msg.c_str(), msg.length());
+    write(1, "\n", 1);
+}
+
 void Server::printMsgUser( int fd, const string& msg, const string& nickName ) const
 {
     write(fd, CYAN, strlen(CYAN));
@@ -165,12 +203,12 @@ int Server::commandAdmin()
             if (rest.empty())
             {
                 _passWord = "";
-                cout << "[MODE] Password deleted." << endl;
+                this->printMsgServer(0, "[MODE k] Password deleted.");
             }
             else
             {
                 _passWord = rest;
-                cout << "[MODE] The new password is : " << _passWord << "." << endl;
+                this->printMsgServer(0, "[MODE k] The new password is : " + _passWord + ".");
             }
             return 0;
         }
@@ -181,8 +219,7 @@ int Server::commandAdmin()
         if (subcmd == "i" && nickname.empty())
         {
             _invite = !_invite;
-            cout << "[MODE] Canal mode invitation ";
-            cout << (_invite ? "ACTIVÉ." : "DÉSACTIVÉ.") << endl;
+            this->printMsgServer(0, "[MODE i] Channel mode invitation " + string(_invite ? "ON." : "OFF."));
             return 0;
         }
 
@@ -196,9 +233,12 @@ int Server::commandAdmin()
                 if (uit->second->getNickName() == nickname)
                 {
                     if (userToStaff(uit->first) == 0)
-                        cout << "[PROMOTION] " << nickname << " est maintenant staff." << endl;
+                    {
+                        this->printMsgServer(0, "[PROMOTION] " + nickname + " is now staff.");
+                        this->printMsgServer(uit->first, "[PROMOTION] " + nickname + " you are now staff.");
+                    }
                     else
-                        cout << "[ERREUR] Impossible de promouvoir " << nickname << endl;
+                        this->printMsgServer(0, "[ERROR] Impossible to promote " + nickname + ".");
                     return 0;
                 }
             }
@@ -210,14 +250,17 @@ int Server::commandAdmin()
                 if (sit->second->getNickName() == nickname)
                 {
                     if (staffToUser(sit->first) == 0)
-                        cout << "[RÉTROGRADATION] " << nickname << " est redevenu user." << endl;
+                    {
+                        this->printMsgServer(0, "[DEMOTION] " + nickname + " has become again user.");
+                        this->printMsgServer(sit->first, "[DEMOTION] " + nickname + " you become again user.");
+                    }
                     else
-                        cout << "[ERREUR] Impossible de rétrograder " << nickname << endl;
+                        this->printMsgServer(0, "[ERROR] Impossible to downgrade " + nickname);
                     return 0;
                 }
             }
 
-            cout << "[!] Aucun utilisateur trouvé avec le nickname : " << nickname << endl;
+            this->printMsgServer(0, "[ERROR] No users found with the nickname : " + nickname + ".");
             return 0;
         }
 
@@ -231,20 +274,22 @@ int Server::commandAdmin()
                     if (sit->second->getTStatus() == true)
                     {
                         sit->second->setTStatus(false);
-                        string msg = "You are no longer entitled to the topic command.\n";
-                        write(sit->first, msg.c_str(), msg.length());
+                        string msg = "You are no longer entitled to the topic command.";
+                        this->printMsgServer(0, nickname + " is no longer entitled to the topic command.");
+                        this->printMsgServer(sit->first, msg);
                         return 0;
                     }
                     else if (sit->second->getTStatus() == false)
                     {
                         sit->second->setTStatus(true);
-                        string msg = "You have rights again for the topic command.\n";
-                        write(sit->first, msg.c_str(), msg.length());
+                        string msg = "You have rights again for the topic command.";
+                        this->printMsgServer(0, nickname + " have rights again for the topic command.");
+                        this->printMsgServer(sit->first, msg);
                         return 0;
                     }
                 }
             }
-            cout << "[!] Aucun utilisateur trouvé avec le nickname : " << nickname << endl;
+            this->printMsgServer(0, "[ERROR] No admin found with the nickname : " + nickname + ".");
             return 0;
         }
 
@@ -253,7 +298,7 @@ int Server::commandAdmin()
             if (nickname.empty())  // Pas de paramètre => suppression de la limite
             {
                 _userLimit = -1;
-                cout << "[MODE] Limite d'utilisateurs supprimée." << endl;
+                this->printMsgServer(0, "[MODE l] User limit removed.");
             }
             else  // MODE l <nombre>
             {
@@ -261,20 +306,23 @@ int Server::commandAdmin()
                 int limit;
                 numStream >> limit;
                 if (limit < _currentUsers)
-                    cout << "[MODE] Cannot define limit of users under number of current users." << endl;
+                    this->printMsgServer(0, "[MODE l] Cannot define limit of users under number of current users.");
                 else if (limit > -1)
                 {
                     _userLimit = limit;
-                    cout << "[MODE] Limite d'utilisateurs définie à " << limit << "." << endl;
+                    std::ostringstream oss;
+                    oss << limit;
+                    string strLimit = oss.str();
+                    this->printMsgServer(0, string("[MODE] User limit defined at ") + strLimit + ".");
                 }
                 else
-                    cout << "[ERREUR] Valeur invalide pour la limite : " << nickname << endl;
+                    this->printMsgServer(0, "[ERROR] Invalid value for the limit.");
             }
             return 0;
         }
 
         // Commande invalide
-        cout << "[ERREUR] Syntaxe invalide pour MODE." << endl;
+        this->printMsgServer(0, "[ERROR] Syntax invalid for MODE.");
     }
     else if (cmd == "KICK")
     {
@@ -298,15 +346,15 @@ int Server::commandAdmin()
             {
                 _userStates[fdToKick] = REGISTERED;
                 _currentUsers -= 1;
-                string kickMsg = ":server KICK " + kick_nick + " : " + getTopic() + "\r\n";
-                write(fdToKick, kickMsg.c_str(), kickMsg.size());
-                cout << "[KICK] " << kick_nick << " a été retiré du channel." << std::endl;
+                string kickMsg = "You are kick from channel : " + getTopic();
+                this->printMsgServer(fdToKick, kickMsg);
+                this->printMsgServer(0, "[KICK] " + kick_nick + " has been kicked from channel.");
             }
             else
-                cout << "[!] Aucun utilisateur trouvé avec le nickname : " << kick_nick << endl;
+                this->printMsgServer(0, "[ERROR] No users found with the nickname : " + kick_nick + ".");
         }
         else
-            cout << "[ERREUR] Syntaxe : KICK <nickname>" << endl;
+            this->printMsgServer(0, "[ERROR] Syntaxe : KICK <nickname>.");
     }
     else if (cmd == "INVITE")
     {
@@ -325,15 +373,15 @@ int Server::commandAdmin()
                     if (_currentUsers >= _userLimit)
                     {
                         string msg = "Cannot invite " + _users[uit->first]->getNickName() + " : the user limit is reached.";
-                        cout << msg << endl;
+                        this->printMsgServer(0, msg);
                         return 0;
                     }
                     _userStates[uit->first] = JOINED;
                     _currentUsers += 1;
-                    cout << "[INVITE] " << invite_nick << " a été invité à rejoindre le canal." << endl;
+                    this->printMsgServer(0, "[INVITE] " + invite_nick + " has been invited to join the channel.");
 
-                    string notice = ":server NOTICE " + invite_nick + " : Vous avez été invité à rejoindre le channel.\r\n";
-                    write(uit->first, notice.c_str(), notice.size());
+                    string notice = invite_nick + " : You have been invited to join the channel.";
+                    this->printMsgServer(uit->first, notice);
 
                     found = true;
                     break;
@@ -341,10 +389,10 @@ int Server::commandAdmin()
             }
 
             if (!found)
-                cout << "[!] Aucun utilisateur trouvé avec le nickname : " << invite_nick << endl;
+                this->printMsgServer(0, "[ERROR] No users found with the nickname : " + invite_nick + ".");
         }
         else
-            cout << "[ERREUR] Syntaxe : INVITE <nickname>" << endl;
+            this->printMsgServer(0, "[ERREUR] Syntaxe : INVITE <nickname>.");
     }
     else if (cmd == "TOPIC")
     {
@@ -357,9 +405,9 @@ int Server::commandAdmin()
         if (channel_or_topic.empty())
         {
             if (_topic.empty())
-                cout << "[TOPIC] Aucun topic n'est défini." << endl;
+                this->printMsgServer(0, "[TOPIC] None topic defined.");
             else
-                cout << "[TOPIC] Sujet actuel : " << _topic << endl;
+                this->printMsgServer(0, "[TOPIC] Current topic : " + _topic);
         }
         else
         {
@@ -370,7 +418,7 @@ int Server::commandAdmin()
             else
                 _topic = channel_or_topic;
 
-            cout << "[TOPIC] Nouveau sujet défini : " << _topic << endl;
+            this->printMsgServer(0, "[TOPIC] New topic defined : " + _topic);
         }
     }
     else if (cmd == "PRIVMSG")
@@ -459,15 +507,12 @@ int Server::commandAdmin()
         if (receiver_fd != -1)
             this->printMsgAdmin(receiver_fd, fullMsg);
         else
-        {
-            string err = ":server 401 " + target + " :No such nick/channel\r\n";
-            cout << "[PRIVMSG] Erreur : utilisateur " << target << " introuvable.\n";
-        }
+            this->printMsgServer(0, "[ERROR] User " + target + " not found.");
 
         return 0;
     }
     else
-        cout << "[Server command] " << input << endl;
+        this->printMsgServer(0, "[ERROR] Command not found : " + cmd + ".");
 
     return 0;
 }
@@ -480,7 +525,7 @@ int Server::commandUserStaff( int event_fd )
     {
         if (_users[event_fd] && _users[event_fd]->getStatus())
         {
-            cout << "Client disconnected: " << _users[event_fd]->getNickName() << endl;
+            this->printMsgServer(0, "Client disconnected: " + _users[event_fd]->getNickName());
             close(event_fd);
             epoll_ctl(_epollFD, EPOLL_CTL_DEL, event_fd, NULL);
             delete _users[event_fd];
@@ -493,7 +538,7 @@ int Server::commandUserStaff( int event_fd )
         }
         else if (_staffs[event_fd] && _staffs[event_fd]->getStatus())
         {
-            cout << "Staff disconnected: " << _staffs[event_fd]->getNickName() << endl;
+            this->printMsgServer(0, "Staff disconnected: " + _staffs[event_fd]->getNickName());
             close(event_fd);
             epoll_ctl(_epollFD, EPOLL_CTL_DEL, event_fd, NULL);
             delete _staffs[event_fd];
@@ -834,10 +879,17 @@ int Server::commandUserStaff( int event_fd )
         {
             // Vérifie que l'expéditeur est valide et récupère son nickname
             string nickname;
+            void (Server::*function)(int, const string &, const string &) const;
             if (_users.count(event_fd) && _users[event_fd])
+            {
                 nickname = _users[event_fd]->getNickName();
+                function = &Server::printMsgUser;
+            }
             else if (_staffs.count(event_fd) && _staffs[event_fd])
+            {
                 nickname = _staffs[event_fd]->getNickName();
+                function = &Server::printMsgStaff;
+            }
             else
                 return -1; // Expéditeur non valide
 
@@ -866,11 +918,11 @@ int Server::commandUserStaff( int event_fd )
                 }
             }
 
-            string fullMsg = nickname + " to you : " + msg + "\r\n";
+            string fullMsg = "MP to you : " + msg + "\r\n";
             if (target == this->getAdminNickName())
-                cout << fullMsg;
+                (this->*function)(1, fullMsg, nickname);
             else if (receiver_fd != -1)
-                write(receiver_fd, fullMsg.c_str(), fullMsg.size());
+                (this->*function)(receiver_fd, fullMsg, nickname);
             else
             {
                 string topic = this->getTopic();

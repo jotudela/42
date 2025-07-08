@@ -7,6 +7,7 @@
 #define VIOLET "\033[35m"
 #define BLEU "\033[34m"
 #define CYAN "\033[36m"
+#define RED "\033[31m"
 #define RESET "\033[0m"
 
 
