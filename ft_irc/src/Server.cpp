@@ -579,13 +579,12 @@ int Server::commandUserStaff( int event_fd )
                     if (rest.empty())
                     {
                         _passWord = "";
-                        write(event_fd, "[MODE] Password deleted.\n", 26);
+                        this->printMsgServer(event_fd, "[MODE k] Password deleted.");
                     }
                     else
                     {
                         _passWord = rest;
-                        string msg = "[MODE] The new password is : " +  _passWord + ".\n";
-                        write(event_fd, msg.c_str(), msg.length());
+                        this->printMsgServer(event_fd, "[MODE k] The new password is : " + _passWord + ".");
                     }
                     return 0;
                 }
@@ -596,8 +595,7 @@ int Server::commandUserStaff( int event_fd )
                 if (subcmd == "i" && nickname.empty())
                 {
                     _invite = !_invite;
-                    string msg = string("[MODE] Canal mode invitation ") + (_invite ? "ACTIVÉ.\n" : "DÉSACTIVÉ.\n");
-                    write(event_fd, msg.c_str(), msg.length());
+                    this->printMsgServer(event_fd, "[MODE i] Channel mode invitation " + string(_invite ? "ON." : "OFF."));
                     return 0;
                 }
 
@@ -606,9 +604,6 @@ int Server::commandUserStaff( int event_fd )
                     && nickname != _staffs[event_fd]->getNickName())
                 {
                     // Promotion
-                    string msg = "[PROMOTION] " + nickname + " est maintenant staff.\n";
-                    string msg2 = "[PROMOTION] " + nickname + " you are now staff.\n";
-                    string err = "[ERREUR] Impossible de promouvoir " + nickname + ".\n";
                     std::map<int, User*>::iterator uit;
                     for (uit = _users.begin(); uit != _users.end(); ++uit)
                     {
@@ -616,20 +611,16 @@ int Server::commandUserStaff( int event_fd )
                         {
                             if (userToStaff(uit->first) == 0)
                             {
-                                write(event_fd, msg.c_str(), msg.length());
-                                write(uit->first, msg2.c_str(), msg2.length());
+                                this->printMsgServer(event_fd, "[PROMOTION] " + nickname + " is now staff.");
+                                this->printMsgServer(uit->first, "[PROMOTION] " + nickname + " you are now staff.");
                             }
                             else
-                                write(event_fd, err.c_str(), err.length());
+                                this->printMsgServer(event_fd, "[ERROR] Impossible to promote " + nickname + ".");
                             return 0;
                         }
                     }
 
                     // Démotion
-                    msg = "[RÉTROGRADATION] " + nickname + " est redevenu user.\n";
-                    msg2 = "[RÉTROGRADATION] " + nickname + " you are now user.\n";
-                    err = "[ERREUR] Impossible de rétrograder " + nickname + ".\n";
-                    string err2 = "[!] Aucun utilisateur trouvé avec le nickname : " + nickname + ".\n";
                     std::map<int, Admin*>::iterator sit;
                     for (sit = _staffs.begin(); sit != _staffs.end(); ++sit)
                     {
@@ -637,16 +628,16 @@ int Server::commandUserStaff( int event_fd )
                         {
                             if (staffToUser(sit->first) == 0)
                             {
-                                write(event_fd, msg.c_str(), msg.length());
-                                write(sit->first, msg2.c_str(), msg2.length());
+                                this->printMsgServer(event_fd, "[DEMOTION] " + nickname + " has become again user.");
+                                this->printMsgServer(sit->first, "[DEMOTION] " + nickname + " you become again user.");
                             }
                             else
-                                write(event_fd, err.c_str(), err.length());
+                                this->printMsgServer(event_fd, "[ERROR] Impossible to downgrade " + nickname);
                             return 0;
                         }
                     }
 
-                    write(event_fd, err2.c_str(), err2.length());
+                    this->printMsgServer(event_fd, "[ERROR] No users found with the nickname : " + nickname + ".");
                     return 0;
                 }
 
@@ -663,19 +654,21 @@ int Server::commandUserStaff( int event_fd )
                             {
                                 sit->second->setTStatus(false);
                                 string msg = "You are no longer entitled to the topic command.\n";
-                                write(sit->first, msg.c_str(), msg.length());
+                                this->printMsgServer(event_fd, nickname + " is no longer entitled to the topic command.");
+                                this->printMsgServer(sit->first, msg);
                                 return 0;
                             }
                             else if (sit->second->getTStatus() == false)
                             {
                                 sit->second->setTStatus(true);
                                 string msg = "You have rights again for the topic command.\n";
-                                write(sit->first, msg.c_str(), msg.length());
+                                this->printMsgServer(event_fd, nickname + " have rights again for the topic command.");
+                                this->printMsgServer(sit->first, msg);
                                 return 0;
                             }
                         }
                     }
-                    write(event_fd, err.c_str(), err.length());
+                    this->printMsgServer(event_fd, "[ERROR] No admin found with the nickname : " + nickname + ".");
                     return 0;
                 }
 
@@ -684,28 +677,25 @@ int Server::commandUserStaff( int event_fd )
                     if (nickname.empty())  // Pas de paramètre => suppression de la limite
                     {
                         _userLimit = -1;
-                        string msg = "[MODE] Limite d'utilisateurs supprimée.\n";
-                        write(event_fd, msg.c_str(), msg.length());
+                        this->printMsgServer(event_fd, "[MODE l] User limit removed.");
                     }
                     else  // MODE l <nombre>
                     {
                         istringstream numStream(nickname);
                         int limit;
                         numStream >> limit;
-                        string err1 = "[MODE] Cannot define limit of users under number of current users.\n";
-                        std::ostringstream oss;
-                        oss << "[MODE] Limite d'utilisateurs définie à " << limit << ".\n";
-                        std::string msg = oss.str();
-                        string err2 = "[ERREUR] Valeur invalide pour la limite : " + nickname + ".\n";
                         if (limit < _currentUsers)
-                            write(event_fd, err1.c_str(), err1.length());
+                            this->printMsgServer(event_fd, "[MODE l] Cannot define limit of users under number of current users.");
                         else if (limit > -1)
                         {
                             _userLimit = limit;
-                            write(event_fd, msg.c_str(), msg.length());
+                            std::ostringstream oss;
+                            oss << limit;
+                            string strLimit = oss.str();
+                            this->printMsgServer(event_fd, string("[MODE] User limit defined at ") + strLimit + ".");
                         }
                         else
-                            write(event_fd, err2.c_str(), err2.length());
+                            this->printMsgServer(event_fd, "[ERROR] Invalid value for the limit.");
                     }
                     return 0;
                 }
@@ -736,23 +726,15 @@ int Server::commandUserStaff( int event_fd )
                     {
                         _userStates[fdToKick] = REGISTERED;
                         _currentUsers -= 1;
-                        string kickMsg = ":server KICK " + kick_nick + " : " + getTopic() + "\r\n";
-                        string msg = "[KICK] " + kick_nick + " a été retiré du channel.\n";
-                        write(fdToKick, kickMsg.c_str(), kickMsg.size());
-                        write(event_fd, msg.c_str(), msg.length());
+                        string kickMsg = "You are kick from channel : " + getTopic();
+                        this->printMsgServer(fdToKick, kickMsg);
+                        this->printMsgServer(event_fd, "[KICK] " + kick_nick + " has been kicked from channel.");
                     }
                     else
-                    {
-                        string err = "[!] Aucun utilisateur trouvé avec le nickname : " + kick_nick + ".\n";
-                        write(event_fd, err.c_str(), err.length());
-                        return 0;
-                    }
+                        this->printMsgServer(event_fd, "[ERROR] No users found with the nickname : " + kick_nick + ".");
                 }
                 else
-                {
-                    string err = "[ERREUR] Syntaxe : KICK <nickname>\n";
-                    write(event_fd, err.c_str(), err.length());
-                }
+                    this->printMsgServer(event_fd, "[ERROR] Syntaxe : KICK <nickname>.");
                 return 0;
             }
             else if (command == "INVITE")
@@ -771,15 +753,17 @@ int Server::commandUserStaff( int event_fd )
                         {
                             if (_currentUsers >= _userLimit)
                             {
-                                string msg = "Cannot invite " + _users[uit->first]->getNickName() + " : the user limit is reached.\n";
-                                write(event_fd, msg.c_str(), msg.length());
+                                string msg = "Cannot invite " + _users[uit->first]->getNickName() + " : the user limit is reached.";
+                                this->printMsgServer(event_fd, msg);
                                 return 0;
                             }
                             _userStates[uit->first] = JOINED;
                             _currentUsers += 1;
 
-                            string notice = ":server NOTICE " + invite_nick + " : Vous avez été invité à rejoindre le channel.\r\n";
-                            write(uit->first, notice.c_str(), notice.size());
+                            this->printMsgServer(event_fd, "[INVITE] " + invite_nick + " has been invited to join the channel.");
+
+                            string notice = invite_nick + " : You have been invited to join the channel.";
+                            this->printMsgServer(uit->first, notice);
 
                             found = true;
                             break;
@@ -787,17 +771,11 @@ int Server::commandUserStaff( int event_fd )
                     }
 
                     if (!found)
-                    {
-                        string err = "[!] Aucun utilisateur trouvé avec le nickname : " + invite_nick + ".\n";
-                        write(event_fd, err.c_str(), err.length());
-                    }
+                        this->printMsgServer(event_fd, "[ERROR] No users found with the nickname : " + invite_nick + ".");
                     return 0;
                 }
                 else
-                {
-                    string err = "[ERREUR] Syntaxe : INVITE <nickname>\n";
-                    write(event_fd, err.c_str(), err.length());
-                }
+                    this->printMsgServer(event_fd, "[ERREUR] Syntaxe : INVITE <nickname>.");
                 return 0;
             }
             else if (command == "TOPIC" && _staffs[event_fd]->getTStatus() == true)
@@ -808,19 +786,12 @@ int Server::commandUserStaff( int event_fd )
                 // Trim leading spaces
                 channel_or_topic.erase(0, channel_or_topic.find_first_not_of(" \t"));
 
-                string msg;
                 if (channel_or_topic.empty())
                 {
                     if (_topic.empty())
-                    {
-                        msg = "[TOPIC] Aucun topic n'est défini.\n";
-                        write(event_fd, msg.c_str(), msg.length());
-                    }
+                        this->printMsgServer(event_fd, "[TOPIC] None topic defined.");
                     else
-                    {
-                        msg = "[TOPIC] Sujet actuel : " + _topic + ".\n";
-                        write(event_fd, msg.c_str(), msg.length());
-                    }
+                        this->printMsgServer(event_fd, "[TOPIC] Current topic : " + _topic);
                 }
                 else
                 {
@@ -831,8 +802,7 @@ int Server::commandUserStaff( int event_fd )
                     else
                         _topic = channel_or_topic;
 
-                    msg = "[TOPIC] Nouveau sujet défini : " + _topic + ".\n";
-                    write(event_fd, msg.c_str(), msg.length());
+                    this->printMsgServer(event_fd, "[TOPIC] New topic defined : " + _topic);
                 }
                 return 0;
             }
@@ -869,8 +839,8 @@ int Server::commandUserStaff( int event_fd )
         {
             if (target.empty() || msg.empty())
             {
-                string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
-                write(event_fd, err.c_str(), err.size());
+                string err = "[ERROR] PRIVMSG : Not enough parameters.";
+                this->printMsgServer(event_fd, err);
                 return -1;
             }
         }
@@ -928,8 +898,8 @@ int Server::commandUserStaff( int event_fd )
                 string topic = this->getTopic();
                 if (target != topic && target != "#" + topic)
                 {
-                    string err = ":server 401 " + target + " :No such nick/channel\r\n";
-                    write(event_fd, err.c_str(), err.size());
+                    string err = "[ERROR] PRIVMSG " + target + " : No such nick/channel.";
+                    this->printMsgServer(event_fd, err);
                 }
             }
         }
@@ -949,8 +919,8 @@ int Server::commandUserStaff( int event_fd )
 
             if (command != "NICK" || nick.empty())
             {
-                const char* msg = ":server 431 * :No nickname given\r\n";
-                write(event_fd, msg, strlen(msg));
+                string msg = "[ERROR] No nickname given\r\n";
+                this->printMsgServer(event_fd, msg);
             }
             else
             {
@@ -1000,8 +970,8 @@ int Server::commandUserStaff( int event_fd )
 
                 if (nicknameTaken)
                 {
-                    string err = ":server 433 * " + nick + " :Nickname is already in use\r\n";
-                    write(event_fd, err.c_str(), err.size());
+                    string err = "[ERRROR] " + nick + " : Nickname is already in use.";
+                    this->printMsgServer(event_fd, err);
                 }
                 else
                 {
@@ -1021,8 +991,8 @@ int Server::commandUserStaff( int event_fd )
                 realname.erase(0,1);
             if (command != "USER" || username.empty())
             {
-                const char* msg = ":server 461 * USER :Not enough parameters\r\n";
-                write(event_fd, msg, strlen(msg));
+                string msg = "[ERROR] Not enough parameters.";
+                this->printMsgServer(event_fd, msg);
             }
             else
             {
@@ -1032,8 +1002,8 @@ int Server::commandUserStaff( int event_fd )
                 _users[event_fd]->setUserName(_tempUser[event_fd]);
                 _users[event_fd]->setStatus(true);
 
-                string welcome = ":server 001 " + _tempNick[event_fd] + " :Welcome to the IRC server!\r\n";
-                write(event_fd, welcome.c_str(), welcome.size());
+                string welcome = _tempNick[event_fd] + " Welcome to the IRC server!";
+                this->printMsgServer(event_fd, welcome);
 
                 _tempNick.erase(event_fd);
                 _tempUser.erase(event_fd);
@@ -1053,35 +1023,35 @@ int Server::commandUserStaff( int event_fd )
                 channel.erase(0, channel.find_first_not_of(" \t"));
                 if (channel.empty())
                 {
-                    const char* msg = ":server 461 * JOIN :Not enough parameters\r\n";
-                    write(event_fd, msg, strlen(msg));
+                    string msg = "[ERROR] Not enough parameters.";
+                    this->printMsgServer(event_fd, msg);
                     break;
                 }
                 if (channel != this->getTopic())
                 {
-                    string msg = ":server 403 * " + channel + " :No such channel\r\n";
-                    write(event_fd, msg.c_str(), msg.size());
+                    string msg = "[ERROR] " + channel + " : No such channel.";
+                    this->printMsgServer(event_fd, msg);
                     break;
                 }
                 if (_invite == true)
                 {
-                    string msg = ":server 473 * " + channel + " :This channel is by invitation only\r\n";
-                    write(event_fd, msg.c_str(), msg.length());
+                    string msg = "[ERROR] " + channel + " : This channel is by invitation only.";
+                    this->printMsgServer(event_fd, msg);
                     break;
                 }
                 if (_currentUsers == _userLimit)
                 {
-                    string err = ":server 471 " + _users[event_fd]->getNickName() + " #" + _topic + " : Cannot join channel (limit reached)\r\n";
-                    write(event_fd, err.c_str(), err.size());
+                    string err = "[ERROR] " + _users[event_fd]->getNickName() + " #" + _topic + " : Cannot join channel (limit reached).";
+                    this->printMsgServer(event_fd, err);
                     break;
                 }
                 if (_passWord.empty())
                 {
-                    string msg = "✅ You have joined channel " + this->getTopic() + "\r\n";
-                    write(event_fd, msg.c_str(), msg.size());
+                    string msg = "✅ You have joined channel " + this->getTopic() + ".";
+                    this->printMsgServer(event_fd, msg);
 
-                    cout << "User " << _users[event_fd]->getNickName()
-                                << " joined channel: " << this->getTopic() << endl;
+                    this->printMsgServer(0, "User " + _users[event_fd]->getNickName()
+                        + " joined channel: " + this->getTopic() + ".");
 
                     _users[event_fd]->setStatus(true);
                     _userStates[event_fd] = JOINED;
@@ -1090,15 +1060,15 @@ int Server::commandUserStaff( int event_fd )
                 }
 
                 channel = "Please enter password : ";
-                write(event_fd, channel.c_str(), channel.length());
+                this->printMsgServer(event_fd, channel);
                 _userStates[event_fd] = WAIT_PASSWORD;
             }
             else if (command == "PRIVMSG")
                 break;
             else
             {
-                string msg = ":server 421 * " + command + " :Unknown command\r\n";
-                write(event_fd, msg.c_str(), msg.size());
+                string msg = "[ERROR] " + command + " : Unknown command.";
+                this->printMsgServer(event_fd, msg);
             }
             break;
         }
@@ -1110,11 +1080,11 @@ int Server::commandUserStaff( int event_fd )
 
             if (password == this->getPassWord())
             {
-                string msg = "✅ You have joined channel " + this->getTopic() + "\r\n";
-                write(event_fd, msg.c_str(), msg.size());
+                string msg = "✅ You have joined channel " + this->getTopic() + ".";
+                this->printMsgServer(event_fd, msg);
 
-                cout << "User " << _users[event_fd]->getNickName()
-                            << " joined channel: " << this->getTopic() << endl;
+                this->printMsgServer(0, "User " + _users[event_fd]->getNickName()
+                        + " joined channel: " + this->getTopic() + ".");
 
                 _users[event_fd]->setStatus(true);
                 _userStates[event_fd] = JOINED;
@@ -1122,8 +1092,8 @@ int Server::commandUserStaff( int event_fd )
             }
             else
             {
-                const char* msg = "❌ Password invalid!\r\n";
-                write(event_fd, msg, strlen(msg));
+                string msg = "❌ Password invalid!\r\n";
+                this->printMsgServer(event_fd, msg);
                 _userStates[event_fd] = REGISTERED;
             }
             break;
@@ -1161,8 +1131,8 @@ int Server::commandUserStaff( int event_fd )
             if (_users.count(event_fd))
             {
                 if (command != "PRIVMSG" || target.empty() || msg.empty()) {
-                    string err = ":server 461 * PRIVMSG :Not enough parameters\r\n";
-                    write(event_fd, err.c_str(), err.size());
+                    string err = "[ERROR] PRIVMSG : Not enough parameters.";
+                    this->printMsgServer(event_fd, err);
                 }
             }
 
