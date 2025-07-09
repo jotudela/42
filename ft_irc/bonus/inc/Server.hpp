@@ -36,6 +36,7 @@ class Server
         char _buffer[IRC_MESSAGE_MAX];
 
         Bot bot;
+        bool _OnOff;
 
         Server( const Server & );
         Server& operator=( const Server & );

@@ -37,7 +37,6 @@ void Server::setUpServer()
     stdin_ev.data.fd = STDIN_FILENO;
     epoll_ctl(_epollFD, EPOLL_CTL_ADD, STDIN_FILENO, &stdin_ev);
     signal(SIGPIPE, SIG_IGN);
-    bot.setStartTime();
 }
 
 int Server::createNewUser()

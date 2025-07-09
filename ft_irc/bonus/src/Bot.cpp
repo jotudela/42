@@ -9,27 +9,14 @@ Bot::Bot(){}
 
 Bot::~Bot(){}
 
-void Bot::setStartTime()
+void Bot::parrot( string& msg, int fd, string hour )
 {
-    _start = std::time(0);
-    _last_display = _start;
-}
-
-bool Bot::calculTime()
-{
-    _now = std::time(0);
-
-    if (_now - _last_display >= 30)
-    {
-        _last_display = _now;
-        return true;
-    }
-    return false;
-}
-
-void Bot::printInfoForUser( int fd, const string& heure ) const
-{
-    write(fd, "Hello ", 7);
-    write(fd, heure.c_str(), heure.length());
-    write(fd, ".\n", 2);
+    write(fd, GREEN, strlen(GREEN));
+    write(fd, "[BOT PARROT🦜] ", 18);
+    write(fd, RESET, strlen(RESET));
+    write(fd, hour.c_str(), hour.length());
+    write(fd, "\n", 1);
+    write(fd, "You just said : ", 17);
+    write(fd, msg.c_str(), msg.length());
+    write(fd, "\n", 1);
 }

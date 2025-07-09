@@ -10,7 +10,7 @@ using std::istringstream;
 
 Server::Server( int port, string passWord ) : _port(port), _serverFd(-1),
 _epollFD(-1), _userLimit(10), _currentUsers(0), _passWord(passWord),
-_running(true), _invite(false)
+_running(true), _invite(false), _OnOff(true)
 {
     string nickName;
     string userName;
@@ -186,6 +186,55 @@ int Server::commandAdmin()
     istringstream iss(input);
     string cmd;
     iss >> cmd;
+
+    if (cmd =="BOT")
+    {
+        string subcmd;
+        iss >> subcmd;
+
+        if (subcmd == "ON")
+        {
+            if (_OnOff == true)
+            {
+                this->printMsgServer(0, "[ERROR] Bot is already ON.");
+                return -1;
+            }
+            _OnOff = true;
+            string fullMsg = "Bot Parrot is now ON.\r\n";
+            for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+            {
+                int fd = it->first;
+                if (_userStates[fd] == JOINED)
+                    this->printMsgAdmin(fd, fullMsg);
+            }
+            for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+                this->printMsgAdmin(it->first, fullMsg);
+            this->printMsgServer(0, "Bot Parrot is now ON.");
+            return 0;
+        }
+        else if (subcmd == "OFF")
+        {
+            if (_OnOff == false)
+            {
+                this->printMsgServer(0, "[ERROR] Bot is already OFF.");
+                return -1;
+            }
+            _OnOff = false;
+            string fullMsg = "Bot Parrot is now OFF.\r\n";
+            for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
+            {
+                int fd = it->first;
+                if (_userStates[fd] == JOINED)
+                    this->printMsgAdmin(fd, fullMsg);
+            }
+            for (std::map<int, Admin*>::iterator it = _staffs.begin(); it != _staffs.end(); ++it)
+                this->printMsgAdmin(it->first, fullMsg);
+            this->printMsgServer(0, "Bot Parrot is now OFF.");
+            return 0;
+        }
+        this->printMsgServer(0, "[ERROR] Good format of command BOT is : BOT ON/OFF");
+        return -1;
+    }
 
     if (cmd == "MODE")
     {
@@ -902,6 +951,8 @@ int Server::commandUserStaff( int event_fd )
                     this->printMsgServer(event_fd, err);
                 }
             }
+            if (_OnOff == true)
+                bot.parrot(msg, event_fd, getCurrentTime());
         }
     }
 
@@ -1181,20 +1232,12 @@ void Server::run()
 {
     while (_running)
     {
-        int n = epoll_wait(_epollFD, _events, MAX_EVENTS, 1000);
+        int n = epoll_wait(_epollFD, _events, MAX_EVENTS, -1);
         if (n == -1)
         {
             perror("epoll_wait");
             break;
         }
-
-        if (bot.calculTime() == true)
-        {
-            for (std::map<int, User*>::iterator it = _users.begin(); it != _users.end(); ++it)
-                bot.printInfoForUser(it->first, getCurrentTime());
-            continue;
-        }
-
         for (int i = 0; i < n; ++i)
         {
             int event_fd = _events[i].data.fd;

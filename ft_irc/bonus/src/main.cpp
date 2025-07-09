@@ -7,7 +7,8 @@ using std::cerr;
 
 void print_irc()
 {
-    cout << "\033[34m";
+    cout << "\033[2J";
+    cout << BLEU;
     cout << "FFFFFFFFFFFFFFFFFFFFFFTTTTTTTTTTTTTTTTTTTTTTT                        IIIIIIIIIIRRRRRRRRRRRRRRRRR           CCCCCCCCCCCCC" << endl;
     cout << "F::::::::::::::::::::FT:::::::::::::::::::::T                        I::::::::IR::::::::::::::::R       CCC::::::::::::C" << endl;
     cout << "F::::::::::::::::::::FT:::::::::::::::::::::T                        I::::::::IR::::::RRRRRR:::::R    CC:::::::::::::::C" << endl;
@@ -27,7 +28,7 @@ void print_irc()
     cout << "                                             ________________________                                                   " << endl;
     cout << "                                             _::::::::::::::::::::::_                                                   " << endl;
     cout << "                                             ________________________                                                   " << endl;
-    cout << "\033[0m";
+    cout << RESET;
     cout << endl << endl << endl;
 }
 
@@ -39,9 +40,6 @@ int main( int ac, char **av )
         return 1;
     }
     Server serv(std::atoi(av[1]), av[2]);
-    //cout << serv.getPassWord() << " " << serv.getPort() << endl;
-    //cout << serv.getAdminNickName() << " " << serv.getAdminUserName() << endl;
-    //cout << serv.getTopic() << endl;
     serv.setUpServer();
     print_irc();
     serv.run();
