@@ -187,7 +187,7 @@ int Server::commandAdmin()
     string cmd;
     iss >> cmd;
 
-    if (cmd =="BOT")
+    if (cmd == "BOT")
     {
         string subcmd;
         iss >> subcmd;
