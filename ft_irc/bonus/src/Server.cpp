@@ -691,9 +691,9 @@ int Server::commandUserStaff( int event_fd )
                 }
 
                 if (subcmd == "t" && !nickname.empty()
-                    && _staffs[event_fd]->getTStatus() == true)
+                    && _staffs[event_fd]->getTStatus() == true
+                    && nickname != _staffs[event_fd]->getNickName())
                 {
-                    string err = "[!] Aucun utilisateur trouvé avec le nickname : " + nickname + ".\n";
                     std::map<int, Admin*>::iterator sit;
                     for (sit = _staffs.begin(); sit != _staffs.end(); ++sit)
                     {
@@ -749,8 +749,8 @@ int Server::commandUserStaff( int event_fd )
                     return 0;
                 }
                 // Commande invalide
-                string err3 = "[ERREUR] Syntaxe invalide pour MODE.\n";
-                write(event_fd, err3.c_str(), err3.length());
+                string err3 = "[ERROR] Invalid syntax for MODE.";
+                this->printMsgServer(event_fd, err3);
                 return 0;
             }
             else if (command == "KICK")

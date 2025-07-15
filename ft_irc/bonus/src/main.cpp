@@ -7,7 +7,6 @@ using std::cerr;
 
 void print_irc()
 {
-    cout << "\033[2J";
     cout << BLEU;
     cout << "FFFFFFFFFFFFFFFFFFFFFFTTTTTTTTTTTTTTTTTTTTTTT                        IIIIIIIIIIRRRRRRRRRRRRRRRRR           CCCCCCCCCCCCC" << endl;
     cout << "F::::::::::::::::::::FT:::::::::::::::::::::T                        I::::::::IR::::::::::::::::R       CCC::::::::::::C" << endl;
