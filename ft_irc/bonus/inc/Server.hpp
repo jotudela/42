@@ -66,6 +66,8 @@ class Server
         int userToStaff( int fd );
         int staffToUser( int fd );
 
+        std::string readInput(int fd);
+
         void printMsgAdmin( int fd, const std::string& msg ) const;
         void printMsgServer( int fd, const std::string& msg ) const;
         void printMsgUser( int fd, const std::string& msg, const std::string& nickName ) const;

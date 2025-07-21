@@ -173,8 +173,9 @@ string getCurrentTime()
 
 int Server::commandAdmin()
 {
-    string input;
-    getline(std::cin, input);
+    string input = this->readInput(0);
+    input.erase(remove(input.begin(), input.end(), '\n'), input.end());
+    input.erase(remove(input.begin(), input.end(), '\r'), input.end());
 
     if (input == "QUIT")
     {
@@ -566,11 +567,58 @@ int Server::commandAdmin()
     return 0;
 }
 
+std::string Server::readInput(int fd)
+{
+    ssize_t nbytes;
+    std::string courant;
+    std::vector<std::string> paquets;
+
+    memset(_buffer, 0, IRC_MESSAGE_MAX);
+    while (true)
+    {
+        if (fd == 0)
+            nbytes = read(fd, _buffer, sizeof(_buffer));  // terminal
+        else
+            nbytes = recv(fd, _buffer, sizeof(_buffer), 0); // clients
+        if (nbytes == 0)
+        {
+            // Le client a fermé la connexion
+            if (!courant.empty())
+                paquets.push_back(courant);
+            break;
+        }
+
+        for (ssize_t i = 0; i < nbytes; ++i)
+        {
+            char c = _buffer[i];
+
+            if (c == '\4') { // Ctrl+D (EOT)
+                paquets.push_back(courant);
+                courant.clear();
+            }
+            else if (c == '\n') {
+                if (!courant.empty()) {
+                    paquets.push_back(courant);
+                    courant.clear();
+                }
+                std::string result;
+                for (size_t i = 0; i < paquets.size(); ++i)
+                    result += paquets[i];
+                return result;
+            }
+            else {
+                courant += c;
+            }
+        }
+    }
+
+    return "";
+}
+
 int Server::commandUserStaff( int event_fd )
 {
-    memset(_buffer, 0, IRC_MESSAGE_MAX);
-    int count = read(event_fd, _buffer, IRC_MESSAGE_MAX);
-    if (count <= 0)
+    string msg_input = this->readInput(event_fd);
+    if (msg_input.empty())
     {
         if (_users[event_fd] && _users[event_fd]->getStatus())
         {
@@ -598,7 +646,7 @@ int Server::commandUserStaff( int event_fd )
         }
     }
 
-    string input(_buffer, count);
+    string input(msg_input.c_str(), msg_input.length());
     input.erase(remove(input.begin(), input.end(), '\n'), input.end());
     input.erase(remove(input.begin(), input.end(), '\r'), input.end());
 
