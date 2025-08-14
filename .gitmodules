@@ -7,3 +7,6 @@
 [submodule "gnl"]
 	path = gnl
 	url = https://github.com/jotudela/get_next_line.git
+[submodule "pipex"]
+	path = pipex
+	url = https://github.com/jotudela/pipex.git
